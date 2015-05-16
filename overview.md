@@ -10,16 +10,33 @@ playerはleap motion（もしくはkey入力）でブロックを移動・回転
 
 \>> [完成予想動画](https://www.youtube.com/watch?v=P2lOHc8wReo)
 
-## Flow
+Policy
+------
 
-1. 新しいブロックの生成
-2. playerによるブロックの移動と回転
-3. ブロックの落下
-4. ブロックプールに格納
-5. 隙間なくブロックが揃った行の削除
-6. 1に戻る
+- 命名規則はunity documentationに従います
+	- クラス名はキャメルケース(SomeClass)
+	- メソッド名はキャメルケース(SomeMethod)
+	- 変数名は先頭が小文字のキャメルケース(someVariable)
+- グローバル変数は、基本的に避けるべきです
+- 処理は可能な限りモジュールで分割（もしくは階層化）します
+- モジュールの最終目的は、重複処理の削除です
+- 各モジュール間の結合度は低くしましょう
 
-## Todo
+Flow
+----
+
+1. ゲームの開始
+	1. 新しいブロックの生成
+	2. playerによるブロックの移動と回転
+	3. ブロックの落下
+	4. ブロックプールに格納
+	5. 隙間なくブロックが揃った行の削除
+	6. ブロックがプールから溢れていないか確認
+2. ゲームの終了
+3. スコアの報告
+
+Todo
+----
 
 - ブロックの左右奥手前方向の移動
 - ブロックを落とす
@@ -35,65 +52,84 @@ playerはleap motion（もしくはkey入力）でブロックを移動・回転
 - 落下予測位置の表示
 - 次のブロックの表示
 
-## Objects
+Classes
+-------
 
 - __BlockEntity__
-	- 各ブロックのデータ管理
+	- \# 各ブロックのデータ管理
 	- [member] block1, block2, …, block8
 		- 各ブロックの色と形を保持するprefabを用意しておく
-	- [func] random_block()
+	- [func] RandomBlock()
 		- ブロックの種類をランダムに返す
 
 - __LeapHandAction__
-	- Leapで検出した手の情報の取得と、対応するイベントの呼び出し
-	- [func] connect_with\_block()
+	- \# Leapで検出した手の情報の取得と、対応するイベントの呼び出し
+	- [func] ConnectWithBlock()
 		- 移動と回転の対象となるブロックを取得する
-	- [event] 手の回転 -> BlockController#{pitch, yaw, roll}_block()
-	- [event] 手の下方向の加速度 -> BlockController#drop_block()
+	- [event] 手の回転 -> BlockController#{Pitch, Yaw, Roll}Block()
+	- [event] 手の下方向の加速度 -> BlockController#DropBlock()
 
 - __BlockController__
-	- 落下させるブロックの集合を管理
-	- [member] block_number : int
+	- \# 落下させるブロックの集合を管理
+	- [member] blockNumber : int
 		- あらかじめ決めてあるブロックの番号（ブロックの形は8種類くらい?を想定）
 	- [member] x, y : int
 		- ブロックのx, y座標
-	- [func] pitch_block(*direct*)
+	- [func] PitchBlock(*direct*)
 		- directは 1 or -1
 		- directの方向にblockをx軸中心で90度回転する
-	- [func] yaw_block(*direct*)
+	- [func] YawBlock(*direct*)
 		- directの方向にblockをy軸中心で90度回転する
-	- [func] roll_block(*direct*)
+	- [func] RollBlock(*direct*)
 		- directの方向にblockをz軸中心で90度回転する
-	- [func] drop_block()
+	- [func] DropBlock()
 		- ブロックを落とす処理
-		- BlockPoolController#control_block()を呼び出すことで、\
+		- BlockPoolController#ControlBlock()を呼び出すことで、\
 		- このブロックはLeapHandAction下の管理からBlockPoolController下の管理に移る
 
 - __BlockPoolController__
-	- BlockPool（ブロックの溜まり場）を管理
-	- [member] block_pool : <T\>型の3次元配列
+	- \# BlockPool（ブロックの溜まり場）を管理
+	- [member] blockPool : <T\>型の3次元配列
 		- 配列の型については、int型で良いのか、enumにすべきか、より多くの情報を保持できる構造体（クラス）がいいのか要検討
-	- [func] control_block(*blockInfo*)
+	- [func] ControlBlock(*blockInfo*)
 		- ブロックプール内での、ブロックの落下と当たり判定と行の削除を制御
-			- hit_block()で衝突するまで落下させる
-			- 衝突後、merge_block()でプールに合成する（block\_poolに格納する）
+			- HitBlock()で衝突するまで落下させる
+			- 衝突後、MergeBlock()でプールに合成する（blockPoolに格納する）
 				- 落下ブロックはプールへの合成と同時に削除
-			- remove_completed\_row()で揃った行の削除
-			- next_phase()で次のフェーズに遷移
-	- [func] hit_block(blockInfo)
+			- RemoveCompletedRow()で揃った行の削除
+			- FullPool()でプールからブロックが溢れているか確認
+				- プールから溢れているならGameManager#GameOver()を呼び出す
+			- NextPhase()で次のフェーズに遷移
+	- [func] HitBlock(blockInfo)
 		- ブロックプールの床もしくは、すでにあるブロックたちと接触した場合、trueを返す
-	- [func] merge_block(blockInfo)
+	- [func] MergeBlock(blockInfo)
 		- 落下ブロックを、プール内に合成する
-	- [func] remove_completed\_row()
+	- [func] RemoveCompletedRow()
 		- 隙間なくブロックが揃った行の削除
 		- 消える行よりも上に積まれているブロックを一つ下に落とす
-	- [func] next_phase()
-		- BlockEntity#random_block()で新しいブロックを決めて、生成する
-		- LeapHandAction#connect_with\_block()でleap motionとblockを接続させる
+	- [func] NextPhase()
+		- BlockEntity#RandomBlock()で新しいブロックを決めて、生成する
+		- LeapHandAction#ConnectWithBlock()でleap motionとblockを接続させる
 
+- __GameManager__
+	- \# ゲーム全体の管理
+	- [member] handedness : right or left
+		- playerの利き手の情報
+	- [member] gameScore : int
+		- ゲームスコア
+	- [member] elapsedTime : int
+		- ゲームの経過時間
+	- [func] GameStart()
+		- ゲーム開始に伴う初期化
+	- [func] GameOver()
+		- 正常ではないゲーム終了に伴う処理
+	- [func] GameFinish()
+		- 時間によるゲーム終了に伴う処理
 
+Other
+-----
 
-
+ドキュメントについて、気になる点があればコメントしてください。
 
 
 
