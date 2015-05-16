@@ -43,7 +43,7 @@ Todo
 	- 落下速度の変化
 	- ブロックの接触判定
 - ブロックの回転
-	- 回転した後の形を見て、壁との接触はないか確認後、回転を行う
+	- 回転した際に壁に食い込む場合は、適切な位置まで移動させる
 - 隙間なくブロックが揃った行の削除
 	- 消えるアニメーション
 	- 消える行よりも上に積まれているブロックを一つ下に落とす
@@ -66,12 +66,15 @@ Classes
 	- \# Leapで検出した手の情報の取得と、対応するイベントの呼び出し
 	- [func] ConnectWithBlock()
 		- 移動と回転の対象となるブロックを取得する
+	- [func] DisconectWithBlock()
+		- 移動と回転の対象となるブロックのコントロールを中止する
 	- [event] 手の移動 -> BlockController#MoveBlock()
 	- [event] 手の回転 -> BlockController#{Pitch, Yaw, Roll}Block()
 	- [event] 手の下方向の加速度 -> BlockController#DropBlock()
 
 - __BlockController__
 	- \# 落下させるブロックの制御
+	- \# 新しく生成されたブロックのスクリプトとなる
 	- [member] blockNumber : int
 		- あらかじめ決めてあるブロックの番号（ブロックの形は8種類くらい?を想定）
 	- [member] x, y : int
@@ -81,18 +84,20 @@ Classes
 	- [func] PitchBlock(*direct*)
 		- directは 1 or -1
 		- directの方向にblockをx軸中心で90度回転する
+		- 回転した際に壁に食い込む場合は、適切な位置まで移動させる
 	- [func] YawBlock(*direct*)
 		- directの方向にblockをy軸中心で90度回転する
 	- [func] RollBlock(*direct*)
 		- directの方向にblockをz軸中心で90度回転する
 	- [func] DropBlock()
 		- ブロックを落とす処理
+		- LeapHandAction#DisconectWithBlock()と、\
 		- BlockPoolController#ControlBlock()を呼び出すことで、\
 		- このブロックはLeapHandAction下の管理からBlockPoolController下の管理に移る
 
 - __BlockPoolController__
 	- \# BlockPool（ブロックの溜まり場）の制御
-	- [member] blockPool : <T\>型の3次元配列
+	- [member] blockPool : T型の3次元配列
 		- 配列の型については、int型で良いのか、enumにすべきか、より多くの情報を保持できる構造体（クラス）がいいのか要検討
 	- [func] ControlBlock(*blockInfo*)
 		- ブロックプール内での、ブロックの落下と当たり判定と行の削除を制御
@@ -101,9 +106,9 @@ Classes
 			- RemoveCompletedRow()で揃った行の削除
 			- FullPool()でプールからブロックが溢れているか確認
 			- NextPhase()で次のフェーズに遷移
-	- [func] HitBlock(blockInfo) -> bool
+	- [func] HitBlock(*blockInfo*) -> bool
 		- ブロックプールの床もしくは、すでにあるブロックたちと接触した場合、trueを返す
-	- [func] MergeBlock(blockInfo)
+	- [func] MergeBlock(*blockInfo*)
 		- 落下ブロックを、プール内に合成する
 		- 落下ブロックはプールへの合成と同時に削除
 	- [func] RemoveCompletedRow()
