@@ -66,11 +66,12 @@ Classes
 	- \# Leapで検出した手の情報の取得と、対応するイベントの呼び出し
 	- [func] ConnectWithBlock()
 		- 移動と回転の対象となるブロックを取得する
+	- [event] 手の移動 -> BlockController#MoveBlock()
 	- [event] 手の回転 -> BlockController#{Pitch, Yaw, Roll}Block()
 	- [event] 手の下方向の加速度 -> BlockController#DropBlock()
 
 - __BlockController__
-	- \# 落下させるブロックの集合を管理
+	- \# 落下させるブロックの制御
 	- [member] blockNumber : int
 		- あらかじめ決めてあるブロックの番号（ブロックの形は8種類くらい?を想定）
 	- [member] x, y : int
@@ -90,25 +91,27 @@ Classes
 		- このブロックはLeapHandAction下の管理からBlockPoolController下の管理に移る
 
 - __BlockPoolController__
-	- \# BlockPool（ブロックの溜まり場）を管理
+	- \# BlockPool（ブロックの溜まり場）の制御
 	- [member] blockPool : <T\>型の3次元配列
 		- 配列の型については、int型で良いのか、enumにすべきか、より多くの情報を保持できる構造体（クラス）がいいのか要検討
 	- [func] ControlBlock(*blockInfo*)
 		- ブロックプール内での、ブロックの落下と当たり判定と行の削除を制御
 			- HitBlock()で衝突するまで落下させる
 			- 衝突後、MergeBlock()でプールに合成する（blockPoolに格納する）
-				- 落下ブロックはプールへの合成と同時に削除
 			- RemoveCompletedRow()で揃った行の削除
 			- FullPool()でプールからブロックが溢れているか確認
-				- プールから溢れているならGameManager#GameOver()を呼び出す
 			- NextPhase()で次のフェーズに遷移
-	- [func] HitBlock(blockInfo)
+	- [func] HitBlock(blockInfo) -> bool
 		- ブロックプールの床もしくは、すでにあるブロックたちと接触した場合、trueを返す
 	- [func] MergeBlock(blockInfo)
 		- 落下ブロックを、プール内に合成する
+		- 落下ブロックはプールへの合成と同時に削除
 	- [func] RemoveCompletedRow()
 		- 隙間なくブロックが揃った行の削除
 		- 消える行よりも上に積まれているブロックを一つ下に落とす
+	- [func] FullPool() -> bool
+		- プールからブロックが溢れているか確認
+			- プールから溢れているならGameManager#GameOver()を呼び出す
 	- [func] NextPhase()
 		- BlockEntity#RandomBlock()で新しいブロックを決めて、生成する
 		- LeapHandAction#ConnectWithBlock()を呼び出すことで、leap motionとblockを接続させて、\
