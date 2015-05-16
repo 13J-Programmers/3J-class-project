@@ -75,6 +75,8 @@ Classes
 		- あらかじめ決めてあるブロックの番号（ブロックの形は8種類くらい?を想定）
 	- [member] x, y : int
 		- ブロックのx, y座標
+	- [func] MoveBlock(*x*, *y*)
+		- x, y座標にブロックを移動する
 	- [func] PitchBlock(*direct*)
 		- directは 1 or -1
 		- directの方向にblockをx軸中心で90度回転する
@@ -109,7 +111,8 @@ Classes
 		- 消える行よりも上に積まれているブロックを一つ下に落とす
 	- [func] NextPhase()
 		- BlockEntity#RandomBlock()で新しいブロックを決めて、生成する
-		- LeapHandAction#ConnectWithBlock()でleap motionとblockを接続させる
+		- LeapHandAction#ConnectWithBlock()を呼び出すことで、leap motionとblockを接続させて、\
+		- 新しいブロックをLeapHandAction下の管理に移す
 
 - __GameManager__
 	- \# ゲーム全体の管理
