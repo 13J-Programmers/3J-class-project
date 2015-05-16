@@ -15,6 +15,4 @@
 概要
 -----
 
-3Dテトリス
-
-
+[3Dテトリス](https://github.com/TeX2e/3J_class_project/blob/master/overview.md)
