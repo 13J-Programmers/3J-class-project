@@ -22,4 +22,4 @@ Unity内で生成される以下のファイルは中間ファイルであり、
 概要
 -----
 
-[3Dテトリス](https://github.com/TeX2e/3J_class_project/blob/master/overview.md)
+[3Dテトリス](https://github.com/13J-Programmers/3J_class_project/blob/master/overview.md)
