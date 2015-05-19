@@ -23,7 +23,7 @@ public class BlockEntity : MonoBehaviour {
 		System.Random rand = new System.Random();
 		int randNum = rand.Next(prefabNum);
 		Debug.Log(randNum);
-		var obj = Instantiate(blocks[randNum]) as GameObject;
+		GameObject obj = Instantiate(blocks[randNum]);
 		obj.name = "block";
 	}
 }
