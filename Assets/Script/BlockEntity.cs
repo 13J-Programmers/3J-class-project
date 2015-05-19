@@ -14,12 +14,11 @@ public class BlockEntity : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown(0)) {
-			RandomBlock();
-			// Instantiate(blocks[1]);
+			CreateRandomBlock();
 		}
 	}
 
-	void RandomBlock () {
+	void CreateRandomBlock () {
 		System.Random rand = new System.Random();
 		int randNum = rand.Next(prefabNum);
 		Debug.Log(randNum);
