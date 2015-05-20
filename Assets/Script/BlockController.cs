@@ -16,4 +16,9 @@ public class BlockController : MonoBehaviour {
 	void OnBecameInvisible(){
     	Destroy(gameObject);
     }
+
+	public void Move(float x, float z) {
+		Vector3 v = new Vector3(x, 0, z);
+		transform.Translate(v, Space.World);
+	}
 }
