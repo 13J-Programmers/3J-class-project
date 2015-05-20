@@ -2,12 +2,29 @@
 3J class project
 ================
 
-TODO
+Todo
 ----
 
 - Leap Motionを使うこと
 - Unityを使うこと
 - なんらかのゲームを作ること
+
+Draft
+-----
+
+3Dテトリス
+- 3Dテトリス -- テトリスに奥行きを加えたゲーム
+- Leap Motionによる操作
+- 独自の工夫 (+α)
+	- ブロックを積むフィールドの回転 ?
+
+3Dテトリスに関する詳細な設計案
+- [3Dテトリス設計草案](https://github.com/13J-Programmers/3J_class_project/blob/master/overview.md)
+	
+
+
+to Committer
+------------
 
 Unity内で生成される以下のファイルは中間ファイルであり、管理する必要がないので、コミットしないことにします。
 	
@@ -35,8 +52,5 @@ Unity内で生成される以下のファイルは中間ファイルであり、
 	# Unity3D Generated File On Crash Reports
 	sysinfo.txt
 
+Unityが自動生成するmetaファイルは、必ずコミットすることにします。
 
-概要
------
-
-[3Dテトリス](https://github.com/13J-Programmers/3J_class_project/blob/master/overview.md)
