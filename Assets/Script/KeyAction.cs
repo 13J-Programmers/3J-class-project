@@ -44,8 +44,8 @@ public class KeyAction : MonoBehaviour {
 		}
 
 		// Move Block
-		x = 0.0f;
-		z = 0.0f;
+		float x = 0.0f;
+		float z = 0.0f;
 		if (Input.GetKey("up")) {
 			z = 0.1f;
 			control.MoveBlock(x,z);
