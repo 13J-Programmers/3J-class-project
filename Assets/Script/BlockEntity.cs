@@ -4,7 +4,6 @@ using System.Collections;
 public class BlockEntity : MonoBehaviour {
 	// block prefabs
 	const int prefabNum = 18;
-	int nameCount = 0;
 	public GameObject[] blocks = new GameObject[prefabNum];
 
 	// Use this for initialization
@@ -23,7 +22,6 @@ public class BlockEntity : MonoBehaviour {
 		System.Random rand = new System.Random();
 		int randNum = rand.Next(prefabNum);
 		Debug.Log(randNum);
-		GameObject obj = Instantiate(blocks[randNum]);
-		obj.name = "block";
+		Instantiate(blocks[randNum]);
 	}
 }
