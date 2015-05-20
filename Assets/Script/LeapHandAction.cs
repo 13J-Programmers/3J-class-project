@@ -4,7 +4,7 @@ using Leap;
 
 public class LeapHandAction : MonoBehaviour {
 	Controller controller = new Controller();
-	BlockController block_controller;
+	BlockController blockController;
 	private GameObject block;
 
 	// Use this for initialization
@@ -20,7 +20,7 @@ public class LeapHandAction : MonoBehaviour {
 
 		if (hand.Confidence < 0.2) return;
 
-		if (!block_controller) {
+		if (!blockController) {
 			ConnectWithBlock();
 		}
 
@@ -29,12 +29,12 @@ public class LeapHandAction : MonoBehaviour {
 		float position_scale = 1000;
 		float hand_x = handCenter.x / position_scale;
 		float hand_z = -handCenter.z / position_scale;
-		block_controller.Move(hand_x, hand_z);
+		blockController.MoveBlock(hand_x, hand_z);
 	}
 
 	void ConnectWithBlock() {
 		block = GameObject.Find("block");
 		if (!block) return;
-		block_controller = block.GetComponent<BlockController>();
+		blockController = block.GetComponent<BlockController>();
 	}
 }
