@@ -17,6 +17,8 @@ public class KeyAction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		x = 0.0f;
+		z = 0.0f;
 		if (!control) {
 			ConnectWithBlock();
 		}
@@ -47,19 +49,19 @@ public class KeyAction : MonoBehaviour {
 
 		//Move Block
 		if(Input.GetKey("up")){
-			z+=0.5f;
+			z+=0.1f;
 			control.MoveBlock(x,z);
 		}
 		else if(Input.GetKey("down")){
-			z-=0.5f;
+			z+=-0.1f;
 			control.MoveBlock(x,z);
 		}
 		else if(Input.GetKey("right")){
-			x+=0.5f;
+			x+=0.1f;
 			control.MoveBlock(x,z);
 		}
 		else if(Input.GetKey("left")){
-			x-=0.5f;
+			x+=-0.1f;
 			control.MoveBlock(x,z);
 		}
 	}
