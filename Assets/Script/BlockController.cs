@@ -14,8 +14,8 @@ public class BlockController : MonoBehaviour {
 
 	// if the gameObject is out of camera range, destroy it.
 	void OnBecameInvisible(){
-    	Destroy(gameObject);
-    }
+		Destroy(gameObject);
+	}
 
 	public void MoveBlock(float x, float z) {
 		Vector3 v = new Vector3(x, 0, z);
