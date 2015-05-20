@@ -30,6 +30,7 @@ public class BlockController : MonoBehaviour {
 
 	public void DropBlock() {
 		// TODO:
+		//  - change gameObject.name = "~(dropping)"
 		//  - add gravity to drop block
 		//  - call LeapHandAction#DisconectWithBlock()
 		//  - call BlockPoolController#ControlBlock()

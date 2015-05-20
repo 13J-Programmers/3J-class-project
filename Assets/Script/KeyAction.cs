@@ -6,19 +6,21 @@ public class KeyAction : MonoBehaviour {
 	GameObject target;
 	float x = 0.0f,z = 0.0f;
 	BlockController control;
+	public GameObject[] blocks = new GameObject[1];
 	
 	// Use this for initialization
 	void Start () {
-		GameObject[] blocks = new GameObject[1];
-		GameObject obj = Instantiate(blocks[1]);
-		obj.name = "block";
-		ConnectWithBlock();
-		BlockController control = obj.GetComponent<BlockController>();
-		
+		// GameObject obj = Instantiate(blocks[1]);
+		// obj.name = "block";
+		// ConnectWithBlock();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (!control) {
+			ConnectWithBlock();
+		}
+
 		//Pitch Block
 		if(Input.GetKeyDown("w")){
 			control.PitchBlock(1);
@@ -64,5 +66,6 @@ public class KeyAction : MonoBehaviour {
 
 	public void ConnectWithBlock() {
 		target = GameObject.Find("block");
+		control = target.GetComponent<BlockController>();
 	}
 }
