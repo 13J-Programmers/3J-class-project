@@ -47,7 +47,6 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("_DummyBlock") != 0) {
 			gameObject.name = "block(dropping)";
 			
-			Physics.gravity = new Vector3(0, -9.81f, 0);
 			rigidbody.useGravity = true;
 			rigidbody.AddForce(Vector3.down * 500);
 		}
@@ -64,6 +63,12 @@ public class BlockController : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter(Collision col){
+		// TODO:
+		//  - To judge if the block is landed on BlockPool  (or collide to Wall)
+		//  - If landed then execute following lines.
+
+		gameObject.name = "block(landed)";
+
 		// disconnect Key and block
         GameObject keyActionObj = GameObject.Find("KeyAction");
         KeyAction keyAction = keyActionObj.GetComponent<KeyAction>();
