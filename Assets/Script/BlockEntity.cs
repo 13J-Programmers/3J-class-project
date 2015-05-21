@@ -9,18 +9,18 @@ public class BlockEntity : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(0)) {
+		if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("c")) {
 			// In future, this method is called by other obj.
 			CreateRandomBlock();
 		}
 	}
 
-	void CreateRandomBlock () {
+	public void CreateRandomBlock () {
 		int randNum = Random.Range(0, prefabMaxNum);
 		GameObject createBlock = Instantiate(
 			blocks[randNum],       // instance object
@@ -29,5 +29,10 @@ public class BlockEntity : MonoBehaviour {
 		) as GameObject;
 
 		createBlock.name = "block";
+
+		// connect Key and block
+		GameObject target = GameObject.Find("KeyAction");
+        KeyAction keyAction = target.GetComponent<KeyAction>();
+        keyAction.ConnectWithBlock();
 	}
 }

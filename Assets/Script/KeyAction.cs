@@ -14,10 +14,13 @@ public class KeyAction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		/*
 		if (!control) {
 			// In future, this method is called by other obj.
 			ConnectWithBlock();
+			return;
 		}
+		*/
 
 		// Pitch Block
 		if (Input.GetKeyDown("w")) {
@@ -62,6 +65,11 @@ public class KeyAction : MonoBehaviour {
 			x = -0.1f;
 			control.MoveBlock(x,z);
 		}
+
+		// Drop Block
+		if (Input.GetKey("space")) {
+			control.DropBlock();
+		}
 	}
 
 	public void ConnectWithBlock() {
@@ -72,6 +80,7 @@ public class KeyAction : MonoBehaviour {
 
 	public void DisconnectWithBlock() {
 		target = GameObject.Find("_DummyBlock");
+		if (!target) return;
 		control = target.GetComponent<BlockController>();
 	}
 }
