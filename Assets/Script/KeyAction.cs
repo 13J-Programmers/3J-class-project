@@ -66,6 +66,7 @@ public class KeyAction : MonoBehaviour {
 
 	public void ConnectWithBlock() {
 		target = GameObject.Find("block");
+		if (!target) return;
 		control = target.GetComponent<BlockController>();
 	}
 
