@@ -68,6 +68,12 @@ public class BlockController : MonoBehaviour {
 		//  - If landed then execute following lines.
 
 		if (col.gameObject.tag == "BlockPool") {
+	
+			if (transform.position.y >= 1) {
+				print("GameOver");
+				return;
+			}
+
 			gameObject.name = "block(landed)";
 			gameObject.tag = "BlockPool";
 
