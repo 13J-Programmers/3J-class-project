@@ -62,26 +62,31 @@ public class BlockController : MonoBehaviour {
 		transform.Rotate(v, Space.World);
 	}
 
-	private void OnCollisionEnter(Collision col){
+	private void OnCollisionEnter(Collision col) {
 		// TODO:
 		//  - To judge if the block is landed on BlockPool  (or collide to Wall)
 		//  - If landed then execute following lines.
 
-		gameObject.name = "block(landed)";
+		if (col.gameObject.tag == "BlockPool") {
+			gameObject.name = "block(landed)";
+			gameObject.tag = "BlockPool";
 
-		// disconnect Key and block
-        GameObject keyActionObj = GameObject.Find("KeyAction");
-        KeyAction keyAction = keyActionObj.GetComponent<KeyAction>();
-        keyAction.DisconnectWithBlock();
-        
-        // create new block
-        if (!GameObject.Find("block")) {
-	        GameObject BlockEntityObj = GameObject.Find("BlockEntity");
-	        BlockEntity blockEntity = BlockEntityObj.GetComponent<BlockEntity>();
-	        blockEntity.CreateRandomBlock();
-	    }
+			// disconnect Key and block
+			GameObject keyActionObj = GameObject.Find("KeyAction");
+			KeyAction keyAction = keyActionObj.GetComponent<KeyAction>();
+			keyAction.DisconnectWithBlock();
 
-        // connect Key and block
-        keyAction.ConnectWithBlock();
-    }
+			// create new block
+			if (!GameObject.Find("block")) {
+				GameObject BlockEntityObj = GameObject.Find("BlockEntity");
+				BlockEntity blockEntity = BlockEntityObj.GetComponent<BlockEntity>();
+				blockEntity.CreateRandomBlock();
+			}
+
+			// connect Key and block
+			keyAction.ConnectWithBlock();
+		}
+
+		
+	}
 }
