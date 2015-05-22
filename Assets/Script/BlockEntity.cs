@@ -32,7 +32,7 @@ public class BlockEntity : MonoBehaviour {
 
 		// connect Key and block
 		GameObject target = GameObject.Find("KeyAction");
-        KeyAction keyAction = target.GetComponent<KeyAction>();
-        keyAction.ConnectWithBlock();
+		KeyAction keyAction = target.GetComponent<KeyAction>();
+		keyAction.ConnectWithBlock();
 	}
 }
