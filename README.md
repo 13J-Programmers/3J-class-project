@@ -18,6 +18,7 @@ Draft
 - 独自の工夫 (+α)
 	- ブロックを積むフィールドの回転 ?
 	- 中心に向かう重力の追加 ?
+	- エコの要素を追加したテトリス (Ecoris)
 
 3Dテトリスに関する詳細な設計案
 - [3Dテトリス設計草案](https://github.com/13J-Programmers/3J_class_project/blob/master/overview.md)
