@@ -67,7 +67,7 @@ public class KeyAction : MonoBehaviour {
 		}
 
 		// Drop Block
-		if (Input.GetKey("space")) {
+		if (Input.GetKeyDown("space")) {
 			control.DropBlock();
 		}
 	}
