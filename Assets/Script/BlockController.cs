@@ -56,12 +56,11 @@ public class BlockController : MonoBehaviour {
 	}
 
 	public Vector3 CorrectPosition() {
-		float correctX = (float)Math.Round(transform.position.x);
-		float correctY = transform.position.y;
-		float correctZ = (float)Math.Round(transform.position.z);
-		Vector3 correctedVector = new Vector3(correctX, correctY, correctZ);
-
-		return correctedVector;
+		Vector3 correctedPos;
+		correctedPos.x = (float)Math.Round(transform.position.x);
+		correctedPos.y = (float)transform.position.y;
+		correctedPos.z = (float)Math.Round(transform.position.z);
+		return correctedPos;
  	}
 
 
