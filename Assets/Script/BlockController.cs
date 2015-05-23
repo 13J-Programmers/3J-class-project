@@ -72,12 +72,7 @@ public class BlockController : MonoBehaviour {
 	}
 
 	private void OnCollisionEnter(Collision col) {
-		// TODO:
-		//  - To judge if the block is landed on BlockPool  (or collide to Wall)
-		//  - If landed then execute following lines.
-
 		if (col.gameObject.tag == "BlockPool") {
-	
 			if (transform.position.y >= 1) {
 				print("GameOver");
 				return;
