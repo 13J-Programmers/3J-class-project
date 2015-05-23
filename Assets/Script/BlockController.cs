@@ -56,9 +56,10 @@ public class BlockController : MonoBehaviour {
 	}
 
 	public Vector3 CorrectPosition() {
-		decimal correctX = Math.Round(transform.position.x,0,MidpointRounding.AwayFromZero);
-		decimal correctZ = Math.Round(transform.position.z,0,MidpointRounding.AwayFromZero);
-		Vector3 correctedVector = new Vector3(correctX, 0, correctZ);
+		float correctX = (float)Math.Round(transform.position.x);
+		float correctY = transform.position.y;
+		float correctZ = (float)Math.Round(transform.position.z);
+		Vector3 correctedVector = new Vector3(correctX, correctY, correctZ);
 
 		return correctedVector;
  	}
