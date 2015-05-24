@@ -45,23 +45,17 @@ public class BlockController : MonoBehaviour {
 		//  - call BlockPoolController#ControlBlock()
 		//  - 
 
-		if (gameObject.name.CompareTo("_DummyBlock") != 0) {
-			gameObject.name = "block(dropping)";
-			
-			rigidbody.useGravity = true;
-			rigidbody.AddForce(Vector3.down * 500);
-		}
+		if (gameObject.name.CompareTo("_DummyBlock") == 0) return;
 
+		gameObject.name = "block(dropping)";
+		
+		CorrectPosition();
+
+		rigidbody.useGravity = true;
+		rigidbody.AddForce(Vector3.down * 500);
+		
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
-
-	public Vector3 CorrectPosition() {
-		Vector3 correctedPos;
-		correctedPos.x = (float)Math.Round(transform.position.x);
-		correctedPos.y = (float)transform.position.y;
-		correctedPos.z = (float)Math.Round(transform.position.z);
-		return correctedPos;
- 	}
 
 
 	// private methods ------------------------------------------------
@@ -97,4 +91,13 @@ public class BlockController : MonoBehaviour {
 			keyAction.ConnectWithBlock();
 		}
 	}
+
+	private Vector3 CorrectPosition() {
+		Vector3 correctedPos;
+		correctedPos.x = (float)Math.Round(transform.position.x);
+		correctedPos.y = (float)transform.position.y;
+		correctedPos.z = (float)Math.Round(transform.position.z);
+		transform.position = correctedPos;
+		return correctedPos;
+ 	}
 }
