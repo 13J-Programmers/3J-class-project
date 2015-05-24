@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class BlockPoolController : MonoBehaviour {
-	const int POOL_X = 5;  // width
-	const int POOL_Y = 10; // height
-	const int POOL_Z = 5;  // depth
+	const int POOL_X = 6;      // width
+	const int POOL_Y = 10;     // height
+	const int POOL_Z = POOL_X; // depth
 	int[,,] blockPool = new int[POOL_X, POOL_Y, POOL_Z]; 
 
 	// Use this for initialization
