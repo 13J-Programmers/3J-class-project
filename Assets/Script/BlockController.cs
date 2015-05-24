@@ -76,16 +76,15 @@ public class BlockController : MonoBehaviour {
 
 	private void OnCollisionEnter(Collision col) {
 		if (col.gameObject.tag == "BlockPool") {
-			// if (transform.position.y >= 1) {
-			// 	print("GameOver");
-			// 	return;
-			// }
+			if (transform.position.y >= 1) {
+				print("GameOver");
+				return;
+			}
 
 			// connect Pool and block
 			GameObject blockPoolObj = GameObject.Find("BlockPool");
 			BlockPoolController blockPool = blockPoolObj.GetComponent<BlockPoolController>();
 			blockPool.ControlBlock(gameObject);
-			rigidbody.useGravity = false;
 
 			// disconnect Key and block
 			GameObject keyActionObj = GameObject.Find("KeyAction");
