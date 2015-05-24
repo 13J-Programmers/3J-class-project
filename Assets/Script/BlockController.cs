@@ -29,13 +29,22 @@ public class BlockController : MonoBehaviour {
 	}
 
 	public void MoveBlock(float x, float z) {
-		Vector3 v = new Vector3(x, 0, z);
-		transform.Translate(v, Space.World);
+		if (gameObject.name.CompareTo("block") != 0) return;
+		transform.Translate(new Vector3(x, 0, z), Space.World);
 	}
 
-	public void PitchBlock(int direct) { Rotate(direct * 90, 0, 0); }
-	public void YawBlock  (int direct) { Rotate(0, direct * 90, 0); }
-	public void RollBlock (int direct) { Rotate(0, 0, direct * 90); }
+	public void PitchBlock(int direct) {
+		if (gameObject.name.CompareTo("block") != 0) return;
+		Rotate(direct * 90, 0, 0);
+	}
+	public void YawBlock(int direct) {
+		if (gameObject.name.CompareTo("block") != 0) return;
+		Rotate(0, direct * 90, 0);
+	}
+	public void RollBlock(int direct) {
+		if (gameObject.name.CompareTo("block") != 0) return;
+		Rotate(0, 0, direct * 90);
+	}
 
 	public void DropBlock() {
 		// TODO:
@@ -45,7 +54,7 @@ public class BlockController : MonoBehaviour {
 		//  - call BlockPoolController#ControlBlock()
 		//  - 
 
-		if (gameObject.name.CompareTo("_DummyBlock") == 0) return;
+		if (gameObject.name.CompareTo("block") != 0) return;
 
 		gameObject.name = "block(dropping)";
 		
