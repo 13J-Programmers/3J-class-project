@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class BlockPoolController : MonoBehaviour {
-	const int POOL_X = 6;      // width
-	const int POOL_Y = 10;     // height
-	const int POOL_Z = POOL_X; // depth
-	int[,,] blockPool = new int[POOL_X, POOL_Y, POOL_Z]; 
+	// const int POOL_X = 6;      // width
+	// const int POOL_Y = 10;     // height
+	// const int POOL_Z = POOL_X; // depth
+	// int[,,] blockPool = new int[POOL_X, POOL_Y, POOL_Z]; 
 
 	// Use this for initialization
 	void Start () {
@@ -17,14 +17,16 @@ public class BlockPoolController : MonoBehaviour {
 	
 	}
 
-	public void ControlBlock() {
-
+	public void ControlBlock(GameObject block) {
+		block.name = "block(land)";
+		block.tag = "BlockPool";
+		MergeBlock(block);
 	}
 
 	// private methods ------------------------------
 
-	private void MergeBlock() {
-
+	private void MergeBlock(GameObject block) {
+		block.transform.parent = gameObject.transform;
 	}
 
 	private void RemoveCompletedRow() {
