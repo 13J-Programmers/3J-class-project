@@ -5,6 +5,7 @@ using System.Collections;
 public class BlockController : MonoBehaviour {
 	public int blockNumber { get; set; }
 	Rigidbody rigidbody;
+	bool isCollideWall = false;
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +21,15 @@ public class BlockController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		// fix position
+		Vector3 pos = transform.position;
+		Vector3 min = new Vector3(-2, 0, -3);
+		Vector3 max = new Vector3(3, 0, 2);
+		pos.x = Mathf.Clamp (pos.x, min.x, max.x);
+		pos.z = Mathf.Clamp (pos.z, min.z, max.z);
+		transform.position = pos;
+
+		// TODO: if part of the block collide wall, fix position.
 	}
 
 	// if the gameObject is out of camera range, destroy it.
@@ -37,10 +46,12 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("block") != 0) return;
 		Rotate(direct * 90, 0, 0);
 	}
+
 	public void YawBlock(int direct) {
 		if (gameObject.name.CompareTo("block") != 0) return;
 		Rotate(0, direct * 90, 0);
 	}
+
 	public void RollBlock(int direct) {
 		if (gameObject.name.CompareTo("block") != 0) return;
 		Rotate(0, 0, direct * 90);
@@ -69,11 +80,13 @@ public class BlockController : MonoBehaviour {
 
 	// private methods ------------------------------------------------
 
+	// rotate myself
 	private void Rotate(float x, float y, float z) {
 		Vector3 v = new Vector3(x, y, z);
 		transform.Rotate(v, Space.World);
 	}
 
+	// called when this collider/rigidbody has begun touching another rigidbody/collider.
 	private void OnCollisionEnter(Collision col) {
 		if (col.gameObject.tag == "BlockPool") {
 			if (transform.position.y >= 1) {
@@ -103,6 +116,21 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 
+	// called once per frame for every collider/rigidbody that is touching rigidbody/collider.
+	private void OnCollisionStay(Collision col) {
+		if (col.gameObject.tag == "Wall") {
+			isCollideWall = true;
+		}
+	}
+
+	// called when this collider/rigidbody has stopped touching another rigidbody/collider.
+	private void OnCollisionExit(Collision col) {
+		if (col.gameObject.tag == "Wall") {
+			isCollideWall = false;
+		}
+	}
+
+	// return myself correct position
 	private Vector3 CorrectPosition() {
 		Vector3 correctedPos;
 		correctedPos.x = (float)Math.Round(transform.position.x);
