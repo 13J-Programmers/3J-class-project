@@ -81,14 +81,6 @@ Classes
 	- [func] GameFinish()
 		- 時間によるゲーム終了に伴う処理
 		- elapsedTimeが一定時間になると呼ばれる
-	- [func] CreateNextBlock()
-		- 次のブロックを生成するための処理
-		- -> {LeapHand, Key}Action#DisconectWithBlock()
-		- -> BlockEntity#CreateRandomBlock()
-		- -> {LeapHand, Key}Action#ConectWithBlock()
-	- [func] CheckPoolBlock()
-		- ブロックプールの、行の削除とブロックの溢れを確認
-		- -> BlockPoolController#ControlBlockPool()
 
 - __GameInfoViewer__
 	- \# ゲームの画面レイアウトの管理
@@ -158,7 +150,8 @@ Classes
 	- [func] DropBlock()
 		- ブロックを落とす処理
 		- 重力の追加
-		- -> GameManager#CheckPoolBlock()
+		- -> {LeapHand, Key}Action#DisconectWithBlock()
+		- -> BlockPoolController#ControlBlockPool()
 
 - __BlockPoolController__
 	- \# BlockPool（ブロックの溜まり場）の制御
@@ -170,7 +163,7 @@ Classes
 		- -> MergeBlock()
 		- -> RemoveCompletedRow()
 		- -> PoolIsFull()
-		- -> GameManager#CreateNextBlock()
+		- -> NextPhase()
 	- [func] LandBlock(GameObject *blockInfo*) -> bool
 		- 落ちてきたブロックが着地した場合は、trueを返す
 	- [func] MergeBlock(GameObject *blockInfo*)
@@ -181,6 +174,10 @@ Classes
 	- [func] PoolIsFull() -> bool
 		- プールからブロックが溢れているか確認
 		- 溢れている場合は -> GameManager#GameOver()
+	- [func] NextPhase()
+		- 次のブロックを生成するための処理
+		- -> BlockEntity#CreateRandomBlock()
+		- -> {LeapHand, Key}Action#ConectWithBlock()
 
 - __ExpectDropPosViewer__
 	- \# ブロックの予想落下位置の表示
