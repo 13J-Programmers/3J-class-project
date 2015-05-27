@@ -22,6 +22,7 @@ Draft
 
 3Dテトリスに関する詳細な設計案
 - [3Dテトリス設計草案](https://github.com/13J-Programmers/3J_class_project/blob/master/overview.md)
+- [3Dテトリス詳細設計 (latest version)](https://github.com/13J-Programmers/3J_class_project/blob/master/design.md)
 	
 
 to Committer
