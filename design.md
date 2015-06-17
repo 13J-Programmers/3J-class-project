@@ -64,6 +64,32 @@ Todo
 Classes
 -------
 
+In the diagram that follows, the name of Camel case represent Class name.
+Snake case represent specific object or method.
+
+~~~
+
+                usr_action
+    GameManager<-----------GameInfoViewer
+        |      ----------->
+        |       show_score
+        |
+        |start_game
+        |                     KeyAction       rotate
+        |                     LeapHandAction----------->CameraController
+        |                          |
+        |                   control|          position
+        |                          |      +------------>ExpectDropPosViewer
+        |                          ∨      |
+        |            +-------->BlockController---------+
+        |   new_block|                                 |droping_block
+        |            |                                 ∨
+        +------>BlockEntity<-------------------BlockPoolController
+                                   create
+
+-+|<∨∧>
+~~~
+
 - __GameManager__
 	- \# ゲーム全体の管理
 	- [member] handedness : right or left
