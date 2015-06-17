@@ -69,18 +69,19 @@ Snake case represent specific object or method.
 
 ~~~
 
-                usr_action
-    GameManager<-----------GameInfoViewer
-        |      ----------->
-        |       show_score
+                show_score
+    GameManager----------->GameInfoViewer
+        |      <-----------
+        |       usr_action
         |
         |start_game
-        |                     KeyAction       rotate
-        |                     LeapHandAction----------->CameraController
-        |                          |
-        |                   control|          position
-        |                          |      +------------>ExpectDropPosViewer
-        |                          ∨      |
+        |
+        |                  KeyAction        rotate
+        |                  LeapHandAction----------->CameraController
+        |                       |
+        |                       |control    position
+        |                       |         +------------>ExpectDropPosViewer
+        |                       ∨         |
         |            +-------->BlockController---------+
         |   new_block|                                 |droping_block
         |            |                                 ∨
