@@ -8,12 +8,12 @@ public class LeapHandAction : MonoBehaviour {
 	private GameObject block;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		Frame frame = controller.Frame();
 		HandList hands = frame.Hands;
 		Hand hand = hands[0];

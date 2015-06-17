@@ -8,12 +8,12 @@ public class BlockPoolController : MonoBehaviour {
 	// int[,,] blockPool = new int[POOL_X, POOL_Y, POOL_Z]; 
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 	
 	}
 

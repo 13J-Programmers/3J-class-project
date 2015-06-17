@@ -8,12 +8,12 @@ public class BlockEntity : MonoBehaviour {
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("c")) {
 			// In future, this method is called by other obj.
 			CreateRandomBlock();

@@ -8,12 +8,12 @@ public class KeyAction : MonoBehaviour {
 	public GameObject[] blocks = new GameObject[1];
 	
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		/*
 		if (!control) {
 			// In future, this method is called by other obj.

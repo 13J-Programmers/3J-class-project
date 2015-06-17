@@ -8,7 +8,7 @@ public class BlockController : MonoBehaviour {
 	bool isCollideWall = false;
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		rigidbody = GetComponent<Rigidbody>();
 
 		// can vary only y position
@@ -20,7 +20,7 @@ public class BlockController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		// fix position
 		Vector3 pos = transform.position;
 		Vector3 min = new Vector3(-2, 0, -3);
