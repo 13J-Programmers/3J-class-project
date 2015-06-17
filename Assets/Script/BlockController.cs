@@ -38,22 +38,22 @@ public class BlockController : MonoBehaviour {
 	}
 
 	public void MoveBlock(float x, float z) {
-		if (gameObject.name.CompareTo("block") != 0) return;
+		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		transform.Translate(new Vector3(x, 0, z), Space.World);
 	}
 
 	public void PitchBlock(int direct) {
-		if (gameObject.name.CompareTo("block") != 0) return;
+		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Rotate(direct * 90, 0, 0);
 	}
 
 	public void YawBlock(int direct) {
-		if (gameObject.name.CompareTo("block") != 0) return;
+		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Rotate(0, direct * 90, 0);
 	}
 
 	public void RollBlock(int direct) {
-		if (gameObject.name.CompareTo("block") != 0) return;
+		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Rotate(0, 0, direct * 90);
 	}
 
@@ -65,7 +65,7 @@ public class BlockController : MonoBehaviour {
 		//  - call BlockPoolController#ControlBlock()
 		//  - 
 
-		if (gameObject.name.CompareTo("block") != 0) return;
+		if (gameObject.name.CompareTo("block(new)") != 0) return;
 
 		gameObject.name = "block(dropping)";
 		
@@ -105,7 +105,7 @@ public class BlockController : MonoBehaviour {
 			keyAction.DisconnectWithBlock();
 
 			// create new block
-			if (!GameObject.Find("block")) {
+			if (!GameObject.Find("block(new)")) {
 				GameObject BlockEntityObj = GameObject.Find("BlockEntity");
 				BlockEntity blockEntity = BlockEntityObj.GetComponent<BlockEntity>();
 				blockEntity.CreateRandomBlock();

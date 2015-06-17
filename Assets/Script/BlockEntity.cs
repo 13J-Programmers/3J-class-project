@@ -22,13 +22,14 @@ public class BlockEntity : MonoBehaviour {
 
 	public void CreateRandomBlock () {
 		int randNum = Random.Range(0, prefabMaxNum);
-		GameObject createBlock = Instantiate(
+		// create new block
+		GameObject newBlock = Instantiate(
 			blocks[randNum],       // instance object
 			new Vector3(0, 5, 0),  // coordinate
 			blocks[randNum].transform.rotation  // rotation
 		) as GameObject;
 
-		createBlock.name = "block";
+		newBlock.name = "block(new)";
 
 		// connect Key and block
 		GameObject target = GameObject.Find("KeyAction");
