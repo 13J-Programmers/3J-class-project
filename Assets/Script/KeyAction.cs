@@ -5,6 +5,7 @@ public class KeyAction : MonoBehaviour {
 	// A container for control target
 	GameObject target;
 	BlockController control;
+	CameraController viewChenge;
 	public GameObject[] blocks = new GameObject[1];
 	
 	// Use this for initialization
@@ -69,6 +70,14 @@ public class KeyAction : MonoBehaviour {
 		// Drop Block
 		if (Input.GetKeyDown("space")) {
 			control.DropBlock();
+		}
+
+		// Rotate Camera
+		if (Input.GetKey("return")){
+			viewChenge.RotateCam(1);
+		}
+		else if (Input.GetKey("delete")){
+			viewChenge.RotateCam(-1);
 		}
 	}
 

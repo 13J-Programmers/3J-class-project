@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ViewPointChange : MonoBehaviour {
 	public GameObject target;		// staring target
-	
+	public double radians;
+
 	// Use this for initialization
 	void Start() {
 		target = GameObject.Find("BlockPool/Plane");
@@ -20,6 +21,9 @@ public class ViewPointChange : MonoBehaviour {
 
 		if (Input.GetKey("delete")) // rotate clockwise
 		transform.RotateAround( target.transform.position, Vector3.up, -45 * Time.deltaTime );
+
+		radians = Mathf.Atan2(transform.position.y, transform.position.x);
+		Debug.Log(radians);
 	}
 
 }
