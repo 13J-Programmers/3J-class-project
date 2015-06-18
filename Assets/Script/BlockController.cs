@@ -5,7 +5,10 @@ using System.Collections;
 public class BlockController : MonoBehaviour {
 	public int blockNumber { get; set; }
 	Rigidbody rigidbody;
-	bool isCollideWall = false;
+	bool isCollideWall = false; // TODO: Remove
+
+	// coordinate for check if collide the wall or not
+	Vector3 blockMinCoord, blockMaxCoord;
 
 	// Use this for initialization
 	void Start() {
@@ -23,13 +26,14 @@ public class BlockController : MonoBehaviour {
 	void Update() {
 		// fix position
 		Vector3 pos = transform.position;
-		Vector3 min = new Vector3(-2, 0, -3);
-		Vector3 max = new Vector3(3, 0, 2);
-		pos.x = Mathf.Clamp (pos.x, min.x, max.x);
-		pos.z = Mathf.Clamp (pos.z, min.z, max.z);
+		Vector3 minRange = new Vector3(-2, 0, -3);
+		Vector3 maxRange = new Vector3(3, 0, 2);
+		pos.x = Mathf.Clamp (pos.x, minRange.x, maxRange.x);
+		pos.z = Mathf.Clamp (pos.z, minRange.z, maxRange.z);
 		transform.position = pos;
 
 		// TODO: if part of the block collide wall, fix position.
+		SetMinMaxCoord();
 	}
 
 	// if the gameObject is out of camera range, destroy it.
@@ -118,6 +122,7 @@ public class BlockController : MonoBehaviour {
 
 	// called once per frame for every collider/rigidbody that is touching rigidbody/collider.
 	private void OnCollisionStay(Collision col) {
+		// TODO: Remove
 		if (col.gameObject.tag == "Wall") {
 			isCollideWall = true;
 		}
@@ -125,6 +130,7 @@ public class BlockController : MonoBehaviour {
 
 	// called when this collider/rigidbody has stopped touching another rigidbody/collider.
 	private void OnCollisionExit(Collision col) {
+		// TODO: Remove
 		if (col.gameObject.tag == "Wall") {
 			isCollideWall = false;
 		}
@@ -138,5 +144,46 @@ public class BlockController : MonoBehaviour {
 		correctedPos.z = (float)Math.Round(transform.position.z);
 		transform.position = correctedPos;
 		return correctedPos;
- 	}
+	}
+
+	// set the block min-max x,y,z coordinate
+	private void SetMinMaxCoord() {
+		// init block min-max coordinate
+		blockMinCoord = blockMaxCoord = transform.position;
+
+		foreach (Transform child in transform) {
+			// set min-max
+			float childX = child.transform.position.x;
+			float childY = child.transform.position.y;
+			float childZ = child.transform.position.z;
+			if (blockMinCoord.x > childX) blockMinCoord.x = childX;
+			if (blockMinCoord.y > childY) blockMinCoord.y = childY;
+			if (blockMinCoord.z > childZ) blockMinCoord.z = childZ;
+			if (blockMaxCoord.x < childX) blockMaxCoord.x = childX;
+			if (blockMaxCoord.y < childY) blockMaxCoord.y = childY;
+			if (blockMaxCoord.z < childZ) blockMaxCoord.z = childZ;
+		}
+		
+		// print("---");
+		// print("block min pos : " + blockMinCoord);
+		// print("block max pos : " + blockMaxCoord);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
