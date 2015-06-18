@@ -3,10 +3,7 @@ using System;
 using System.Collections;
 
 public class BlockController : MonoBehaviour {
-	public int blockNumber { get; set; }
 	Rigidbody rigidbody;
-	bool isCollideWall = false; // TODO: Remove
-
 	// coordinate for check if collide the wall or not
 	Vector3 blockMinCoord, blockMaxCoord;
 
@@ -121,20 +118,10 @@ public class BlockController : MonoBehaviour {
 	}
 
 	// called once per frame for every collider/rigidbody that is touching rigidbody/collider.
-	private void OnCollisionStay(Collision col) {
-		// TODO: Remove
-		if (col.gameObject.tag == "Wall") {
-			isCollideWall = true;
-		}
-	}
+	private void OnCollisionStay(Collision col) {}
 
 	// called when this collider/rigidbody has stopped touching another rigidbody/collider.
-	private void OnCollisionExit(Collision col) {
-		// TODO: Remove
-		if (col.gameObject.tag == "Wall") {
-			isCollideWall = false;
-		}
-	}
+	private void OnCollisionExit(Collision col) {}
 
 	// return myself correct position
 	private Vector3 CorrectPosition() {
