@@ -37,6 +37,7 @@ public class BlockController : MonoBehaviour {
 
 		// TODO: if part of the block collide wall, fix position.
 		SetMinMaxCoord();
+		// blockPool.GetWallPosition();
 	}
 
 	// if the gameObject is out of camera range, destroy it.
