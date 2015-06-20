@@ -5,11 +5,14 @@ public class KeyAction : MonoBehaviour {
 	// A container for control target
 	GameObject target;
 	BlockController control;
+	GameObject camera = GameObject.FindWithTag("MainCamera");
+	CameraController cameraController;
 	public GameObject[] blocks = new GameObject[1];
 	
 	// Use this for initialization
 	void Start() {
-		
+		// GameObject camera = GameObject.FindWithTag("MainCamera");
+		cameraController = camera.GetComponent<CameraController>();
 	}
 	
 	// Update is called once per frame
@@ -66,9 +69,17 @@ public class KeyAction : MonoBehaviour {
 			control.MoveBlock(x,z);
 		}
 
-		// Drop Block
+		// Drop Block 
 		if (Input.GetKeyDown("space")) {
 			control.DropBlock();
+		}
+
+		// Rotate Camera 
+		if (Input.GetKey("return")) {
+			cameraController.RotateCam(1);
+		}
+		else if (Input.GetKey("delete")) {
+			cameraController.RotateCam(-1);
 		}
 	}
 
