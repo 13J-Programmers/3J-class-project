@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BlockController : MonoBehaviour {
 	Rigidbody rigidbody;
@@ -48,6 +49,26 @@ public class BlockController : MonoBehaviour {
 	// move the block
 	public void MoveBlock(float x, float z) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
+
+		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
+		float halfOfWidth = transform.localScale.x / 2;
+		// print("x-min : " + wallPos["x-min"]);
+		// print("x-max : " + wallPos["x-max"]);
+		// print("z-min : " + wallPos["z-min"]);
+		// print("z-max : " + wallPos["z-max"]);
+		// print("x : " + blockMinCoord.x);
+		// print("z : " + blockMinCoord.z);
+		if (wallPos["x-min"] > blockMinCoord.x - halfOfWidth) {
+			x = (x < 0) ? 0 : x;
+		} else if (wallPos["x-max"] < blockMaxCoord.x + halfOfWidth) {
+			x = (x > 0) ? 0 : x;
+		}
+		if (wallPos["z-min"] > blockMinCoord.z - halfOfWidth) {
+			z = (z < 0) ? 0 : z;
+		} else if (wallPos["z-max"] < blockMaxCoord.z + halfOfWidth) {
+			z = (z > 0) ? 0 : z;
+		}
+		
 		transform.Translate(new Vector3(x, 0, z), Space.World);
 	}
 
