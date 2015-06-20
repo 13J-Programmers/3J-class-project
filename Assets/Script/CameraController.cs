@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
-	public GameObject target;		// staring target
+	GameObject target;		// staring target
 	public double radians;
 	public double theta;
 
 	// Use this for initialization
 	void Start() {
-		target = GameObject.Find("BlockPool/Plane");
+		target = GameObject.Find("BlockPool/Ground");
 	}
 	
 	// Update is called once per frame

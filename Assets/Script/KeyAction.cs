@@ -5,14 +5,12 @@ public class KeyAction : MonoBehaviour {
 	// A container for control target
 	GameObject target;
 	BlockController control;
-	GameObject camera = GameObject.FindWithTag("MainCamera");
 	CameraController cameraController;
 	public GameObject[] blocks = new GameObject[1];
 	
 	// Use this for initialization
 	void Start() {
-		// GameObject camera = GameObject.FindWithTag("MainCamera");
-		cameraController = camera.GetComponent<CameraController>();
+		cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
 	}
 	
 	// Update is called once per frame
