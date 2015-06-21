@@ -126,11 +126,16 @@ public class BlockController : MonoBehaviour {
 			blockPool.ControlBlock(gameObject);
 			keyAction.DisconnectWithBlock();
 
+			// TODO: following scripts will expect to be called from BlockPool
+
 			// create new block to do next phase
+			//
+			//               create
+			//   BlockPool ----------> BlockEntity
+			//
 			if (!GameObject.Find("block(new)")) {
 				blockEntity.CreateRandomBlock();
 			}
-
 			//               binding
 			//   keyAction ----------> BlockController
 			//
