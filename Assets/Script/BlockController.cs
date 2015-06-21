@@ -28,17 +28,10 @@ public class BlockController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		// fix position
-		Vector3 pos = transform.position;
-		Vector3 minRange = new Vector3(-2, 0, -3);
-		Vector3 maxRange = new Vector3(3, 0, 2);
-		pos.x = Mathf.Clamp (pos.x, minRange.x, maxRange.x);
-		pos.z = Mathf.Clamp (pos.z, minRange.z, maxRange.z);
-		transform.position = pos;
-
-		// TODO: if part of the block collide wall, fix position.
+		// set the block min-max coordinate
 		SetMinMaxCoord();
-		// blockPool.GetWallPosition();
+		// fix position
+		FixPosition();
 	}
 
 	// if the gameObject is out of camera range, destroy it.
@@ -177,6 +170,30 @@ public class BlockController : MonoBehaviour {
 			if (blockMaxCoord.x < childX) blockMaxCoord.x = childX;
 			if (blockMaxCoord.y < childY) blockMaxCoord.y = childY;
 			if (blockMaxCoord.z < childZ) blockMaxCoord.z = childZ;
+		}
+	}
+
+	// fix position
+	private void FixPosition() {
+		// set movable range
+		Vector3 pos = transform.position;
+		Vector3 minRange = new Vector3(-2, 0, -3);
+		Vector3 maxRange = new Vector3(3, 0, 2);
+		pos.x = Mathf.Clamp (pos.x, minRange.x, maxRange.x);
+		pos.z = Mathf.Clamp (pos.z, minRange.z, maxRange.z);
+		transform.position = pos;
+
+		// after rotate, if part of the block into wall, fix position
+		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
+		if (wallPos["x-min"] > blockMinCoord.x) {
+			transform.Translate(Vector3.right, Space.World);
+		} else if (wallPos["x-max"] < blockMaxCoord.x) {
+			transform.Translate(Vector3.left, Space.World);
+		}
+		if (wallPos["z-min"] > blockMinCoord.z) {
+			transform.Translate(Vector3.forward, Space.World);
+		} else if (wallPos["z-max"] < blockMaxCoord.z) {
+			transform.Translate(Vector3.back, Space.World);
 		}
 	}
 }
