@@ -45,12 +45,10 @@ public class BlockController : MonoBehaviour {
 
 		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
 		float halfOfWidth = transform.localScale.x / 2;
-		// print("x-min : " + wallPos["x-min"]);
-		// print("x-max : " + wallPos["x-max"]);
-		// print("z-min : " + wallPos["z-min"]);
-		// print("z-max : " + wallPos["z-max"]);
-		// print("x : " + blockMinCoord.x);
-		// print("z : " + blockMinCoord.z);
+		// print("Wall x min-max : " + wallPos["x-min"] + "..." + wallPos["x-max"]);
+		// print("Wall z min-max : " + wallPos["z-min"] + "..." + wallPos["z-max"]);
+		// print("Block x min-max : " + blockMinCoord.x + "..." + blockMaxCoord.x);
+		// print("Block z min-max : " + blockMinCoord.z + "..." + blockMaxCoord.z);
 		if (wallPos["x-min"] > blockMinCoord.x - halfOfWidth) {
 			x = (x < 0) ? 0 : x;
 		} else if (wallPos["x-max"] < blockMaxCoord.x + halfOfWidth) {
@@ -178,17 +176,8 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 
-	// fix position
+	// after rotate, if part of the block into wall, fix position
 	private void FixPosition() {
-		// set movable range
-		Vector3 pos = transform.position;
-		Vector3 minRange = new Vector3(-2, 0, -3);
-		Vector3 maxRange = new Vector3(3, 0, 2);
-		pos.x = Mathf.Clamp (pos.x, minRange.x, maxRange.x);
-		pos.z = Mathf.Clamp (pos.z, minRange.z, maxRange.z);
-		transform.position = pos;
-
-		// after rotate, if part of the block into wall, fix position
 		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
 		if (wallPos["x-min"] > blockMinCoord.x) {
 			transform.Translate(Vector3.right, Space.World);
