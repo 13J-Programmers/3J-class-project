@@ -23,7 +23,9 @@ public class BlockPoolController : MonoBehaviour {
 		block.name = "block(land)";
 		block.tag = "BlockPool";
 		MergeBlock(block);
-		CollectCubePos();
+
+		SearchCubePos();
+		print(RemoveCompletedRow());
 	}
 
 	// return the 4 walls position
@@ -51,7 +53,7 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	// collect each position of block's cubes
-	private void CollectCubePos() {
+	private void SearchCubePos() {
 		Dictionary<string, float> wallPos = GetWallPosition();
 
 		Vector3 offset = new Vector3(0, 0, 0);
@@ -62,7 +64,6 @@ public class BlockPoolController : MonoBehaviour {
 		foreach (Transform block in transform) {
 			if (block.name.CompareTo("block(land)") != 0) continue;
 
-			print("--------");
 			SetCubePos(block, offset);
 
 			foreach (Transform cube in block) {
@@ -76,12 +77,37 @@ public class BlockPoolController : MonoBehaviour {
 		int x = (int)tf.transform.position.x + (int)offset.x;
 		int y = (int)tf.transform.position.y + (int)offset.y;
 		int z = (int)tf.transform.position.z + (int)offset.z;
-		print(new Vector3(x, y, z));
+		// print(new Vector3(x, y, z));
 		blockPool[x, y, z] = tf.gameObject;
 	}
 
-	private void RemoveCompletedRow() {
+	private bool RemoveCompletedRow() {
+		bool isRemoved = false;
 
+		// check completed row
+
+		// FIXME: 
+		//   - blockPool elements is not correct
+		//   - ControlBlock() is not called when the block is landed
+		for (int z = 0; z < POOL_Z; z++) {
+			for (int y = 0; y < POOL_X; y++) {
+				bool isCompleted = true;
+				for (int x = 0; x < POOL_X; x++) {
+					if (blockPool[x, y, z] == null) isCompleted = false;
+				}
+
+				if (!isCompleted) continue;
+
+				// remove competed row
+				isRemoved = true;
+				for (int x = 0; x < POOL_X; x++) {
+					print("Destroy : " + blockPool[x, y, z]);
+					Destroy(blockPool[x, y, z]);
+				}
+			}
+		}
+
+		return isRemoved;
 	}
 
 	private void FullPool() {
@@ -92,3 +118,13 @@ public class BlockPoolController : MonoBehaviour {
 
 	}
 }
+
+
+
+
+
+
+
+
+
+
