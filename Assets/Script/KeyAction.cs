@@ -7,6 +7,7 @@ public class KeyAction : MonoBehaviour {
 	BlockController control;
 	CameraController cameraController;
 	public GameObject[] blocks = new GameObject[1];
+	double cameraDirection;
 	
 	// Use this for initialization
 	void Start() {
@@ -47,6 +48,19 @@ public class KeyAction : MonoBehaviour {
 			control.RollBlock(-1);
 		}
 
+		// Rotate Camera 
+		if (Input.GetKey("return")) {
+			cameraController.RotateCam(1);
+			cameraDirection = cameraController.WatchingDirection();
+		}
+		else if (Input.GetKey("delete")) {
+			cameraController.RotateCam(-1);
+			cameraDirection = cameraController.WatchingDirection();
+		}
+
+		// switch Key bind
+		// some method
+
 		// Move Block
 		float x = 0.0f;
 		float z = 0.0f;
@@ -70,14 +84,6 @@ public class KeyAction : MonoBehaviour {
 		// Drop Block 
 		if (Input.GetKeyDown("space")) {
 			control.DropBlock();
-		}
-
-		// Rotate Camera 
-		if (Input.GetKey("return")) {
-			cameraController.RotateCam(1);
-		}
-		else if (Input.GetKey("delete")) {
-			cameraController.RotateCam(-1);
 		}
 	}
 

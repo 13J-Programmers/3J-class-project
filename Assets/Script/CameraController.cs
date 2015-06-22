@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour {
 	}
 
 	public double WatchingDirection() {
-		radians = Mathf.Atan2(transform.position.y, transform.position.x);
+		radians = Mathf.Atan2(transform.position.z, transform.position.x);
 		theta = radians * Mathf.Rad2Deg;
 		Debug.Log(theta);
 		return theta;
