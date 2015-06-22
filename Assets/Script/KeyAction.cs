@@ -7,7 +7,7 @@ public class KeyAction : MonoBehaviour {
 	BlockController control;
 	CameraController cameraController;
 	public GameObject[] blocks = new GameObject[1];
-	double cameraDirection;
+	Vector3 forward, back, right, left;
 	
 	// Use this for initialization
 	void Start() {
@@ -48,37 +48,57 @@ public class KeyAction : MonoBehaviour {
 			control.RollBlock(-1);
 		}
 
+		// Move speed
+		float s = 0.1f;
+
 		// Rotate Camera 
 		if (Input.GetKey("return")) {
 			cameraController.RotateCam(1);
-			cameraDirection = cameraController.WatchingDirection();
 		}
 		else if (Input.GetKey("delete")) {
 			cameraController.RotateCam(-1);
-			cameraDirection = cameraController.WatchingDirection();
 		}
+
+		forward = Camera.main.transform.TransformDirection(Vector3.forward) * s;
+		back = Camera.main.transform.TransformDirection(Vector3.back) * s;
+		right = Camera.main.transform.TransformDirection(Vector3.right) * s;
+		left = Camera.main.transform.TransformDirection(Vector3.left) * s;
 
 		// switch Key bind
 		// some method
 
 		// Move Block
-		float x = 0.0f;
-		float z = 0.0f;
+		// float x = 0.0f;
+		// float z = 0.0f;
+		// if (Input.GetKey("up")) {
+		// 	z = 0.1f;
+		// 	control.MoveBlock(x,z);
+		// }
+		// else if (Input.GetKey("down")) {
+		// 	z = -0.1f;
+		// 	control.MoveBlock(x,z);
+		// }
+		// else if (Input.GetKey("right")) {
+		// 	x = 0.1f;
+		// 	control.MoveBlock(x,z);
+		// }
+		// else if (Input.GetKey("left")) {
+		// 	x = -0.1f;
+		// 	control.MoveBlock(x,z);
+		// }
+
+		// Move Block
 		if (Input.GetKey("up")) {
-			z = 0.1f;
-			control.MoveBlock(x,z);
+			control.MoveBlock(forward);
 		}
 		else if (Input.GetKey("down")) {
-			z = -0.1f;
-			control.MoveBlock(x,z);
+			control.MoveBlock(back);
 		}
 		else if (Input.GetKey("right")) {
-			x = 0.1f;
-			control.MoveBlock(x,z);
+			control.MoveBlock(right);
 		}
 		else if (Input.GetKey("left")) {
-			x = -0.1f;
-			control.MoveBlock(x,z);
+			control.MoveBlock(left);
 		}
 
 		// Drop Block 
