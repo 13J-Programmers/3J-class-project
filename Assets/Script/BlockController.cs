@@ -65,7 +65,7 @@ public class BlockController : MonoBehaviour {
 
 	// MoveBlock arguments can be Vector3
 	public void MoveBlock(Vector3 vector) {
-		MoveBlock(vector.x, vector.y);
+		MoveBlock(vector.x, vector.z);
 	}
 
 	// pitch the block
