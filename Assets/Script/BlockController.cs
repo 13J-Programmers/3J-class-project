@@ -63,6 +63,11 @@ public class BlockController : MonoBehaviour {
 		transform.Translate(new Vector3(x, 0, z), Space.World);
 	}
 
+	// MoveBlock arguments can be Vector3
+	public void MoveBlock(Vector3 vector) {
+		MoveBlock(vector.x, vector.y);
+	}
+
 	// pitch the block
 	public void PitchBlock(int direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
