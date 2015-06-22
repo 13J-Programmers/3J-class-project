@@ -7,7 +7,6 @@ public class KeyAction : MonoBehaviour {
 	BlockController control;
 	CameraController cameraController;
 	public GameObject[] blocks = new GameObject[1];
-	Vector3 forward, back, right, left;
 	
 	// Use this for initialization
 	void Start() {
@@ -16,14 +15,6 @@ public class KeyAction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		/*
-		if (!control) {
-			// In future, this method is called by other obj.
-			ConnectWithBlock();
-			return;
-		}
-		*/
-
 		// Pitch Block
 		if (Input.GetKeyDown("w")) {
 			control.PitchBlock(1);
@@ -48,9 +39,6 @@ public class KeyAction : MonoBehaviour {
 			control.RollBlock(-1);
 		}
 
-		// Move speed
-		float s = 0.1f;
-
 		// Rotate Camera 
 		if (Input.GetKey("return")) {
 			cameraController.RotateCam(1);
@@ -59,45 +47,24 @@ public class KeyAction : MonoBehaviour {
 			cameraController.RotateCam(-1);
 		}
 
-		forward = Camera.main.transform.TransformDirection(Vector3.forward) * s;
-		back = Camera.main.transform.TransformDirection(Vector3.back) * s;
-		right = Camera.main.transform.TransformDirection(Vector3.right) * s;
-		left = Camera.main.transform.TransformDirection(Vector3.left) * s;
-
-		// switch Key bind
-		// some method
-
-		// Move Block
-		// float x = 0.0f;
-		// float z = 0.0f;
-		// if (Input.GetKey("up")) {
-		// 	z = 0.1f;
-		// 	control.MoveBlock(x,z);
-		// }
-		// else if (Input.GetKey("down")) {
-		// 	z = -0.1f;
-		// 	control.MoveBlock(x,z);
-		// }
-		// else if (Input.GetKey("right")) {
-		// 	x = 0.1f;
-		// 	control.MoveBlock(x,z);
-		// }
-		// else if (Input.GetKey("left")) {
-		// 	x = -0.1f;
-		// 	control.MoveBlock(x,z);
-		// }
-
+		// Move speed
+		float speed = 0.1f;
+		
 		// Move Block
 		if (Input.GetKey("up")) {
+			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * speed;
 			control.MoveBlock(forward);
 		}
 		else if (Input.GetKey("down")) {
+			Vector3 back = Camera.main.transform.TransformDirection(Vector3.back) * speed;
 			control.MoveBlock(back);
 		}
 		else if (Input.GetKey("right")) {
+			Vector3 right = Camera.main.transform.TransformDirection(Vector3.right) * speed;
 			control.MoveBlock(right);
 		}
 		else if (Input.GetKey("left")) {
+			Vector3 left = Camera.main.transform.TransformDirection(Vector3.left) * speed;
 			control.MoveBlock(left);
 		}
 
