@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,8 +25,13 @@ public class BlockPoolController : MonoBehaviour {
 		block.tag = "BlockPool";
 		MergeBlock(block);
 
+		// remove completed row
 		SearchCubePos();
-		print(RemoveCompletedRow());
+		if (RemoveCompletedRow()) {
+			InitPool();
+		}
+		
+		print("done");
 	}
 
 	// return the 4 walls position
@@ -46,6 +52,17 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	// private methods ------------------------------
+
+	// init the pool block
+	private void InitPool() {
+		for (int z = 0; z < POOL_Z; z++) {
+			for (int y = 0; y < POOL_X; y++) {
+				for (int x = 0; x < POOL_X; x++) {
+					blockPool[x, y, z] = null;
+				}
+			}
+		}
+	}
 
 	// merge to child
 	private void MergeBlock(GameObject block) {
@@ -74,10 +91,13 @@ public class BlockPoolController : MonoBehaviour {
 
 	// set the cube position to blockPool
 	private void SetCubePos(Transform tf, Vector3 offset) {
-		int x = (int)tf.transform.position.x + (int)offset.x;
-		int y = (int)tf.transform.position.y + (int)offset.y;
-		int z = (int)tf.transform.position.z + (int)offset.z;
-		// print(new Vector3(x, y, z));
+		float halfOfWidth = 0.5f;
+		int x = (int)(Mathf.Round(tf.transform.position.x + offset.x - halfOfWidth));
+		int y = (int)(Mathf.Round(tf.transform.position.y + offset.y - halfOfWidth));
+		int z = (int)(Mathf.Round(tf.transform.position.z + offset.z - halfOfWidth));
+		print("offset: " + offset);
+		print("target: " + tf.transform.position);
+		print("index : >> " + new Vector3(x, y, z));
 		blockPool[x, y, z] = tf.gameObject;
 	}
 
@@ -85,16 +105,15 @@ public class BlockPoolController : MonoBehaviour {
 		bool isRemoved = false;
 
 		// check completed row
-
-		// FIXME: 
-		//   - blockPool elements is not correct
-		//   - ControlBlock() is not called when the block is landed
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_X; y++) {
 				bool isCompleted = true;
+				// string row = "";
 				for (int x = 0; x < POOL_X; x++) {
 					if (blockPool[x, y, z] == null) isCompleted = false;
+					// row += (blockPool[x, y, z] == null) ? "_ " : "o ";
 				}
+				// print("(y:" + y + ", z:" + z + ")>>" + row);
 
 				if (!isCompleted) continue;
 
