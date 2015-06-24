@@ -112,6 +112,8 @@ public class BlockController : MonoBehaviour {
 
 	// called when this collider/rigidbody has begun touching another rigidbody/collider.
 	private void OnCollisionEnter(Collision col) {
+		if (gameObject.name.CompareTo("block(dropping)") != 0) return;
+
 		if (col.gameObject.tag == "BlockPool") {
 			// TODO: In future, this if-sentence will be removed.
 			if (transform.position.y >= 1) {
