@@ -95,9 +95,9 @@ public class BlockPoolController : MonoBehaviour {
 		int x = (int)(Mathf.Round(tf.transform.position.x + offset.x - halfOfWidth));
 		int y = (int)(Mathf.Round(tf.transform.position.y + offset.y - halfOfWidth));
 		int z = (int)(Mathf.Round(tf.transform.position.z + offset.z - halfOfWidth));
-		print("offset: " + offset);
-		print("target: " + tf.transform.position);
-		print("index : >> " + new Vector3(x, y, z));
+		// print("offset: " + offset);
+		// print("target: " + tf.transform.position);
+		// print("index : >> " + new Vector3(x, y, z));
 		blockPool[x, y, z] = tf.gameObject;
 	}
 
@@ -120,6 +120,30 @@ public class BlockPoolController : MonoBehaviour {
 				// remove competed row
 				isRemoved = true;
 				for (int x = 0; x < POOL_X; x++) {
+					print("Destroy : " + blockPool[x, y, z]);
+					Destroy(blockPool[x, y, z]);
+				}
+			}
+		}
+
+		if (isRemoved) return true;
+
+		// check completed col
+		for (int x = 0; x < POOL_Z; x++) {
+			for (int y = 0; y < POOL_X; y++) {
+				bool isCompleted = true;
+				// string row = "";
+				for (int z = 0; z < POOL_X; z++) {
+					if (blockPool[x, y, z] == null) isCompleted = false;
+					// row += (blockPool[x, y, z] == null) ? "_ " : "o ";
+				}
+				// print("(y:" + y + ", z:" + z + ")>>" + row);
+
+				if (!isCompleted) continue;
+
+				// remove competed row
+				isRemoved = true;
+				for (int z = 0; z < POOL_X; z++) {
 					print("Destroy : " + blockPool[x, y, z]);
 					Destroy(blockPool[x, y, z]);
 				}
