@@ -125,16 +125,10 @@ Snake case represent specific object or method.
 
 - __GameInfoViewer__
 	- \# ゲームの画面レイアウトの管理
-	- [func] GameStartView()
-		- playerがleapに手をかざすことでゲーム開始
-		- そのときの画面の表示
-	- [func] GameOverView()
-		- GameOverした際の表示
-	- [func] GameFinishView()
-		- GameFinishした際の表示
-	- [func] GameScoreView()
-		- GameFinish時のスコア表示
-		- GameManager.gameScore の情報を取得
+	- [func] ShowRemainingTime()
+		- 残り時間の表示
+	- [func] ShowNextBlock()
+		- 次のブロックを表示
 
 - __BlockEntity__
 	- \# 各ブロックのデータ管理
@@ -219,6 +213,11 @@ Snake case represent specific object or method.
 		- 次のブロックを生成するための処理
 		- -> BlockEntity#CreateRandomBlock()
 		- -> {LeapHand, Key}Action#ConectWithBlock()
+	- [func] FillEmptyBlock(int *x*, int *y*, int *z*)
+		- (x, z)の座標で、高さy未満のスペースに空のブロックを詰める
+		- : BlockをバラバラにしてCubeにしたときに、各Cubeが勝手に落下しないようにするため
+	- [func] RemoveEmptyBlock()
+		- 全ての(x, z)の座標で、空のブロックの上にあったCubeが消えた場合、この空のブロックは必要ないので削除する
 
 - __ExpectDropPosViewer__
 	- \# ブロックの予想落下位置の表示
