@@ -29,6 +29,8 @@ public class BlockPoolController : MonoBehaviour {
 		SearchCubePos();
 		if (RemoveCompletedRow()) {
 			InitPool();
+			// wait
+			// SearchCubePos();
 		}
 		
 		print("done");
