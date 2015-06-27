@@ -111,21 +111,21 @@ Snake case represent specific object or method.
 		- playerの利き手の情報
 	- [member] gameScore : int { get; set; }
 		- ゲームスコア
-	- [member] elapsedTime : int
-		- ゲームの経過時間
+	- [member] remainingTime : int
+		- ゲームの残り時間
 	- [func] GameStart()
 		- ゲーム開始に伴う初期化
-		- -> GameInfoViewer#GameStartView() でplayerの入力を待つ
-		- -> CreateNextBlock()
+		- -> BlockEntity#CreateNextBlock()
+		- -> GameInfoViewer#ShowRemainingTime(remainingTime)
 	- [func] GameOver()
 		- ブロックプールが溢れた際のゲーム終了に伴う処理
 	- [func] GameFinish()
 		- 時間によるゲーム終了に伴う処理
-		- elapsedTimeが一定時間になると呼ばれる
+		- remainingTimeが0になるとこの関数が呼ばれる
 
 - __GameInfoViewer__
 	- \# ゲームの画面レイアウトの管理
-	- [func] ShowRemainingTime()
+	- [func] ShowRemainingTime(Time t)
 		- 残り時間の表示
 	- [func] ShowNextBlock()
 		- 次のブロックを表示
