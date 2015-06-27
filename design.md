@@ -69,24 +69,38 @@ Snake case represent specific object or method.
 
 ~~~
 
-                show_score
-    GameManager----------->GameInfoViewer
-        |      <-----------
-        |       usr_action
-        |
-        |start_game
-        |
-        |                  KeyAction        rotate
-        |                  LeapHandAction----------->CameraController
-        |                       |
-        |                       |control    position
-        |                       |         +------------>ExpectDropPosViewer
-        |                       ∨         |
-        |            +-------->BlockController---------+
-        |   new_block|                                 |droping_block
-        |            |                                 ∨
-        +------>BlockEntity<-------------------BlockPoolController
-                                   create
+             show_title
+            ----------->
+ +-->(Title)<-----------KeyAction
+ |      |    usr_action
+ |      |
+ |      |                                                  rotate
+ |      |                                 KeyAction     ------------->
+ |      |                                 LeapHandAction<-------------CameraController
+ |      |                                      |          ch_key_bind
+ |      |transition                            |
+ |      |                                      |control    position
+ |      |                                      |         +---------->ExpectDropPosViewer
+ |      |                                      ∨         |
+ |      |                              +----->BlockController------+
+ |      |                     new_block|                           |droping_block
+ |      |                              |                           |
+ |      ∨                start_game    |                           ∨
+ |  (MainGame)--->GameManager---->BlockEntity<---------------BlockPoolController
+ |      |             |                |          create
+ |      |             |                |
+ |      |             |                ∨
+ |      |             +---------->GameInfoViewer
+ |      |                           * show remaining time
+ |      |                           * show next block
+ |      |
+ |      |transition
+ |      |
+ |      ∨    show_score
+ +---(Score)----------->ScoreViewer
+            <-----------
+             usr_action
+
 
 -+|<∨∧>
 ~~~
