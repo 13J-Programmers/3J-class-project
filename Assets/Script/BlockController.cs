@@ -101,6 +101,15 @@ public class BlockController : MonoBehaviour {
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
 
+	// return correct coordinate
+	public Vector3 GetCorrectPosition() {
+		Vector3 correctedPos;
+		correctedPos.x = (float)Math.Round(transform.position.x);
+		correctedPos.y = (float)transform.position.y;
+		correctedPos.z = (float)Math.Round(transform.position.z);
+		return correctedPos;
+	}
+
 
 	// private methods ------------------------------------------------
 
