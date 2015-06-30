@@ -1,6 +1,5 @@
 
 # temporary files
-
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -22,3 +21,6 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# Unity Version
+ProjectVersion.txt
