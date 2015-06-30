@@ -8,11 +8,12 @@ public class BlockPoolController : MonoBehaviour {
 	const int POOL_Y = 10;     // height
 	const int POOL_Z = POOL_X; // depth
 	GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
-	GameObject ground;
+	GameObject ground, poolCubes;
 
 	// Use this for initialization
 	void Start() {
 		ground = GameObject.Find("BlockPool/Ground");
+		poolCubes = GameObject.Find("BlockPool/Cubes");
 	}
 	
 	// Update is called once per frame
@@ -21,17 +22,17 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	public void ControlBlock(GameObject block) {
-		block.name = "block(land)";
-		block.tag = "BlockPool";
 		MergeBlock(block);
 
 		// remove completed row
+		/*
 		SearchCubePos();
 		if (RemoveCompletedRow()) {
 			InitPool();
 			// wait
 			// SearchCubePos();
 		}
+		*/
 		
 		print("done");
 	}
@@ -68,7 +69,21 @@ public class BlockPoolController : MonoBehaviour {
 
 	// merge to child
 	private void MergeBlock(GameObject block) {
-		block.transform.parent = gameObject.transform;
+		// move block cubes into poolCubes
+		block.tag = "BlockPool";
+		block.name = "Cube";
+		block.transform.parent = poolCubes.transform;
+
+		block.GetComponent<Rigidbody>().useGravity = false;
+
+		var blockCubes = new ArrayList();
+		foreach (Transform cube in block.transform) {
+			blockCubes.Add(cube);
+		}
+		foreach (Transform cube in blockCubes) {
+			cube.tag = "BlockPool";
+			cube.transform.parent = poolCubes.transform;
+		}
 	}
 
 	// collect each position of block's cubes
