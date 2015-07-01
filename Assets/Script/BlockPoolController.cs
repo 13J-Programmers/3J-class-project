@@ -24,9 +24,10 @@ public class BlockPoolController : MonoBehaviour {
 	public void ControlBlock(GameObject block) {
 		MergeBlock(block);
 
+		SearchCubePos();
+
 		// remove completed row
 		/*
-		SearchCubePos();
 		if (RemoveCompletedRow()) {
 			InitPool();
 			// wait
@@ -95,29 +96,28 @@ public class BlockPoolController : MonoBehaviour {
 		offset.z = -wallPos["z-min"];
 		offset.y = -ground.transform.position.y;
 
-		foreach (Transform block in transform) {
-			if (block.name.CompareTo("block(land)") != 0) continue;
-
-			SetCubePos(block, offset);
-
-			foreach (Transform cube in block) {
-				SetCubePos(cube, offset);
-			}
+		foreach (Transform cube in poolCubes.transform) {
+			SetCubePos(cube, offset);
 		}
 	}
 
 	// set the cube position to blockPool
-	private void SetCubePos(Transform tf, Vector3 offset) {
+	private void SetCubePos(Transform obj, Vector3 offset) {
 		float halfOfWidth = 0.5f;
-		int x = (int)(Mathf.Round(tf.transform.position.x + offset.x - halfOfWidth));
-		int y = (int)(Mathf.Round(tf.transform.position.y + offset.y - halfOfWidth));
-		int z = (int)(Mathf.Round(tf.transform.position.z + offset.z - halfOfWidth));
+		int x = (int)Mathf.Round(obj.position.x + offset.x - halfOfWidth);
+		int y = (int)Mathf.Round(obj.position.y + offset.y - halfOfWidth);
+		int z = (int)Mathf.Round(obj.position.z + offset.z - halfOfWidth);
 		// print("offset: " + offset);
-		// print("target: " + tf.transform.position);
+		// print("target: " + obj.transform.position);
 		// print("index : >> " + new Vector3(x, y, z));
-		blockPool[x, y, z] = tf.gameObject;
+		blockPool[x, y, z] = obj.gameObject;
 	}
 
+	private void RemoveCompletedRow() {
+
+	}
+
+	/* ** bad pattern **
 	private bool RemoveCompletedRow() {
 		bool isRemoved = false;
 
@@ -169,6 +169,7 @@ public class BlockPoolController : MonoBehaviour {
 
 		return isRemoved;
 	}
+	*/
 
 	private void FullPool() {
 
