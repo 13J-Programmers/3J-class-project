@@ -114,7 +114,10 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	private void RemoveCompletedRow() {
-
+		// TODO:
+		//   1. Check every completed row
+		//   2. Remove it
+		//   3. After every cubes is landed, jump to 1.
 	}
 
 	/* ** bad pattern **
