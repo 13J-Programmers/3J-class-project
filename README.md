@@ -100,6 +100,6 @@ Pull Requestがまだ作業中の場合、`[WIP]`をタイトル冒頭に付け�
 Contact us
 ----------
 
-クラス企画について、質問や気になる点があれば、コメントしてください。(issues, class mail, line)
+クラス企画について、質問や気になる点があれば、コメントしてください。(issues, class mail, line, slack)
 
 
