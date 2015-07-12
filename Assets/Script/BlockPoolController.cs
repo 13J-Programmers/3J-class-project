@@ -68,7 +68,7 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
-	// merge to child
+	// merge block cubes in BlockPool/Cubes
 	private void MergeBlock(GameObject block) {
 		// move block cubes into poolCubes
 		block.tag = "BlockPool";
