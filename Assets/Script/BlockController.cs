@@ -134,7 +134,7 @@ public class BlockController : MonoBehaviour {
 			//
 			//                     block
 			//   BlockController --------> BlockPoolController
-			//               binding
+			//               connect
 			//   keyAction -----X----> BlockController
 			//
 			blockPool.ControlBlock(gameObject);
@@ -150,10 +150,13 @@ public class BlockController : MonoBehaviour {
 			if (!GameObject.Find("block(new)")) {
 				blockEntity.CreateRandomBlock();
 			}
-			//               binding
+			//               connect
 			//   keyAction ----------> BlockController
 			//
 			keyAction.ConnectWithBlock();
+
+			// All jobs has finished. So destroy this script.
+			Destroy(this);
 		}
 	}
 
