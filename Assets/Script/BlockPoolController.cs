@@ -27,6 +27,8 @@ public class BlockPoolController : MonoBehaviour {
 		SearchCubePos();
 
 		// remove completed row
+		RemoveCompletedRow();
+
 		/*
 		if (RemoveCompletedRow()) {
 			InitPool();
@@ -113,66 +115,61 @@ public class BlockPoolController : MonoBehaviour {
 		blockPool[x, y, z] = obj.gameObject;
 	}
 
-	private void RemoveCompletedRow() {
+	private bool RemoveCompletedRow() {
 		// TODO:
 		//   1. Check every completed row
 		//   2. Remove it
 		//   3. After every cubes is landed, jump to 1.
-	}
 
-	/* ** bad pattern **
-	private bool RemoveCompletedRow() {
-		bool isRemoved = false;
+		bool hasCompletedRow = false;
+		bool[,,] willRemoveCube = new bool[POOL_X, POOL_Y, POOL_Z];
 
 		// check completed row
 		for (int z = 0; z < POOL_Z; z++) {
-			for (int y = 0; y < POOL_X; y++) {
+			for (int y = 0; y < POOL_Y; y++) {
 				bool isCompleted = true;
-				// string row = "";
 				for (int x = 0; x < POOL_X; x++) {
 					if (blockPool[x, y, z] == null) isCompleted = false;
-					// row += (blockPool[x, y, z] == null) ? "_ " : "o ";
 				}
-				// print("(y:" + y + ", z:" + z + ")>>" + row);
-
 				if (!isCompleted) continue;
 
-				// remove competed row
-				isRemoved = true;
+				// check completed row
+				hasCompletedRow = true;
 				for (int x = 0; x < POOL_X; x++) {
-					print("Destroy : " + blockPool[x, y, z]);
-					Destroy(blockPool[x, y, z]);
+					willRemoveCube[x, y, z] = true;
+				}
+			}
+		}
+		for (int x = 0; x < POOL_X; x++) {
+			for (int y = 0; y < POOL_Y; y++) {
+				bool isCompleted = true;
+				for (int z = 0; z < POOL_Z; z++) {
+					if (blockPool[x, y, z] == null) isCompleted = false;
+				}
+				if (!isCompleted) continue;
+
+				// check completed row
+				hasCompletedRow = true;
+				for (int z = 0; z < POOL_Z; z++) {
+					willRemoveCube[x, y, z] = true;
+				}
+			}
+		}
+		
+		if (!hasCompletedRow) return false;
+
+		// destroy completed row
+		for (int z = 0; z < POOL_Z; z++) {
+			for (int y = 0; y < POOL_Y; y++) {
+				for (int x = 0; x < POOL_X; x++) {
+					if (willRemoveCube[x, y, z] == true) 
+						Destroy(blockPool[x, y, z]);
 				}
 			}
 		}
 
-		if (isRemoved) return true;
-
-		// check completed col
-		for (int x = 0; x < POOL_Z; x++) {
-			for (int y = 0; y < POOL_X; y++) {
-				bool isCompleted = true;
-				// string row = "";
-				for (int z = 0; z < POOL_X; z++) {
-					if (blockPool[x, y, z] == null) isCompleted = false;
-					// row += (blockPool[x, y, z] == null) ? "_ " : "o ";
-				}
-				// print("(y:" + y + ", z:" + z + ")>>" + row);
-
-				if (!isCompleted) continue;
-
-				// remove competed row
-				isRemoved = true;
-				for (int z = 0; z < POOL_X; z++) {
-					print("Destroy : " + blockPool[x, y, z]);
-					Destroy(blockPool[x, y, z]);
-				}
-			}
-		}
-
-		return isRemoved;
+		return true;
 	}
-	*/
 
 	private void FullPool() {
 
