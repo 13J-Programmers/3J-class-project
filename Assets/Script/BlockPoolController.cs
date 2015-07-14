@@ -117,9 +117,15 @@ public class BlockPoolController : MonoBehaviour {
 
 	private bool RemoveCompletedRow() {
 		// TODO:
-		//   1. Check every completed row
-		//   2. Remove it
-		//   3. After every cubes is landed, jump to 1.
+		//   1. Marking cubes of every completed row. (A) 
+		//   2. Marking cubes which above them. (B)
+		//   3. Cubes (B) belong to a Dummy parent
+		//   4. Add RigitBody to the Dummy parent
+		//   5. Remove (A)
+		//   6. Rid RigitBody from the Dummy parent
+		//   7. After cubes (B) landed, 
+		//      cubes (B) independent of the Dummy parent.
+		//   8. jump to first.
 
 		bool hasCompletedRow = false;
 		bool[,,] willRemoveCube = new bool[POOL_X, POOL_Y, POOL_Z];
