@@ -74,8 +74,8 @@ public class BlockPoolController : MonoBehaviour {
 		block.tag = "BlockPool";
 		block.name = "Cube";
 		block.transform.parent = poolCubes.transform;
-
-		block.GetComponent<Rigidbody>().useGravity = false;
+		// remove rigitbody
+		Destroy(block.GetComponent<Rigidbody>());
 
 		var blockCubes = new ArrayList();
 		foreach (Transform cube in block.transform) {
