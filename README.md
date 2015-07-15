@@ -92,7 +92,7 @@ Pull Requestがまだ作業中の場合、`[WIP]`（Work In Progress）をタイ
 Contributing
 ------------
 
-1. Fork it ( https://github.com/https://github.com/13J-Programmers/3J_class_project )
+1. Fork it ( https://github.com/13J-Programmers/3J_class_project )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
