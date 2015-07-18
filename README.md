@@ -76,7 +76,7 @@ Unityが自動生成するmetaファイルは、必ずコミットすること�
 
 #### Pull Request
 
-Pull Requestがまだ作業中の場合、`[WIP]`をタイトル冒頭に付けるようにしましょう。
+Pull Requestがまだ作業中の場合、`[WIP]`（Work In Progress）をタイトル冒頭に付けるようにしましょう。
 こうすることにより、謝ってmergeすることを防ぐことができます。
 
 #### Work Flow (GitHub Flow)
@@ -89,17 +89,18 @@ Pull Requestがまだ作業中の場合、`[WIP]`をタイトル冒頭に付け�
 4. 助けて欲しいときや、フィードバックが欲しいときはPull Requestを作成し、Pull Requestでやりとりする
 5. ほかの開発者がレビューし、作業終了を確認したらmasterブランチにマージする
 
-#### Issue
+Contributing
+------------
 
-今後、Issueは次のように使いたいと考えています。
-
-- バグ管理システム
-- チケット駆動開発のチケット
-- 議論や修正
+1. Fork it ( https://github.com/13J-Programmers/3J_class_project )
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create a new Pull Request
 
 Contact us
 ----------
 
-クラス企画について、質問や気になる点があれば、コメントしてください。(issues, class mail, line, slack)
+If you have any questions, please ask us (slack, issues, class mail, line)
 
 
