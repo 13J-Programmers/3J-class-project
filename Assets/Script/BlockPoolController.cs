@@ -3,41 +3,56 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+// Behavior about BlockPoolController class
+// 
+//   |call
+//   ∨
+// BlockPoolController
+//   ControlBlock() <--------+
+//   | MergeBlock()          | update()
+//   | SearchCubePos()       |   if (_DummyParent.isLanded) 
+//   | RemoveCompletedRow()  |     recall
+//   |                       |     
+//   ∨                       |
+//
+// _DummyParent --------> isLanded = true
+//   StartDropping()
+// 
+// 
+// After remove completed row, we need to wait cubes dropping.
+// then recall ControlBlock()
+// 
 public class BlockPoolController : MonoBehaviour {
 	const int POOL_X = 6;      // width
 	const int POOL_Y = 10;     // height
 	const int POOL_Z = POOL_X; // depth
 	GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	GameObject ground, poolCubes;
+	GameObject dummyParent;
+	_DummyParent dummyParentController;
+	Rigidbody dummyParentRigit;
 
 	// Use this for initialization
 	void Start() {
 		ground = GameObject.Find("BlockPool/Ground");
 		poolCubes = GameObject.Find("BlockPool/Cubes");
+		dummyParent = GameObject.Find("_DummyParent");
+		dummyParentController = dummyParent.GetComponent<_DummyParent>();
+		dummyParentRigit = dummyParent.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void Update() {
-	
+		if (dummyParentController.isLanded) {
+			dummyParentController.FinishDropping();
+			ControlBlock(null);
+		}
 	}
 
 	public void ControlBlock(GameObject block) {
 		MergeBlock(block);
-
 		SearchCubePos();
-
-		// remove completed row
 		RemoveCompletedRow();
-
-		/*
-		if (RemoveCompletedRow()) {
-			InitPool();
-			// wait
-			// SearchCubePos();
-		}
-		*/
-		
-		print("done");
 	}
 
 	// return the 4 walls position
@@ -72,6 +87,7 @@ public class BlockPoolController : MonoBehaviour {
 
 	// merge block cubes in BlockPool/Cubes
 	private void MergeBlock(GameObject block) {
+		if (block == null) return;
 		// move block cubes into poolCubes
 		block.tag = "BlockPool";
 		block.name = "Cube";
@@ -116,8 +132,8 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	private bool RemoveCompletedRow() {
-		// TODO:
-		//   1. Marking cubes of every completed row. (A) 
+		// Flow:
+		//   1. Marking cubes of every completed row. (A)
 		//   2. Marking cubes which above them. (B)
 		//   3. Cubes (B) belong to a Dummy parent
 		//   4. Add RigitBody to the Dummy parent
@@ -129,6 +145,7 @@ public class BlockPoolController : MonoBehaviour {
 
 		bool hasCompletedRow = false;
 		bool[,,] willRemoveCube = new bool[POOL_X, POOL_Y, POOL_Z];
+		bool[,,] onRemoveCube   = new bool[POOL_X, POOL_Y, POOL_Z];
 
 		// check completed row
 		for (int z = 0; z < POOL_Z; z++) {
@@ -164,6 +181,21 @@ public class BlockPoolController : MonoBehaviour {
 		
 		if (!hasCompletedRow) return false;
 
+		// mark cubes above completed row
+		for (int z = 0; z < POOL_Z; z++) {
+			for (int x = 0; x < POOL_X; x++) {
+				for (int y = 1; y < POOL_Y; y++) {
+					if (blockPool[x, y, z] == null) continue;
+
+					if (willRemoveCube[x, y - 1, z] == true ||
+							onRemoveCube[x, y - 1, z] == true) {
+						onRemoveCube[x, y, z] = true;
+						blockPool[x, y, z].transform.parent = dummyParent.transform;
+					}
+				}
+			}
+		}
+
 		// destroy completed row
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
@@ -173,6 +205,9 @@ public class BlockPoolController : MonoBehaviour {
 				}
 			}
 		}
+
+		// start to drop dummyParent
+		dummyParentController.StartDropping();
 
 		return true;
 	}
