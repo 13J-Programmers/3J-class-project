@@ -7,8 +7,7 @@ public class CameraSwitch : MonoBehaviour {
 	public Key key;
 	// Use this for initialization
 	void Start () {
-		key = GameObject.Find ("Key").GetComponent<Key>();//keyをオブジェクトkeyを格納、CameraRollを使用できるようにする
-		//time = 0;
+		key = GameObject.Find ("Key").GetComponent<Key>();//keyをオブジェクトkeyを格納、CameraChangeを使用できるようにする
 		main.enabled = false;
 		second.enabled = true;
 	}

@@ -9,13 +9,14 @@ public class SoundController : MonoBehaviour {
 	void Start () {
 		audio = this.GetComponent<AudioSource> ();
 		audio.clip = BGM [i];
+		audio.loop = true;
 		audio.Play ();
 	}
 
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 
-	}
+	}*/
 	public void ChangeBGM(){
 		if(i+1==BGM.Length){
 			i=0;
@@ -23,6 +24,12 @@ public class SoundController : MonoBehaviour {
 		else
 			i++;
 		audio.clip = BGM [i];
+		audio.Play ();
+	}
+	public AudioClip startSE;
+	public void SoundSE(){//シーン切り替え時のSE
+		audio.clip=startSE;
+		audio.loop = false;
 		audio.Play ();
 	}
 }

@@ -51,18 +51,10 @@ public class MouseAction : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit)) {
 				//print (hit.collider.tag);
 				if (hit.collider.tag == GameObject.Find("EmptyObject").tag) {
-					SoundSE ();
+					GameObject.Find ("SoundBox").GetComponent<SoundController> ().SoundSE ();
 					GameObject.Find ("FedeSystem").GetComponent<Fade> ().LoadLevel (nextSceneName, 1f);
 				}
 			}
 		}
-	}
-	public AudioClip startSE;
-	public void SoundSE(){//シーン切り替え時のSE
-		AudioSource audioSource = soundBox.GetComponent<AudioSource> ();
-		audioSource.clip = startSE;
-		audioSource.volume = soundBox.GetComponent<AudioSource>().volume/3f;
-		audioSource.loop = false;
-		audioSource.Play ();
 	}
 }
