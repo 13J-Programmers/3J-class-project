@@ -40,6 +40,7 @@ public class BlockEntity : MonoBehaviour {
 		) as GameObject;
 
 		newBlock.name = "block(new)";
+		newBlock.AddComponent<BlockController>();
 
 		// connect Key and block
 		GameObject target = GameObject.Find("KeyAction");
