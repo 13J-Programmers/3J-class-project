@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -90,10 +90,11 @@ public class BlockController : MonoBehaviour {
 	public void PitchBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Vector3 newDirect = CorrectDirection(direct);
-		if (newDirect.x !=0 && newDirect.z != 0)
+		Debug.Log(newDirect);
+		if (Math.Abs(direct.x) >= Math.Abs(direct.z))
 			Rotate(newDirect.x * 90, 0, 0);
-		else
-			Rotate(newDirect.x * 90, 0, newDirect.z * 90);
+		else if (Math.Abs(direct.x) < Math.Abs(direct.z))
+			Rotate(0, 0, newDirect.z * 90);
 	}
 
 	// yaw the block
@@ -106,10 +107,11 @@ public class BlockController : MonoBehaviour {
 	public void RollBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Vector3 newDirect = CorrectDirection(direct);
-		if (newDirect.x !=0 && newDirect.z != 0)
+			Debug.Log(newDirect);
+		if (Math.Abs(direct.x) >= Math.Abs(direct.z))
 			Rotate(newDirect.x * 90, 0, 0);
-		else
-			Rotate(newDirect.x * 90, 0, newDirect.z * 90);
+		else if (Math.Abs(direct.x) < Math.Abs(direct.z))
+			Rotate(0, 0, newDirect.z * 90);
 
 	}
 
@@ -152,6 +154,12 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("block(dropping)") != 0) return;
 
 		if (col.gameObject.tag == "BlockPool") {
+			// TODO: In future, this if-sentence will be removed.
+			if (transform.position.y >= 1) {
+				print("GameOver");
+				return;
+			}
+			
 			// following script behaves:
 			//
 			//                     block
