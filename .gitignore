@@ -21,8 +21,18 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+*.stackdump
 
 # Unity Version
 ProjectVersion.txt
-*.stackdump
 
+# depend each development environment
+EditorBuildSettings.asset
+InputManager.asset
+ProjectSettings.asset
+QualitySettings.asset
+TagManager.asset
+TimeManager.asset
+AudioManager.asset
+DynamicsManager.asset
+NetworkManager.asset
