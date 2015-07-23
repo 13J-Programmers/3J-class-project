@@ -4,8 +4,8 @@ using System.Collections;
 public class BlockEntity : MonoBehaviour {
 	// block prefabs
 	const int prefabMaxNum = 18;
-	int nameCount = 0;
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
+	bool isStarted = false;
 
 	// Use this for initialization
 	void Start() {
@@ -24,8 +24,8 @@ public class BlockEntity : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("c")) {
-			// In future, this method is called by other obj.
+		if (!isStarted) {
+			isStarted = true;
 			CreateRandomBlock();
 		}
 	}
