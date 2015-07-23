@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		Vector3 poolPos = target.transform.position;
-		poolPos = new Vector3(poolPos.x, poolPos.y + 5, poolPos.z);
+		poolPos = new Vector3(poolPos.x, poolPos.y + 9, poolPos.z);
 		transform.LookAt(poolPos);
 	}
 
