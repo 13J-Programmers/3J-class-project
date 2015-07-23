@@ -154,12 +154,6 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("block(dropping)") != 0) return;
 
 		if (col.gameObject.tag == "BlockPool") {
-			// TODO: In future, this if-sentence will be removed.
-			if (transform.position.y >= 1) {
-				print("GameOver");
-				return;
-			}
-			
 			// following script behaves:
 			//
 			//                     block
