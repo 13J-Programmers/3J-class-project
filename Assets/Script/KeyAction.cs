@@ -17,10 +17,12 @@ public class KeyAction : MonoBehaviour {
 	void Update() {
 		// Pitch Block
 		if (Input.GetKeyDown("w")) {
-			control.PitchBlock(1);
+			Vector3 right = Camera.main.transform.TransformDirection(Vector3.right);
+			control.PitchBlock(right);
 		}
 		else if (Input.GetKeyDown("s")) {
-			control.PitchBlock(-1);
+			Vector3 right = Camera.main.transform.TransformDirection(Vector3.right);
+			control.PitchBlock(-1 * right);
 		}
 
 		// Yaw Block
@@ -33,10 +35,12 @@ public class KeyAction : MonoBehaviour {
 
 		// Roll Block
 		else if (Input.GetKeyDown("d")) {
-			control.RollBlock(1);
+			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
+			control.RollBlock(forward);
 		}
 		else if (Input.GetKeyDown("a")) {
-			control.RollBlock(-1);
+			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
+			control.RollBlock(-1 * forward);
 		}
 
 		// Rotate Camera 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -68,10 +68,32 @@ public class BlockController : MonoBehaviour {
 		MoveBlock(vector.x, vector.z);
 	}
 
+	// // pitch the block
+	// public void PitchBlock(int direct) {
+	// 	if (gameObject.name.CompareTo("block(new)") != 0) return;
+	// 	Rotate(direct * 90, 0, 0);
+	// }
+
+	// // yaw the block
+	// public void YawBlock(int direct) {
+	// 	if (gameObject.name.CompareTo("block(new)") != 0) return;
+	// 	Rotate(0, direct * 90, 0);
+	// }
+
+	// // roll the block
+	// public void RollBlock(int direct) {
+	// 	if (gameObject.name.CompareTo("block(new)") != 0) return;
+	// 	Rotate(0, 0, direct * 90);
+	// }
+
 	// pitch the block
-	public void PitchBlock(int direct) {
+	public void PitchBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
-		Rotate(direct * 90, 0, 0);
+		Vector3 newDirect = CorrectDirection(direct);
+		if (newDirect.x !=0 && newDirect.z != 0)
+			Rotate(newDirect.x * 90, 0, 0);
+		else
+			Rotate(newDirect.x * 90, 0, newDirect.z * 90);
 	}
 
 	// yaw the block
@@ -81,10 +103,16 @@ public class BlockController : MonoBehaviour {
 	}
 
 	// roll the block
-	public void RollBlock(int direct) {
+	public void RollBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
-		Rotate(0, 0, direct * 90);
+		Vector3 newDirect = CorrectDirection(direct);
+		if (newDirect.x !=0 && newDirect.z != 0)
+			Rotate(newDirect.x * 90, 0, 0);
+		else
+			Rotate(newDirect.x * 90, 0, newDirect.z * 90);
+
 	}
+
 
 	// drop the block
 	//   change gameObject.name = "block(dropping)"
@@ -174,6 +202,15 @@ public class BlockController : MonoBehaviour {
 		correctedPos.z = (float)Math.Round(transform.position.z);
 		transform.position = correctedPos;
 		return correctedPos;
+	}
+
+	// return myself correct position
+	private Vector3 CorrectDirection(Vector3 currentPosition) {
+		Vector3 correctedDir;
+		correctedDir.x = (float)Math.Round(currentPosition.x);
+		correctedDir.y = (float)currentPosition.y;
+		correctedDir.z = (float)Math.Round(currentPosition.z);
+		return correctedDir;
 	}
 
 	// set the block min-max x,y,z coordinate
