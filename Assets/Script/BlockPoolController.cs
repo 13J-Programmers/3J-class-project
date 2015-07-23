@@ -129,7 +129,12 @@ public class BlockPoolController : MonoBehaviour {
 		// print("offset: " + offset);
 		// print("target: " + obj.transform.position);
 		// print("index : >> " + new Vector3(x, y, z));
-		blockPool[x, y, z] = obj.gameObject;
+		try {
+			blockPool[x, y, z] = obj.gameObject;
+		} catch(IndexOutOfRangeException e) {
+			// TODO: call GameOver()
+			print("GameOver");
+		}
 	}
 
 	private void FixCubePos() {
