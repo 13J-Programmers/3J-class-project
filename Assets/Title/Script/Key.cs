@@ -6,10 +6,9 @@ public class Key : MonoBehaviour {
 	void Start () {
 	
 	}
-	
 	// Update is called once per frame
 	void Update () {
-	
+		switchScene ();
 	}
 	public int CameraChange(){
 		int f;
@@ -25,5 +24,12 @@ public class Key : MonoBehaviour {
 			f=true;
 		}
 		return(f);
+	}
+	public string nextSceneName;
+	public void switchScene(){//キーボードでシーン切り替え
+		if (Input.GetKeyDown (KeyCode.Return)) {
+			GameObject.Find ("SoundBox").GetComponent<SoundController> ().SoundSE ();
+			GameObject.Find ("FedeSystem").GetComponent<Fade> ().LoadLevel (nextSceneName, 1f);
+		}
 	}
 }
