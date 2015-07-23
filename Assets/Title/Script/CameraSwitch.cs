@@ -15,8 +15,7 @@ public class CameraSwitch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		int f;
-		if (( f = key.CameraChange ()) == 1) {
+		if ((key.CameraChange ()) == 1) {
 			CameraChange();
 		}
 	}
