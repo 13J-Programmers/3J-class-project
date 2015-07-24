@@ -11,7 +11,7 @@ public class BlockEntity : MonoBehaviour {
 	void Start() {
 		// change every cube of block
 		BoxCollider bc;
-		Vector3 colliderSize = new Vector3(0.8f, 1f, 0.8f);
+		Vector3 colliderSize = new Vector3(0.95f, 0.95f, 0.95f);
 		for (int i = 0; i < prefabMaxNum; i++) {
 			bc = blocks[i].GetComponent<BoxCollider>();
 			bc.size = colliderSize;
