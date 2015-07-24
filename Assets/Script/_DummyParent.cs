@@ -10,12 +10,10 @@ public class _DummyParent : MonoBehaviour {
 		get { return _isLanded; }
 		// set { _isLanded = value; }
 	}
-	Rigidbody rigidbody;
 	GameObject poolCubes;
 
 	// Use this for initialization
 	void Start() {
-		rigidbody = GetComponent<Rigidbody>();
 		poolCubes = GameObject.Find("BlockPool/Cubes");
 	}
 	
@@ -29,13 +27,13 @@ public class _DummyParent : MonoBehaviour {
 	public void StartDropping() {
 		Setup();
 		_isLanded = false;
-		rigidbody.useGravity = true;
-		rigidbody.AddForce(Vector3.down * 100);
+		GetComponent<Rigidbody>().useGravity = true;
+		GetComponent<Rigidbody>().AddForce(Vector3.down * 100);
 	}
 
 	public void FinishDropping() {
 		_isLanded = false;
-		rigidbody.useGravity = false;
+		GetComponent<Rigidbody>().useGravity = false;
 
 		// move parent
 		var dropedCubes = new ArrayList();
@@ -51,7 +49,7 @@ public class _DummyParent : MonoBehaviour {
 
 	private void Setup() {
 		transform.position = new Vector3(0, 0, 0);
-		rigidbody.velocity = new Vector3(0, 0, 0);
+		GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
 	}
 
 	private void OnCollisionEnter(Collision col) {

@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BlockController : MonoBehaviour {
-	Rigidbody rigidbody;
 	BlockPoolController blockPool;
 	KeyAction keyAction;
 	BlockEntity blockEntity;
@@ -13,13 +12,12 @@ public class BlockController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		rigidbody = GetComponent<Rigidbody>();
 		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 
 		// can vary only y position
-		rigidbody.constraints = (
+		GetComponent<Rigidbody>().constraints = (
 			RigidbodyConstraints.FreezePositionX |
 			RigidbodyConstraints.FreezePositionZ | 
 			RigidbodyConstraints.FreezeRotation
@@ -125,8 +123,8 @@ public class BlockController : MonoBehaviour {
 
 		gameObject.name = "block(dropping)";
 		CorrectPosition();
-		rigidbody.useGravity = true;
-		rigidbody.AddForce(Vector3.down * 500);
+		GetComponent<Rigidbody>().useGravity = true;
+		GetComponent<Rigidbody>().AddForce(Vector3.down * 500);
 		
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
