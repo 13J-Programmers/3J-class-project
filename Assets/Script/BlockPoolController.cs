@@ -47,6 +47,19 @@ public class BlockPoolController : MonoBehaviour {
 			dummyParentController.FinishDropping();
 			ControlBlock(null);
 		}
+
+		// for debug
+		if (Input.GetKeyDown("p")) {
+			for (int z = 0; z < POOL_Z; z++) {
+				for (int y = 0; y < POOL_Y; y++) {
+					string str = "";
+					for (int x = 0; x < POOL_X; x++) {
+						str += (blockPool[x, y, z] == null) ? "_": "o";
+					}
+					print("(z, y) = (" + z + ", " + y + ") : " + str);
+				}
+			}
+		}
 	}
 
 	public void ControlBlock(GameObject block) {
@@ -79,7 +92,7 @@ public class BlockPoolController : MonoBehaviour {
 	// init the pool block
 	private void InitPool() {
 		for (int z = 0; z < POOL_Z; z++) {
-			for (int y = 0; y < POOL_X; y++) {
+			for (int y = 0; y < POOL_Y; y++) {
 				for (int x = 0; x < POOL_X; x++) {
 					blockPool[x, y, z] = null;
 				}
@@ -132,7 +145,7 @@ public class BlockPoolController : MonoBehaviour {
 		// print("index : >> " + new Vector3(x, y, z));
 		try {
 			blockPool[x, y, z] = obj.gameObject;
-		} catch(IndexOutOfRangeException e) {
+		} catch (IndexOutOfRangeException e) {
 			// TODO: call GameOver()
 			print("GameOver");
 		}
