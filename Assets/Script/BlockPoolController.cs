@@ -145,7 +145,7 @@ public class BlockPoolController : MonoBehaviour {
 		// print("index : >> " + new Vector3(x, y, z));
 		try {
 			blockPool[x, y, z] = obj.gameObject;
-		} catch (IndexOutOfRangeException e) {
+		} catch (IndexOutOfRangeException) {
 			// TODO: call GameOver()
 			print("GameOver");
 		}
