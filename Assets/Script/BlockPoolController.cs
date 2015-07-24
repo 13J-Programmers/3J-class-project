@@ -50,6 +50,7 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	public void ControlBlock(GameObject block) {
+		InitPool();
 		MergeBlock(block);
 		SearchCubePos();
 		FixCubePos();
