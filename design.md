@@ -14,6 +14,8 @@ Policy
 	- クラス名はキャメルケース(SomeClass)
 	- メソッド名はキャメルケース(SomeMethod)
 	- 変数名は先頭が小文字のキャメルケース(someVariable)
+- メソッドは次のように表します
+	- instance.FuncName() : インスタンスメソッド
 
 次の設計の書き方は独自のものです
 
@@ -27,16 +29,8 @@ Policy
 		- 引数は斜体にする。返り値がない場合は`->`を省略
 	- [func] FuncName()
 		- 関数内で別の関数を呼ぶときは`->`を追加
-		- -> ClassName#OtherFuncName()
+		- -> ClassName.OtherFuncName()
 
-クラスへのアクセスの記述方法はrubyの書き方を採用します
-
-- ClassName.FuncName()
-	- クラスメソッド
-- ClassName#FuncName()
-	- インスタンスメソッド
-- ClassName::Const
-	- クラス定数
 
 Todo
 ----
@@ -49,16 +43,24 @@ Todo
 - ブロックの回転
 	- [x] 回転した際に壁に食い込む場合は、適切な位置まで移動させる
 - ブロックを落とす
-	- [ ] ブロックを落下した直後に、新しいブロックが生成されるバグ
+	- [x] ブロックを落下した直後に、新しいブロックが生成されるバグ
 - ブロックプールを管理するクラス
 	- [x] 落下してきたブロックをブロックプールの子要素に入れる
 	- [x] 子要素であるブロックの子要素（つまりCube）を巡回して、各座標に基づいて3次元配列に格納する
-	- [ ] 隙間なくブロックが揃った行の削除
+	- [x] 隙間なくブロックが揃った行の削除
 	- [ ] 消えるアニメーション
+	- [ ] 消した分の得点計算
 - 落下予測位置の表示
 	- [ ] ExpectDropPosViewerクラスの作成
-- 次のブロックの表示
-	- [ ] GameInfoViewerクラスの作成
+- Play中の画面
+	- [ ] 残り時間の表示
+	- [ ] スコアの表示
+	- [ ] 次に出すブロックの表示
+- Sceneの作成
+	- [x] タイトル画面
+	- [ ] スコア画面
+- Leap Motionへの対応
+	- [ ] ブロック操作のLeap化
 
 
 Classes
@@ -69,37 +71,43 @@ Snake case represent specific object or method.
 
 ~~~
 
-             show_title
-            ----------->
- +-->(Title)<-----------KeyAction
- |      |    usr_action
- |      |
- |      |                                                  rotate
- |      |                                 KeyAction     ------------->
- |      |                                 LeapHandAction<-------------CameraController
- |      |                                      |          ch_key_bind
- |      |transition                            |
- |      |                                      |control    position
- |      |                                      |         +---------->ExpectDropPosViewer
- |      |                                      ∨         |
- |      |                              +----->BlockController------+
- |      |                     new_block|                           |droping_block
- |      |                              |                           |
- |      ∨                start_game    |                           ∨
- |  (MainGame)--->GameManager---->BlockEntity<---------------BlockPoolController
- |      |             |                |          create
- |      |             |                |
- |      |             |                ∨
- |      |             +---------->GameInfoViewer
- |      |                           * show remaining time
- |      |                           * show next block
- |      |
- |      |transition
- |      |
- |      ∨    show_score
- +---(Score)----------->ScoreViewer
-            <-----------
-             usr_action
+           show_title
+          ----------->
+   (Title)<-----------KeyAction
+    ∧  |   usr_action
+    |  |
+    |  |transition
+    |  |                                        rotate
+    |  |                       KeyAction     ------------->
+    |  |                       LeapHandAction<-------------CameraController
+    |  |                            |          ch_key_bind
+    |  |                            |
+    |  |                            |control    position
+    |  |                            |         +---------->ExpectDropPosViewer
+    |  |                            |         |
+    |  |                            ∨         |
+    |  |                          BlockController---------+
+    |  |                              ∧  |                |
+    |  |                     new_block|  |create          |droping_block
+    |  |                              |  |                |
+    |  ∨                  start_game  |  ∨                ∨             delete
+   (MainGame)--->GameManager------>BlockEntity      BlockPoolController------->CubeInfo
+    |  |             |  ∧             |                   |
+    |  |             |  |             |next_block         |game_over
+    |  |             |  |             |                   |
+    |  |             |  +-------------|-------------------+
+    |  |             |                |
+    |  |             |                ∨
+    |  |             +---------->GameInfoViewer
+    |  |          remaining_time
+    |  |
+    |  |
+    |  |transition
+    |  |
+    |  ∨   show_score
+   (Score)----------->ScoreViewer
+           <-----------
+            usr_action
 
 
 -+|<∨∧>
@@ -107,52 +115,58 @@ Snake case represent specific object or method.
 
 - __GameManager__
 	- \# ゲーム全体の管理
-	- [member] handedness : right or left
+	- public
+	- [member] handedness : string
 		- playerの利き手の情報
-	- [member] gameScore : int { get; set; }
+		- "right" または "left"
+	- [member] score : int
 		- ゲームスコア
 	- [member] remainingTime : int
 		- ゲームの残り時間
 	- [func] GameStart()
 		- ゲーム開始に伴う初期化
-		- -> BlockEntity#CreateNextBlock()
-		- -> GameInfoViewer#ShowRemainingTime(remainingTime)
+		- -> BlockEntity.CreateNextBlock()
+		- -> GameInfoViewer.ShowRemainingTime(remainingTime)
 	- [func] GameOver()
 		- ブロックプールが溢れた際のゲーム終了に伴う処理
 	- [func] GameFinish()
 		- 時間によるゲーム終了に伴う処理
-		- remainingTimeが0になるとこの関数が呼ばれる
+		- remainingTimeが0になると、この関数が呼ばれる
 
 - __GameInfoViewer__
 	- \# ゲームの画面レイアウトの管理
-	- [func] ShowRemainingTime(Time t)
+	- private
+	- [func] OnGUI()
+		- -> ShowRemainingTime()
+		- -> ShowNextBlock()
+	- [func] ShowRemainingTime(Time *t*)
 		- 残り時間の表示
 	- [func] ShowNextBlock()
 		- 次のブロックを表示
 
 - __BlockEntity__
 	- \# 各ブロックのデータ管理
+	- public
 	- [member] perfabMaxNum : int
 		- 各ブロックのデータ数
 	- [member] blocks : GameObject[perfabMaxNum]
 		- 各ブロックの色と形を保持するprefab
 	- [func] CreateRandomBlock()
 		- ブロックをランダムに1つ生成する
-		- 生成されたオブジェクトの名前は 'block(new)' <<< 重要な変更点
+		- 生成されたオブジェクトの名前は 'block(new)'
+		- -> KeyAction.ConnectWithBlock()
 
 - __LeapHandAction__
 	- \# Leapで検出した手の情報の取得と、対応するイベントの呼び出し
+	- public
 	- [func] ConnectWithBlock()
-		- 移動と回転の対象となるブロックを取得する
+		- 移動と回転の対象となるブロックのコントロールを開始する
 	- [func] DisconectWithBlock()
 		- 移動と回転の対象となるブロックのコントロールを中止する
-	- [func] ChangeKeyBind()
-		- 上下左右の移動を見ている方向に合わせて変更する
-		- カメラの見ている方向は -> CameraController#WatchingDirection() を参照
-	- [event] 手の移動 -> BlockController#MoveBlock()
-	- [event] 手の回転 -> BlockController#{Pitch, Yaw, Roll}Block()
-	- [event] 手の下方向の加速度 -> BlockController#DropBlock()
-	- [event] 両手で回転操作 -> CameraController#Rotate()
+	- [event] 手の移動 -> BlockController.MoveBlock()
+	- [event] 手の回転 -> BlockController.{Pitch, Yaw, Roll}Block()
+	- [event] 手の下方向の加速度 -> BlockController.DropBlock()
+	- [event] 両手で回転操作 -> CameraController.RotateCam()
 
 - __KeyAction__ (for Debug)
 	- \# Key入力の検出と、対応するイベントの呼び出し
@@ -160,67 +174,105 @@ Snake case represent specific object or method.
 
 - __CameraController__
 	- \# カメラの座標・方向の制御
-	- [func] Rotate(float *theta*)
+	- public
+	- [func] RotateCam(float *theta*)
 		- 角度*theta*の分だけ回転させた位置にカメラを移動させる
-	- [func] WatchingDirection() -> Enum
-		- 見ている方向（東西南北のような情報）を返す
-		- CameraController::North などの定数を用意
+	- private
+	- [func] Update()
+		- 常にBlockPoolの中心を見る
 
 - __BlockController__
 	- \# 落下させるブロックの制御
 	- \# 新しく生成されたブロックのスクリプトとなる
+	- public
 	- [func] MoveBlock(float *x*, float *z*)
 		- x, z座標の方向にブロックを移動する
-	- [func] PitchBlock(int *direct*)
-		- directは 1 or -1
+	- [func] PitchBlock(Vector3 *direct*)
 		- directの方向にblockをx軸中心で90度回転する
-	- [func] YawBlock(int *direct*)
+	- [func] YawBlock(Vector3 *direct*)
 		- directの方向にblockをy軸中心で90度回転する
-	- [func] RollBlock(int *direct*)
+	- [func] RollBlock(Vector3 *direct*)
 		- directの方向にblockをz軸中心で90度回転する
-	- [func] PullBlockToCenter()
-		- 壁に食い込んだブロックを、壁と接触しない位置まで引き戻す
-	- [func] CorrectPos() -> Vector3
-		- 自身のx,z座標を四捨五入した座標を返す
 	- [func] DropBlock()
 		- ブロックを落とす処理
 		- 重力の追加
-		- -> {LeapHand, Key}Action#DisconectWithBlock()
-		- -> BlockPoolController#ControlBlockPool()
+		- 落下後、Poolに着地したタイミングで、OnCollisionEnter()が呼ばれる
+	- [func] GetCorrectPosition() -> Vector3
+		- 自身のx,z座標を四捨五入した座標を返す
+	- private
+	- [func] Rotate(float *x*, float *y*, float *z*)
+		- 世界軸を中心にブロックの回転を行う
+	- [func] OnCollisionEnter()
+		- colliderに当たり判定があると、この関数が呼ばれる
+		- -> {LeapHand, Key}Action.DisconectWithBlock()
+		- -> BlockPoolController.ControlBlockPool()
+		- -> BlockEntity.CreateRandomBlock()
+		- -> {LeapHand, Key}Action.ConectWithBlock()
+	- [func] FixPosition()
+		- 壁に食い込んだブロックを、壁と接触しない位置まで引き戻す
+	- [func] CorrectPosition() -> Vector3
+		- 自身のx,z座標を四捨五入した座標に移動させる
+	- [func] CorrectDirection() -> Vector3
+		- x,z要素を四捨五入したVector3を返す
+	
 
 - __BlockPoolController__
-	- \# BlockPool（ブロックの溜まり場）の制御
+	- \# BlockPool（ブロックの溜まり場）の管理
+	- private
+	- [member] POOL\_X, POOL\_Y, POOL\_Z
+		- Poolのサイズ
 	- [member] blockPool : GameObject[,,]
 		- 各ブロックを位置を元に格納する3次元配列
-	- [func] ControlBlockPool(GameObject *blockInfo*)
-		- ブロックプール内での、ブロックの落下と当たり判定と行の削除を制御
-		- -> LandBlock()
+	- public
+	- [func] ControlBlockPool(GameObject *block*)
+		- ブロックプール内における作業の集まり
+		- 引数は、Poolに着地したブロック
+		- -> InitPool()
 		- -> MergeBlock()
+		- -> SearchCubePos()
+		- -> FixCubePos()
 		- -> RemoveCompletedRow()
-		- -> PoolIsFull()
-		- -> NextPhase()
-	- [func] LandBlock(GameObject *blockInfo*) -> bool
-		- 落ちてきたブロックが着地した場合は、trueを返す
-	- [func] MergeBlock(GameObject *blockInfo*)
+	- private
+	- [func] InitPool()
+		- blockPoolの初期化
+	- [func] MergeBlock(GameObject *block*)
 		- 落下ブロックを、プール内に合成する
 		- 具体的には、そのブロックをBlockPoolの子要素にする
+	- [func] SearchCubePos()
+		- 壁の位置を取得
+		- -> SetCubePos()
+	- [func] SetCubePos(Transform *obj*, Vector3 *offset*)
+		- 壁の位置をoffsetとして、ブロックの位置をblockPool（3次元配列）に保存する
+		- 配列に保存できない（Poolから溢れた）場合は、-> GameManager.GameOver()
+	- [func] FixCubePos()
+		- Pool内の全てのブロックに対して、位置のずれ（誤差）を補正する
 	- [func] RemoveCompletedRow()
-		- 隙間なくブロックが揃った行の削除
-	- [func] PoolIsFull() -> bool
-		- プールからブロックが溢れているか確認
-		- 溢れている場合は -> GameManager#GameOver()
-	- [func] NextPhase()
-		- 次のブロックを生成するための処理
-		- -> BlockEntity#CreateRandomBlock()
-		- -> {LeapHand, Key}Action#ConectWithBlock()
-	- [func] FillEmptyBlock(int *x*, int *y*, int *z*)
-		- (x, z)の座標で、高さy未満のスペースに空のブロックを詰める
-		- : BlockをバラバラにしてCubeにしたときに、各Cubeが勝手に落下しないようにするため
-	- [func] RemoveEmptyBlock()
-		- 全ての(x, z)の座標で、空のブロックの上にあったCubeが消えた場合、この空のブロックは必要ないので削除する
+		- 隙間なくCubeが揃った行の削除
+		- Cubeを削除する前に、削除されるCubeの上にあるCubeを全てDummyParentの子要素にする
+		- 最後に、DummyParentに対して重力を与える
+
+- __DummyParent__
+	- \# Pool内の削除される行の上にあるCubesを管理する
+	- public
+	- [member] isLanded : bool
+		- CubesがPoolに着地した場合はtrueを保持する
+	- [func] StartDropping()
+		- isLandedをfalseにする
+		- 自身に対して、重力を与える
+	- [func] FinishDropping()
+		- isLandedをfalseにする
+		- 自身に働いている重力を外す
+		- 自身の子要素であるCubesを、Poolに戻す
+	- private
+	- [func] Setup()
+		- 初期設定を行う
+	- [func] OnCollisionEnter()
+		- Poolに着地した場合、isLandedをtrueにする
+
 
 - __ExpectDropPosViewer__
 	- \# ブロックの予想落下位置の表示
+	- private
 	- [func] ShowExpectDropPos()
 		- 現在の操作対象のブロックの落下予測位置に、落とすブロックのやや透明なブロックを配置
 	- [func] CloneSkeltonBlock()
