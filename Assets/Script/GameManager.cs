@@ -13,18 +13,20 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-	
+		if (remainingTime <= 0)
+			GameFinish();
+		remainingTime -= Time.deltaTime;
 	}
 
 	public void GameStart() {
-
+		
 	}
 
 	public void GameOver() {
-
+		// call result scene
 	}
 
 	public void GameFinish() {
-		
+		// call result scene
 	}
 }
