@@ -27,7 +27,7 @@ public class CreateCube : MonoBehaviour {
 
 	}
 	
-	public void create(GameObject[] cube){
+	public void create(GameObject[] cube) {
 		while (true) {
 			rand = Random.Range(0, 18); // 0~17のランダム生成
 			if (rand != i) {
