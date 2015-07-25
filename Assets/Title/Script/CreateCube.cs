@@ -21,7 +21,7 @@ public class CreateCube : MonoBehaviour {
 		//print(time + "秒経過");
 		time += Time.deltaTime;
 		if (time > interval) {
-			create (cube);
+			create(cube);
 			time = 0;
 		}
 
@@ -29,8 +29,8 @@ public class CreateCube : MonoBehaviour {
 	
 	public void create(GameObject[] cube){
 		while (true) {
-			rand = Random.Range (0, 18); // 0~17のランダム生成
-			if(rand!=i){
+			rand = Random.Range(0, 18); // 0~17のランダム生成
+			if (rand != i) {
 				i = rand;
 				break;
 			}

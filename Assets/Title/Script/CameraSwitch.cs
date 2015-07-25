@@ -20,6 +20,7 @@ public class CameraSwitch : MonoBehaviour {
 			CameraChange();
 		}
 	}
+	
 	public void CameraChange(){
 		main.enabled = !main.enabled;
 		second.enabled = !second.enabled;

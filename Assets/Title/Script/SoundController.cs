@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SoundController : MonoBehaviour {
 	public AudioClip[] BGM;
-	private new AudioSource audio;
+	private AudioSource audio;
 	private int i = 0;
 
 	// Use this for initialization
@@ -28,6 +28,7 @@ public class SoundController : MonoBehaviour {
 		audio.clip = BGM[i];
 		audio.Play();
 	}
+
 	public AudioClip startSE;
 	public void SoundSE() { // シーン切り替え時のSE
 		audio.clip = startSE;

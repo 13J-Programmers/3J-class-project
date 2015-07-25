@@ -46,7 +46,7 @@ public class Fade : MonoBehaviour {
 	public void OnGUI() {
 		// Fade .
 		if (this.isFading) {
-			//色と透明度を更新して白テクスチャを描画 .
+			// 色と透明度を更新して白テクスチャを描画 .
 			this.fadeColor.a = this.fadeAlpha;
 			GUI.color = this.fadeColor;
 			GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
@@ -70,7 +70,7 @@ public class Fade : MonoBehaviour {
 				int i = 0;
 				foreach (string sceneName in scenes) {
 					if (GUI.Button(new Rect(20, 55 + i * 25, 100, 20), "Load Level")) {
-						LoadLevel (sceneName,interval);
+						LoadLevel(sceneName, interval);
 					}
 					GUI.Label(new Rect(125, 55 + i * 25, 1000, 20), sceneName);
 					i++;
