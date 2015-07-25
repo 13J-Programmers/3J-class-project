@@ -66,24 +66,6 @@ public class BlockController : MonoBehaviour {
 		MoveBlock(vector.x, vector.z);
 	}
 
-	// // pitch the block
-	// public void PitchBlock(int direct) {
-	// 	if (gameObject.name.CompareTo("block(new)") != 0) return;
-	// 	Rotate(direct * 90, 0, 0);
-	// }
-
-	// // yaw the block
-	// public void YawBlock(int direct) {
-	// 	if (gameObject.name.CompareTo("block(new)") != 0) return;
-	// 	Rotate(0, direct * 90, 0);
-	// }
-
-	// // roll the block
-	// public void RollBlock(int direct) {
-	// 	if (gameObject.name.CompareTo("block(new)") != 0) return;
-	// 	Rotate(0, 0, direct * 90);
-	// }
-
 	// pitch the block
 	public void PitchBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
@@ -105,12 +87,11 @@ public class BlockController : MonoBehaviour {
 	public void RollBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Vector3 newDirect = CorrectDirection(direct);
-			Debug.Log(newDirect);
+		Debug.Log(newDirect);
 		if (Math.Abs(direct.x) >= Math.Abs(direct.z))
 			Rotate(newDirect.x * 90, 0, 0);
 		else if (Math.Abs(direct.x) < Math.Abs(direct.z))
 			Rotate(0, 0, newDirect.z * 90);
-
 	}
 
 

@@ -3,12 +3,15 @@ using System.Collections;
 
 public class BlockEntity : MonoBehaviour {
 	// block prefabs
-	const int prefabMaxNum = 18;
+	public const int prefabMaxNum = 18;
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
-	bool isStarted = false;
+	bool isGameStarted = false;
+	KeyAction keyAction;
 
 	// Use this for initialization
 	void Start() {
+		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
+
 		// change every cube of block
 		BoxCollider bc;
 		Vector3 colliderSize = new Vector3(0.95f, 0.95f, 0.95f);
@@ -24,8 +27,8 @@ public class BlockEntity : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		if (!isStarted) {
-			isStarted = true;
+		if (!isGameStarted) {
+			isGameStarted = true;
 			CreateRandomBlock();
 		}
 	}
@@ -43,8 +46,6 @@ public class BlockEntity : MonoBehaviour {
 		newBlock.AddComponent<BlockController>();
 
 		// connect Key and block
-		GameObject target = GameObject.Find("KeyAction");
-		KeyAction keyAction = target.GetComponent<KeyAction>();
 		keyAction.ConnectWithBlock();
 	}
 }

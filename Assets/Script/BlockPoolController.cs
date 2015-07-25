@@ -30,7 +30,6 @@ public class BlockPoolController : MonoBehaviour {
 	GameObject ground, poolCubes;
 	GameObject dummyParent;
 	_DummyParent dummyParentController;
-	Rigidbody dummyParentRigit;
 
 	// Use this for initialization
 	void Start() {
@@ -38,7 +37,6 @@ public class BlockPoolController : MonoBehaviour {
 		poolCubes = GameObject.Find("BlockPool/Cubes");
 		dummyParent = GameObject.Find("_DummyParent");
 		dummyParentController = dummyParent.GetComponent<_DummyParent>();
-		dummyParentRigit = dummyParent.GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -251,14 +249,6 @@ public class BlockPoolController : MonoBehaviour {
 		dummyParentController.StartDropping();
 
 		return true;
-	}
-
-	private void FullPool() {
-
-	}
-
-	private void NextPhase() {
-
 	}
 }
 

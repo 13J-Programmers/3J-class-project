@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
-	GameObject target;		// staring target
-	public double radians;
-	public double theta;
+	GameObject target; // staring target
+	// public double radians;
+	// public double theta;
 
 	// Use this for initialization
 	void Start() {
@@ -22,10 +22,10 @@ public class CameraController : MonoBehaviour {
 		transform.RotateAround( target.transform.position, Vector3.up, direct * 45 * Time.deltaTime );
 	}
 
-	public double WatchingDirection() {
-		radians = Mathf.Atan2(transform.position.z, transform.position.x);
-		theta = radians * Mathf.Rad2Deg;
-		Debug.Log(theta);
-		return theta;
-	}
+	// public double WatchingDirection() {
+	// 	radians = Mathf.Atan2(transform.position.z, transform.position.x);
+	// 	theta = radians * Mathf.Rad2Deg;
+	// 	Debug.Log(theta);
+	// 	return theta;
+	// }
 }
