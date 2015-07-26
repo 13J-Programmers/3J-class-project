@@ -28,23 +28,21 @@ public class BlockPoolController : MonoBehaviour {
 	const int POOL_Z = POOL_X; // depth
 	GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	GameObject ground, poolCubes;
-	GameObject dummyParent;
-	_DummyParent dummyParentController;
-//	GameManager gameManager;
+	_DummyParent dummyParent;
+	GameManager gameManager;
 
 	// Use this for initialization
 	void Start() {
 		ground = GameObject.Find("BlockPool/Ground");
 		poolCubes = GameObject.Find("BlockPool/Cubes");
-		dummyParent = GameObject.Find("_DummyParent");
-//		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-		dummyParentController = dummyParent.GetComponent<_DummyParent>();
+		dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
 	void Update() {
-		if (dummyParentController.isLanded) {
-			dummyParentController.FinishDropping();
+		if (dummyParent.isLanded) {
+			dummyParent.FinishDropping();
 			ControlBlock(null);
 		}
 
@@ -248,7 +246,7 @@ public class BlockPoolController : MonoBehaviour {
 		}
 
 		// start to drop dummyParent
-		dummyParentController.StartDropping();
+		dummyParent.StartDropping();
 
 		return true;
 	}
