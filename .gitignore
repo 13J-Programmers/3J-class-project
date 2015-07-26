@@ -27,7 +27,7 @@ sysinfo.txt
 ProjectVersion.txt
 EditorBuildSettings.asset
 InputManager.asset
-ProjectSettings.asset
+# ProjectSettings.asset
 QualitySettings.asset
 TagManager.asset
 TimeManager.asset
