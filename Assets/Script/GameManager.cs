@@ -5,13 +5,15 @@ public class GameManager : MonoBehaviour {
 	public string handedness = "right";
 	public int score = 0;
 	public float remainingTime = 180; // sec
-	blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
-//	gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
+	BlockEntity blockEntity;
+//	GamrInfoViewer gameInfo;
 
 
 	// Use this for initialization
 	void Start() {
-	
+		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
+	//	gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
+
 	}
 	
 	// Update is called once per frame
