@@ -26,6 +26,7 @@ public class BlockPoolController : MonoBehaviour {
 	const int POOL_X = 6;      // width
 	const int POOL_Y = 10;     // height
 	const int POOL_Z = POOL_X; // depth
+	gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	GameObject ground, poolCubes;
 	GameObject dummyParent;
