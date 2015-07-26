@@ -5,6 +5,9 @@ public class GameManager : MonoBehaviour {
 	public string handedness = "right";
 	public int score = 0;
 	public float remainingTime = 180; // sec
+	blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
+//	gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
+
 
 	// Use this for initialization
 	void Start() {
@@ -19,7 +22,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameStart() {
-		
+		score = 0;
+		remainingTime = 180;
 	}
 
 	public void GameOver() {
