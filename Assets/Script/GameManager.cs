@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour {
 	public void GameStart() {
 		score = 0;
 		remainingTime = 180;
+		blockEntity.CreateRandomBlock();
+
 	}
 
 	public void GameOver() {
