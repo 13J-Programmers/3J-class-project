@@ -367,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handedness: 
+  lines: 0
   score: 0
   remainingTime: 180
 --- !u!4 &383653125
