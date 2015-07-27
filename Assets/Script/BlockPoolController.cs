@@ -178,6 +178,7 @@ public class BlockPoolController : MonoBehaviour {
 		//   8. jump to first.
 
 		bool hasCompletedRow = false;
+		int removeRowNum = 0;
 		bool[,,] willRemoveCube = new bool[POOL_X, POOL_Y, POOL_Z];
 		bool[,,] onRemoveCube   = new bool[POOL_X, POOL_Y, POOL_Z];
 
@@ -190,8 +191,10 @@ public class BlockPoolController : MonoBehaviour {
 				}
 				if (!isCompleted) continue;
 
-				// check completed row
 				hasCompletedRow = true;
+				removeRowNum++;
+
+				// check completed row
 				for (int x = 0; x < POOL_X; x++) {
 					willRemoveCube[x, y, z] = true;
 				}
@@ -205,8 +208,10 @@ public class BlockPoolController : MonoBehaviour {
 				}
 				if (!isCompleted) continue;
 
-				// check completed row
 				hasCompletedRow = true;
+				removeRowNum++;
+
+				// check completed row
 				for (int z = 0; z < POOL_Z; z++) {
 					willRemoveCube[x, y, z] = true;
 				}
@@ -214,6 +219,9 @@ public class BlockPoolController : MonoBehaviour {
 		}
 		
 		if (!hasCompletedRow) return false;
+
+		// add num of rows to show
+		gameManager.lines += removeRowNum;
 
 		// mark cubes above completed row
 		for (int z = 0; z < POOL_Z; z++) {

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 	public string handedness = "right";
-	public int score = 0;
+	public int lines = 0; // removed lines
+	public int score = 0; // obtained score
 	public float remainingTime = 180; // sec
 	BlockEntity blockEntity;
 //	GamrInfoViewer gameInfo;
