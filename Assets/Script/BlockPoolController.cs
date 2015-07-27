@@ -244,17 +244,18 @@ public class BlockPoolController : MonoBehaviour {
 		}
 
 		// destroy completed row
+		int cubeScore = 0;
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
 				for (int x = 0; x < POOL_X; x++) {
 					if (willRemoveCube[x, y, z] == true) {
-						gameManager.score += 
-							blockPool[x, y, z].GetComponent<CubeInfo>().score;
+						cubeScore += blockPool[x, y, z].GetComponent<CubeInfo>().score;
 						Destroy(blockPool[x, y, z]);
 					}
 				}
 			}
 		}
+		gameManager.score += cubeScore * removeRowNum;
 
 		// start to drop dummyParent
 		dummyParent.StartDropping();
