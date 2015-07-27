@@ -6,7 +6,6 @@ public class KeyAction : MonoBehaviour {
 	GameObject target;
 	BlockController control;
 	CameraController cameraController;
-	public GameObject[] blocks = new GameObject[1];
 	
 	// Use this for initialization
 	void Start() {
