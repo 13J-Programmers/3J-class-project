@@ -8,12 +8,12 @@ public class GameManager : MonoBehaviour {
 	BlockEntity blockEntity;
 //	GamrInfoViewer gameInfo;
 
-
 	// Use this for initialization
 	void Start() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 	//	gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
 
+		GameStart();
 	}
 	
 	// Update is called once per frame
@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour {
 		score = 0;
 		remainingTime = 180;
 		blockEntity.CreateRandomBlock();
-
 	}
 
 	public void GameOver() {

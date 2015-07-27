@@ -5,13 +5,14 @@ public class BlockEntity : MonoBehaviour {
 	// block prefabs
 	public const int prefabMaxNum = 18;
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
-	bool isGameStarted = false;
 	KeyAction keyAction;
+
+	void Awake() {
+		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
+	}
 
 	// Use this for initialization
 	void Start() {
-		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
-
 		// change every cube of block
 		BoxCollider bc;
 		Vector3 colliderSize = new Vector3(0.95f, 0.95f, 0.95f);
@@ -27,10 +28,7 @@ public class BlockEntity : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		if (!isGameStarted) {
-			isGameStarted = true;
-			CreateRandomBlock();
-		}
+		
 	}
 
 	public void CreateRandomBlock () {
