@@ -31,7 +31,7 @@ public class BlockEntity : MonoBehaviour {
 		
 	}
 
-	public void CreateRandomBlock () {
+	public void CreateRandomBlock() {
 		int randNum = Random.Range(0, prefabMaxNum);
 		// create new block
 		GameObject newBlock = Instantiate(
@@ -42,8 +42,21 @@ public class BlockEntity : MonoBehaviour {
 
 		newBlock.name = "block(new)";
 		newBlock.AddComponent<BlockController>();
+		SetScoreToCube(newBlock);
 
 		// connect Key and block
 		keyAction.ConnectWithBlock();
+	}
+
+	// private methods ------------------------------
+
+	private void SetScoreToCube(GameObject newBlock) {
+		CubeInfo cubeInfo;
+		cubeInfo = newBlock.AddComponent<CubeInfo>();
+		cubeInfo.score = 20;
+		foreach (Transform t in newBlock.transform) {
+			cubeInfo = t.gameObject.AddComponent<CubeInfo>();
+			cubeInfo.score = 20;
+		}
 	}
 }

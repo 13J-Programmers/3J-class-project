@@ -247,8 +247,11 @@ public class BlockPoolController : MonoBehaviour {
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
 				for (int x = 0; x < POOL_X; x++) {
-					if (willRemoveCube[x, y, z] == true) 
+					if (willRemoveCube[x, y, z] == true) {
+						gameManager.score += 
+							blockPool[x, y, z].GetComponent<CubeInfo>().score;
 						Destroy(blockPool[x, y, z]);
+					}
 				}
 			}
 		}
