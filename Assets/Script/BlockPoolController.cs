@@ -220,7 +220,7 @@ public class BlockPoolController : MonoBehaviour {
 		
 		if (!hasCompletedRow) return false;
 
-		// add num of rows to show
+		// add num of rows to display
 		gameManager.lines += removeRowNum;
 
 		// mark cubes above completed row
@@ -255,6 +255,8 @@ public class BlockPoolController : MonoBehaviour {
 				}
 			}
 		}
+
+		// add game-score to display
 		gameManager.score += cubeScore * removeRowNum;
 
 		// start to drop dummyParent
