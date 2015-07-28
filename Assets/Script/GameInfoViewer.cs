@@ -31,10 +31,6 @@ public class GameInfoViewer : MonoBehaviour {
 		GUI.Label(new Rect(10, Screen.height - 20, 100, 60), "Time Left : " + timeLeft, guiStyle);
 	}
 
-	private void ShowRemainingTime(Time t) {
-
-	}
-
 	private void ShowNextBlock() {
 
 	}
