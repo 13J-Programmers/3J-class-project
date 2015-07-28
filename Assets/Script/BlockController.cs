@@ -112,10 +112,7 @@ public class BlockController : MonoBehaviour {
 
 	// return correct coordinate
 	public Vector3 GetCorrectPosition() {
-		Vector3 correctedPos;
-		correctedPos.x = (float)Math.Round(transform.position.x);
-		correctedPos.y = (float)transform.position.y;
-		correctedPos.z = (float)Math.Round(transform.position.z);
+		Vector3 correctedPos = roundXZ(transform.position);
 		return correctedPos;
 	}
 
@@ -143,8 +140,6 @@ public class BlockController : MonoBehaviour {
 			blockPool.ControlBlock(gameObject);
 			keyAction.DisconnectWithBlock();
 
-			// TODO: following scripts will expect to be called from BlockPool
-
 			// create new block to do next phase
 			//
 			//               create
@@ -163,28 +158,25 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 
-	// called once per frame for every collider/rigidbody that is touching rigidbody/collider.
-	private void OnCollisionStay(Collision col) {}
-
-	// called when this collider/rigidbody has stopped touching another rigidbody/collider.
-	private void OnCollisionExit(Collision col) {}
+	// round x,z coordinate
+	private Vector3 roundXZ(Vector3 vector) {
+		Vector3 _vector;
+		_vector.x = (float)Math.Round(vector.x);
+		_vector.y = vector.y;
+		_vector.z = (float)Math.Round(vector.z);
+		return _vector;
+	}
 
 	// return myself correct position
 	private Vector3 CorrectPosition() {
-		Vector3 correctedPos;
-		correctedPos.x = (float)Math.Round(transform.position.x);
-		correctedPos.y = (float)transform.position.y;
-		correctedPos.z = (float)Math.Round(transform.position.z);
+		Vector3 correctedPos = roundXZ(transform.position);
 		transform.position = correctedPos;
 		return correctedPos;
 	}
 
 	// return myself correct position
 	private Vector3 CorrectDirection(Vector3 currentPosition) {
-		Vector3 correctedDir;
-		correctedDir.x = (float)Math.Round(currentPosition.x);
-		correctedDir.y = (float)currentPosition.y;
-		correctedDir.z = (float)Math.Round(currentPosition.z);
+		Vector3 correctedDir = roundXZ(currentPosition);
 		return correctedDir;
 	}
 
