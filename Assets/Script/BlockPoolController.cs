@@ -23,7 +23,7 @@ using System.Collections.Generic;
 // then recall ControlBlock()
 // 
 public class BlockPoolController : MonoBehaviour {
-	public const int POOL_X = 5;      // width
+	public const int POOL_X = 6;      // width
 	public const int POOL_Y = 10;     // height
 	public const int POOL_Z = POOL_X; // depth
 	GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
@@ -51,8 +51,8 @@ public class BlockPoolController : MonoBehaviour {
 		// scale : (0.6, 1.0, 0.6)
 		//
 		switch (POOL_X) {
-			case 5: 
-				transform.Translate(new Vector3(-0.5f, -2f, -0.5f), Space.World);
+			case 5:
+				transform.Translate(new Vector3(0f, -2.5f, 0f), Space.World);
 				transform.localScale = new Vector3(0.5f, 1.0f, 0.5f);
 				break;
 			case 6:
