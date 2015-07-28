@@ -34,12 +34,12 @@ public class GameInfoViewer : MonoBehaviour {
 	}
 
 	public void ShowNextBlock(int nextNum) {
-		Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
-		GameObject next = Instantiate(
-			blockEntity.blocks[nextNum],  //Next Block
-			pos,        //Pos
-			blockEntity.blocks[nextNum].transform.rotation
-		) as  GameObject;
-		next.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+		// Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+		// GameObject next = Instantiate(
+		// 	blockEntity.blocks[nextNum],  //Next Block
+		// 	pos,        //Pos
+		// 	blockEntity.blocks[nextNum].transform.rotation
+		// ) as  GameObject;
+		// next.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 	}
 }

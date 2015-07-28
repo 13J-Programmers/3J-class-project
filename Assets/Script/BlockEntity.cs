@@ -36,6 +36,7 @@ public class BlockEntity : MonoBehaviour {
 	}
 
 	public void CreateRandomBlock() {
+		// Get next prefab number to display Screen
 		// int nextNum = Random.Range(0, prefabMaxNum);
 		int randNum = Random.Range(0, prefabMaxNum);
 
@@ -52,6 +53,7 @@ public class BlockEntity : MonoBehaviour {
 
 		// connect Key and block
 		keyAction.ConnectWithBlock();
+
 		// randNum = nextNum;
 	}
 
