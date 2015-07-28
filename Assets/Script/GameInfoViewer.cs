@@ -3,11 +3,13 @@ using System.Collections;
 
 public class GameInfoViewer : MonoBehaviour {
 	GameManager gameManager;
+	BlockEntity blockEntity;
 	GUIStyle guiStyle;
 	GUIStyleState guiStyleState;
 
 	// Use this for initialization
 	void Start() {
+		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
@@ -31,11 +33,13 @@ public class GameInfoViewer : MonoBehaviour {
 		GUI.Label(new Rect(10, Screen.height - 20, 100, 60), "Time Left : " + timeLeft, guiStyle);
 	}
 
-	private void ShowRemainingTime(Time t) {
-
-	}
-
-	private void ShowNextBlock() {
-
+	public void ShowNextBlock(int nextNum) {
+		// Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+		// GameObject next = Instantiate(
+		// 	blockEntity.blocks[nextNum],  //Next Block
+		// 	pos,        //Pos
+		// 	blockEntity.blocks[nextNum].transform.rotation
+		// ) as  GameObject;
+		// next.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 	}
 }
