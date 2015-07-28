@@ -23,20 +23,45 @@ using System.Collections.Generic;
 // then recall ControlBlock()
 // 
 public class BlockPoolController : MonoBehaviour {
-	const int POOL_X = 6;      // width
-	const int POOL_Y = 10;     // height
-	const int POOL_Z = POOL_X; // depth
+	public const int POOL_X = 5;      // width
+	public const int POOL_Y = 10;     // height
+	public const int POOL_Z = POOL_X; // depth
 	GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	GameObject ground, poolCubes;
 	_DummyParent dummyParent;
 	GameManager gameManager;
 
 	// Use this for initialization
-	void Start() {
+	void Awake() {
 		ground = GameObject.Find("BlockPool/Ground");
 		poolCubes = GameObject.Find("BlockPool/Cubes");
 		dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+	}
+
+	void Start() {
+		// BlockPool Transform
+		//
+		// size : 5
+		// position : (-0.5, -2, -0.5)
+		// scale : (0.5, 1.0, 0.5)
+		// 
+		// size : 6
+		// position : (0.5, -2.5, 0.5)
+		// scale : (0.6, 1.0, 0.6)
+		//
+		switch (POOL_X) {
+			case 5: 
+				transform.Translate(new Vector3(-0.5f, -2f, -0.5f), Space.World);
+				transform.localScale = new Vector3(0.5f, 1.0f, 0.5f);
+				break;
+			case 6:
+				transform.Translate(new Vector3(0.5f, -2.5f, 0.5f), Space.World);
+				transform.localScale = new Vector3(0.6f, 1.0f, 0.6f);
+				break;
+			default:
+				throw new Exception("Pool width is expected to be 5 or 6.");
+		}
 	}
 	
 	// Update is called once per frame
