@@ -5,6 +5,7 @@ public class BlockEntity : MonoBehaviour {
 	// block prefabs
 	public const int prefabMaxNum = 18;
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
+	public int randNum = Random.Range(0, prefabMaxNum);
 	KeyAction keyAction;
 
 	void Awake() {
@@ -32,7 +33,7 @@ public class BlockEntity : MonoBehaviour {
 	}
 
 	public void CreateRandomBlock() {
-		int randNum = Random.Range(0, prefabMaxNum);
+		int nextNum = Random.Range(0, prefabMaxNum);
 		// create new block
 		GameObject newBlock = Instantiate(
 			blocks[randNum],       // instance object
@@ -46,6 +47,7 @@ public class BlockEntity : MonoBehaviour {
 
 		// connect Key and block
 		keyAction.ConnectWithBlock();
+		randNum = nextNum;
 	}
 
 	// private methods ------------------------------
