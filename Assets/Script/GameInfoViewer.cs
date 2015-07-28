@@ -34,6 +34,8 @@ public class GameInfoViewer : MonoBehaviour {
 	}
 
 	public void ShowNextBlock(int nextNum) {
+		// Get next prefab number to display Screen
+		
 		// Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
 		// GameObject next = Instantiate(
 		// 	blockEntity.blocks[nextNum],  //Next Block

@@ -5,14 +5,18 @@ public class BlockEntity : MonoBehaviour {
 	// block prefabs
 	public const int prefabMaxNum = 18;
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
-	// public int randNum = Random.Range(0, prefabMaxNum);
+	public int nextBlockNum;
+	public int currentBlockNum;
 	KeyAction keyAction;
 	GameInfoViewer gameInfoViewer;
 
+	// BlockEntity methods are invoked from Start() in GameManager.
+	// therefore, initializing variables have to write in Awake().
 	void Awake() {
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
 		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
-
+		nextBlockNum = Random.Range(0, prefabMaxNum);
+		currentBlockNum = Random.Range(0, prefabMaxNum);
 	}
 
 	// Use this for initialization
@@ -36,14 +40,15 @@ public class BlockEntity : MonoBehaviour {
 	}
 
 	public void CreateRandomBlock() {
-		// Get next prefab number to display Screen
-		// int nextNum = Random.Range(0, prefabMaxNum);
-		int randNum = Random.Range(0, prefabMaxNum);
+		// shift block number
+		int randNum = currentBlockNum;
+		currentBlockNum = nextBlockNum;
+		nextBlockNum = Random.Range(0, prefabMaxNum);
 
 		// create new block
 		GameObject newBlock = Instantiate(
-			blocks[randNum],       // instance object
-			new Vector3(0, 10, 0),  // coordinate
+			blocks[randNum], // instance object
+			new Vector3(0, 10, 0), // coordinate
 			blocks[randNum].transform.rotation  // rotation
 		) as GameObject;
 
@@ -53,8 +58,6 @@ public class BlockEntity : MonoBehaviour {
 
 		// connect Key and block
 		keyAction.ConnectWithBlock();
-
-		// randNum = nextNum;
 	}
 
 	// private methods ------------------------------
