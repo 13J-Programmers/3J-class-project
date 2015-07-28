@@ -41,8 +41,7 @@ public class BlockEntity : MonoBehaviour {
 
 	public void CreateRandomBlock() {
 		// shift block number
-		int randNum = currentBlockNum;
-		currentBlockNum = nextBlockNum;
+		int randNum = currentBlockNum = nextBlockNum;
 		nextBlockNum = Random.Range(0, prefabMaxNum);
 
 		// create new block
