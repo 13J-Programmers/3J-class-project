@@ -126,7 +126,6 @@ Snake case represent specific object or method.
 	- [func] GameStart()
 		- ゲーム開始に伴う初期化
 		- -> BlockEntity.CreateNextBlock()
-		- -> GameInfoViewer.ShowRemainingTime(remainingTime)
 	- [func] GameOver()
 		- ブロックプールが溢れた際のゲーム終了に伴う処理
 	- [func] GameFinish()
@@ -137,10 +136,10 @@ Snake case represent specific object or method.
 	- \# ゲームの画面レイアウトの管理
 	- private
 	- [func] OnGUI()
-		- -> ShowRemainingTime()
-		- -> ShowNextBlock()
-	- [func] ShowRemainingTime(Time *t*)
+		- 消した行数の表示
+		- 獲得したスコアの表示
 		- 残り時間の表示
+		- -> ShowNextBlock()
 	- [func] ShowNextBlock()
 		- 次のブロックを表示
 
@@ -208,12 +207,14 @@ Snake case represent specific object or method.
 		- -> BlockPoolController.ControlBlockPool()
 		- -> BlockEntity.CreateRandomBlock()
 		- -> {LeapHand, Key}Action.ConectWithBlock()
-	- [func] FixPosition()
-		- 壁に食い込んだブロックを、壁と接触しない位置まで引き戻す
+	- [func] roundXZ(Vector3 vector) -> Vector3
+		- 引数のvectorのx,z成分だけ四捨五入する
 	- [func] CorrectPosition() -> Vector3
 		- 自身のx,z座標を四捨五入した座標に移動させる
 	- [func] CorrectDirection() -> Vector3
 		- x,z要素を四捨五入したVector3を返す
+	- [func] FixPosition()
+		- 壁に食い込んだブロックを、壁と接触しない位置まで引き戻す
 	
 
 - __BlockPoolController__
