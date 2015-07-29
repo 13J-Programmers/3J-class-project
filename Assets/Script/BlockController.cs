@@ -41,12 +41,26 @@ public class BlockController : MonoBehaviour {
 	public void MoveBlock(float x, float z) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 
+		// block can move in specific range
+		// 
+		//   wallPos : coordinate of wall of blockPool
+		//   blockMinCoord : minimum x,z coordinate
+		//   blockMaxCoord : maximum x,z coordinate
+		//   halfOfWidth : blockWidth / 2
+		// 
+		//            --- << blockMaxCoord.z + halfOfWidth
+		//           |   |
+		//    --- --- --- 
+		//   |   |   |   |
+		//    --- --- --- << blockMinCoord.z - halfOfWidth
+		//   ∧           ∧
+		//   ∧           blockMaxCoord.x + halfOfWidth
+		//   blockMinCoord.x - halfOfWidth
+		// 
+		// if block collides wall, it cannot move
+		// 
 		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
 		float halfOfWidth = transform.localScale.x / 2;
-		// print("Wall x min-max : " + wallPos["x-min"] + "..." + wallPos["x-max"]);
-		// print("Wall z min-max : " + wallPos["z-min"] + "..." + wallPos["z-max"]);
-		// print("Block x min-max : " + blockMinCoord.x + "..." + blockMaxCoord.x);
-		// print("Block z min-max : " + blockMinCoord.z + "..." + blockMaxCoord.z);
 		if (wallPos["x-min"] > blockMinCoord.x - halfOfWidth) {
 			x = (x < 0) ? 0 : x;
 		} else if (wallPos["x-max"] < blockMaxCoord.x + halfOfWidth) {
