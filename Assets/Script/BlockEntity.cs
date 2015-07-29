@@ -48,11 +48,12 @@ public class BlockEntity : MonoBehaviour {
 		GameObject newBlock = Instantiate(
 			blocks[randNum], // instance object
 			new Vector3(0, 10, 0), // coordinate
-			blocks[randNum].transform.rotation  // rotation
+			blocks[randNum].transform.rotation // rotation
 		) as GameObject;
 
 		newBlock.name = "block(new)";
 		newBlock.AddComponent<BlockController>();
+		newBlock.AddComponent<ExpectDropPosViewer>();
 		SetScoreToCube(newBlock);
 
 		// connect Key and block

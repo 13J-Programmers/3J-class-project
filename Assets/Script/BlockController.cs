@@ -153,8 +153,9 @@ public class BlockController : MonoBehaviour {
 			//
 			keyAction.ConnectWithBlock();
 
-			// All jobs has finished. So destroy this script.
-			Destroy(this);
+			// All jobs has finished. So destroy blockControl script.
+			Destroy(gameObject.GetComponent<ExpectDropPosViewer>());
+			Destroy(this); // destroy BlockController component
 		}
 	}
 
