@@ -7,6 +7,7 @@ public class BlockController : MonoBehaviour {
 	BlockPoolController blockPool;
 	KeyAction keyAction;
 	BlockEntity blockEntity;
+	ExpectDropPosViewer expectDropPosViewer;
 	// coordinate for check if collide the wall or not
 	Vector3 blockMinCoord, blockMaxCoord;
 
@@ -15,6 +16,7 @@ public class BlockController : MonoBehaviour {
 		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
+		expectDropPosViewer = gameObject.GetComponent<ExpectDropPosViewer>();
 
 		// can vary only y position
 		GetComponent<Rigidbody>().constraints = (
@@ -106,6 +108,8 @@ public class BlockController : MonoBehaviour {
 		CorrectPosition();
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().AddForce(Vector3.down * 500);
+
+		expectDropPosViewer.StopSync();
 		
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
@@ -139,6 +143,9 @@ public class BlockController : MonoBehaviour {
 			//
 			blockPool.ControlBlock(gameObject);
 			keyAction.DisconnectWithBlock();
+
+			// destory expected drop pos
+			expectDropPosViewer.StopShowing();
 
 			// create new block to do next phase
 			//
