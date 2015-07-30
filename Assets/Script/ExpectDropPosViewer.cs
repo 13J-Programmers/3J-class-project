@@ -69,12 +69,18 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Destroy(showDropPosBlock.GetComponent<BlockPoolController>());
 		Destroy(showDropPosBlock.GetComponent<ExpectDropPosViewer>());
 		Destroy(showDropPosBlock.GetComponent<BoxCollider>());
-	}
 
-	private void SetSkeltonCube(Transform block) {
-		foreach (Transform cube in block.transform) {
-			cube.gameObject.renderer.material.color = new Color(1f, 1f, 1f, 0.5f);
+		// set skelton cubes
+		Color alpha = new Color(1f, 1f, 1f, 0.5f);
+		Material material = showDropPosBlock.gameObject.GetComponent<Renderer>().material;
+		StandardShader.SetBlendMode(material, BlendMode.Fade);
+		material.color = alpha;
+		foreach (Transform cube in showDropPosBlock.transform) {
+			Material childMaterial = cube.gameObject.GetComponent<Renderer>().material;
+			StandardShader.SetBlendMode(childMaterial, BlendMode.Fade);
+			childMaterial.color = alpha;
 		}
+		print(showDropPosBlock.gameObject.GetComponent<Renderer>().material.color);
 	}
 
 	private void SyncOriginBlock() {
