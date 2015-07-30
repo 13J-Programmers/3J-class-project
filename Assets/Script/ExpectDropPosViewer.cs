@@ -9,6 +9,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	bool[,,] pool;
 	GameObject controllingBlock;
 	GameObject showDropPosBlock;
+	bool isSync = true;
 
 	void Awake() {
 		blockPoolControl = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
@@ -40,7 +41,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	}
 
 	public void StopSync() {
-		// TODO: stop moving y coordinate
+		isSync = false;
 	}
 
 	public void StopShowing() {
@@ -49,20 +50,14 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 	// private methods --------------------------------
 
-	private Vector3 ExpectDropPos() {
-		return new Vector3(0f, 0f, 0f);
+	private Vector3 ExpectDropPos(Vector3 pos) {
+		return new Vector3(pos.x, pos.y - 20.5f, pos.z);
 	}
 
 	// clone block to create skelton it
 	private void CloneSkeltonBlock() {
-		if (GameObject.Find("block(expected-drop-pos)")) return;
-
 		Vector3 originBlockPos = controllingBlock.transform.position;
-		Vector3 cloneBlockPos = new Vector3(
-			originBlockPos.x,
-			originBlockPos.y - 20.5f,
-			originBlockPos.z
-		);
+		Vector3 cloneBlockPos = ExpectDropPos(originBlockPos);
 
 		showDropPosBlock = Instantiate(
 			controllingBlock, 
@@ -76,15 +71,18 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Destroy(showDropPosBlock.GetComponent<BoxCollider>());
 	}
 
+	private void SetSkeltonCube(Transform block) {
+		foreach (Transform cube in block.transform) {
+			cube.gameObject.renderer.material.color = new Color(1f, 1f, 1f, 0.5f);
+		}
+	}
+
 	private void SyncOriginBlock() {
 		if (!GameObject.Find("block(expected-drop-pos)")) return;
+		if (!isSync) return;
 
 		Vector3 originBlockPos = controllingBlock.transform.position;
-		Vector3 cloneBlockPos = new Vector3(
-			originBlockPos.x,
-			originBlockPos.y - 20.5f,
-			originBlockPos.z
-		);
+		Vector3 cloneBlockPos = ExpectDropPos(originBlockPos);
 
 		if (!showDropPosBlock) return;
 		showDropPosBlock.transform.localPosition = cloneBlockPos;
