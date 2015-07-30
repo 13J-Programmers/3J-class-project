@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Swapping Rendering Mode in Unity 5.0 on Run Time
+//   http://sassybot.com/blog/swapping-rendering-mode-in-unity-5-0/
+
 public enum BlendMode {
 	Opaque, Cutout, Fade, Transparent
 };
