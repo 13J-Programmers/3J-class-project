@@ -5,7 +5,7 @@ public enum BlendMode {
 	Opaque, Cutout, Fade, Transparent
 };
 
-public class StandardShader {
+public class StandardShader : MonoBehaviour {
 	public static void SetBlendMode(Material material, BlendMode blendMode) {
 		switch (blendMode) {
 			case BlendMode.Opaque:
