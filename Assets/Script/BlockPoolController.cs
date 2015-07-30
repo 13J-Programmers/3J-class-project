@@ -72,6 +72,7 @@ public class BlockPoolController : MonoBehaviour {
 		}
 
 		// for debug
+		/*
 		if (Input.GetKeyDown("p")) {
 			for (int z = 0; z < POOL_Z; z++) {
 				for (int y = 0; y < POOL_Y; y++) {
@@ -83,6 +84,7 @@ public class BlockPoolController : MonoBehaviour {
 				}
 			}
 		}
+		*/
 	}
 
 	public void ControlBlock(GameObject block) {
