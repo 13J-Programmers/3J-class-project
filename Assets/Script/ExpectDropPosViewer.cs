@@ -5,6 +5,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	int POOL_X;
 	int POOL_Y;
 	int POOL_Z;
+	BlockController blockController;
 	BlockPoolController blockPoolControl;
 	bool[,,] pool;
 	GameObject controllingBlock;
@@ -12,6 +13,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	bool isSync = true;
 
 	void Awake() {
+		blockController = gameObject.GetComponent<BlockController>();
 		blockPoolControl = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 		controllingBlock = gameObject;
 	}
@@ -51,7 +53,9 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	// private methods --------------------------------
 
 	private Vector3 ExpectDropPos(Vector3 pos) {
-		return new Vector3(pos.x, pos.y - 20.5f, pos.z);
+		Vector3 correctedBlockPos = blockController.GetCorrectPosition();
+		correctedBlockPos.y = -2f;
+		return correctedBlockPos;
 	}
 
 	// clone block to create skelton it
@@ -66,9 +70,13 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		) as GameObject;
 		showDropPosBlock.name = "block(expected-drop-pos)";
 
-		Destroy(showDropPosBlock.GetComponent<BlockPoolController>());
-		Destroy(showDropPosBlock.GetComponent<ExpectDropPosViewer>());
+		Destroy(showDropPosBlock.GetComponent<Rigidbody>());
 		Destroy(showDropPosBlock.GetComponent<BoxCollider>());
+		foreach (Transform cube in showDropPosBlock.transform) {
+			Destroy(cube.gameObject.GetComponent<BoxCollider>());
+		}
+		Destroy(showDropPosBlock.GetComponent<BlockController>());
+		Destroy(showDropPosBlock.GetComponent<ExpectDropPosViewer>());
 
 		// set skelton cubes
 		Color alpha = new Color(1f, 1f, 1f, 0.5f);
