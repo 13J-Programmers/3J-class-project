@@ -40,10 +40,10 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	void Start() {
-		// BlockPool Transform
+		// BlockPool Transforms
 		//
 		// size : 5
-		// position : (-0.5, -2, -0.5)
+		// position : (0, -2.5, 0)
 		// scale : (0.5, 1.0, 0.5)
 		// 
 		// size : 6
