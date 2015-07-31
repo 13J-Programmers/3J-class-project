@@ -30,7 +30,13 @@ public class GameInfoViewer : MonoBehaviour {
 		GUI.Label(new Rect(10, Screen.height - 60, 100, 60), "Lines : " + gameManager.lines, guiStyle);
 		GUI.Label(new Rect(10, Screen.height - 40, 100, 60), "Score : " + gameManager.score, guiStyle);
 		int timeLeft = (int)gameManager.remainingTime;
-		GUI.Label(new Rect(10, Screen.height - 20, 100, 60), "Time Left : " + timeLeft, guiStyle);
+		int min = timeLeft / 60;
+		int sec = timeLeft % 60;
+		if(min == 0)
+			GUI.Label(new Rect(10, Screen.height - 20, 100, 60), "Time Left : " + sec + "sec", guiStyle);
+		else
+			GUI.Label(new Rect(10, Screen.height - 20, 100, 60), "Time Left : " + min + "min " + sec + "sec", guiStyle);
+
 	}
 
 	public void ShowNextBlock(int nextNum) {
