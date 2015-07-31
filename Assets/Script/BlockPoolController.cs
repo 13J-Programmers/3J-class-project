@@ -133,7 +133,7 @@ public class BlockPoolController : MonoBehaviour {
 	//   │   ├── Ground
 	//   │   ├── Wall
 	//   │   └── Cubes
-	//   └── block(new)
+	//   └── block(dropping)
 	//       ├── Cube
 	//       ├── Cube
 	//       └── Cube
@@ -194,8 +194,7 @@ public class BlockPoolController : MonoBehaviour {
 		try {
 			blockPool[x, y, z] = obj.gameObject;
 		} catch (IndexOutOfRangeException) {
-			// TODO: call GameOver()
-			print("GameOver");
+			gameManager.GameOver();
 		}
 	}
 

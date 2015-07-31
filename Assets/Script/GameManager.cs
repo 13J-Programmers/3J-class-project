@@ -32,9 +32,11 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver() {
 		// call result scene
+		print("GameOver");
 	}
 
 	public void GameFinish() {
 		// call result scene
+		print("GameFinish");
 	}
 }
