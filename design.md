@@ -106,8 +106,8 @@ Snake case represent specific object or method.
     |  |
     |  ∨   show_score
    (Score)----------->ScoreViewer
-           <-----------
-            usr_action
+          <-----------
+           usr_action
 
 
 -+|<∨∧>
@@ -273,12 +273,25 @@ Snake case represent specific object or method.
 
 - __ExpectDropPosViewer__
 	- \# ブロックの予想落下位置の表示
+	- \# ブロック生成時に付加されるスクリプト
+	- public
+	- [func] StopSync()
+		- 落下予測位置の表示するとき、操作中のブロックの動きに合わせるのを停止する
+	- [func] StopShowing()
+		- 落下予測位置の表示を停止する
 	- private
-	- [func] ShowExpectDropPos()
-		- 現在の操作対象のブロックの落下予測位置に、落とすブロックのやや透明なブロックを配置
+	- [func] roundXZ(Vector3 vector) -> Vector3
+		- ベクトルのx,z成分を四捨五入したベクトルを返す
+	- [func] ExpectDropPos(Vector3 position) -> Vector3
+		- 操作中のブロックの座標*position*を元に、落下予測位置の座標を返す
 	- [func] CloneSkeltonBlock()
-		- 現在の操作対象のブロックのクローンを作成する
-		- そのクローンの骨格を残して透明にする
+		- この関数は、Start()にて1度だけ呼び出される
+		- 現在の操作対象のブロックの落下予測位置に、半透明なブロックを配置
+		- GameObject *showDropPosBlock* が、ブロックのインスタンスの実体
+	- [func] SyncOriginBlock()
+		- 操作中のブロックが移動・回転した際に、落下予想位置を表示するブロックの位置・形を更新する
+		- この関数はUpdate()によって呼び出される
+
 
 Other
 -----

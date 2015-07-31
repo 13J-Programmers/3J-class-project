@@ -30,7 +30,7 @@ public class BlockController : MonoBehaviour {
 	void Update() {
 		// set the block min-max coordinate
 		SetMinMaxCoord();
-		// fix position
+		// after rotate, if the block is outside the Pool, then fix position
 		FixPosition();
 	}
 

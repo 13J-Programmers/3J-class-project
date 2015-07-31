@@ -11,8 +11,8 @@ using System.Collections.Generic;
 //   ControlBlock() <--------+
 //   | MergeBlock()          | update()
 //   | SearchCubePos()       |   if (_DummyParent.isLanded) 
-//   | RemoveCompletedRow()  |     recall
-//   |                       |     
+//   | RemoveCompletedRow()  |     dummyParent.FinishDropping()
+//   |                       |     recall
 //   ∨                       |
 //
 // _DummyParent --------> isLanded = true
@@ -126,6 +126,28 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	// merge block cubes in BlockPool/Cubes
+	// 
+	// before:
+	//
+	//   ├── BlockPool
+	//   │   ├── Ground
+	//   │   ├── Wall
+	//   │   └── Cubes
+	//   └── block(new)
+	//       ├── Cube
+	//       ├── Cube
+	//       └── Cube
+	//   
+	// after:
+	//
+	//   └── BlockPool
+	//       ├── Ground
+	//       ├── Wall
+	//       └── Cubes
+	//           ├── Cube
+	//           ├── Cube
+	//           └── Cube
+	// 
 	private void MergeBlock(GameObject block) {
 		if (block == null) return;
 		// move block cubes into poolCubes
@@ -146,6 +168,7 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	// collect each position of block's cubes
+	// blockPool[,,] has each cubes position
 	private void SearchCubePos() {
 		Dictionary<string, float> wallPos = GetWallPosition();
 
@@ -176,6 +199,8 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
+	// sometimes, cube position is unexpected.
+	// therefore, cubes are need to correct position.
 	private void FixCubePos() {
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
@@ -192,18 +217,20 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
+	// remove completed row
+	//
+	// steps:
+	//   1. Marking cubes of every completed row. (A)
+	//   2. Marking cubes which above them. (B)
+	//   3. Cubes (B) belong to a Dummy parent
+	//   4. Add RigitBody to the Dummy parent
+	//   5. Remove (A)
+	//   6. Rid RigitBody from the Dummy parent
+	//   7. After cubes (B) landed, 
+	//      cubes (B) independent of the Dummy parent.
+	//   8. jump to first.
+	//
 	private bool RemoveCompletedRow() {
-		// Flow:
-		//   1. Marking cubes of every completed row. (A)
-		//   2. Marking cubes which above them. (B)
-		//   3. Cubes (B) belong to a Dummy parent
-		//   4. Add RigitBody to the Dummy parent
-		//   5. Remove (A)
-		//   6. Rid RigitBody from the Dummy parent
-		//   7. After cubes (B) landed, 
-		//      cubes (B) independent of the Dummy parent.
-		//   8. jump to first.
-
 		bool hasCompletedRow = false;
 		int removeRowNum = 0;
 		bool[,,] willRemoveCube = new bool[POOL_X, POOL_Y, POOL_Z];
