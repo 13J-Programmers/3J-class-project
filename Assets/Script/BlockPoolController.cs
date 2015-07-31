@@ -26,7 +26,7 @@ public class BlockPoolController : MonoBehaviour {
 	public const int POOL_X = 6;      // width
 	public const int POOL_Y = 10;     // height
 	public const int POOL_Z = POOL_X; // depth
-	GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
+	public GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	GameObject ground, poolCubes;
 	_DummyParent dummyParent;
 	GameManager gameManager;
@@ -40,10 +40,10 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	void Start() {
-		// BlockPool Transform
+		// BlockPool Transforms
 		//
 		// size : 5
-		// position : (-0.5, -2, -0.5)
+		// position : (0, -2.5, 0)
 		// scale : (0.5, 1.0, 0.5)
 		// 
 		// size : 6
@@ -72,6 +72,7 @@ public class BlockPoolController : MonoBehaviour {
 		}
 
 		// for debug
+		/*
 		if (Input.GetKeyDown("p")) {
 			for (int z = 0; z < POOL_Z; z++) {
 				for (int y = 0; y < POOL_Y; y++) {
@@ -83,6 +84,7 @@ public class BlockPoolController : MonoBehaviour {
 				}
 			}
 		}
+		*/
 	}
 
 	public void ControlBlock(GameObject block) {
