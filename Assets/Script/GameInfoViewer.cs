@@ -32,11 +32,10 @@ public class GameInfoViewer : MonoBehaviour {
 		int timeLeft = (int)gameManager.remainingTime;
 		int min = timeLeft / 60;
 		int sec = timeLeft % 60;
-		if(min == 0)
-			GUI.Label(new Rect(10, Screen.height - 20, 100, 60), "Time Left : " + sec + "sec", guiStyle);
-		else
-			GUI.Label(new Rect(10, Screen.height - 20, 100, 60), "Time Left : " + min + "min " + sec + "sec", guiStyle);
-
+		string time = "Time Left : ";
+		if (min != 0) time += min + "min ";
+		time += sec + "sec";
+		GUI.Label(new Rect(10, Screen.height - 20, 100, 60), time, guiStyle);
 	}
 
 	public void ShowNextBlock(int nextNum) {
