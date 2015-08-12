@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// 
+// This script is for create block object instance.
+// 
+
+using UnityEngine;
 using System.Collections;
 
 public class BlockEntity : MonoBehaviour {

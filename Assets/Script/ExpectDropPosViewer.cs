@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// 
+// This script displays block expected dropping position.
+// 
+
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,7 +58,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Vector3 correctedBlockPos = roundXZ(position);
 
 		// set expected y //
-		// get offsets
+		// get offsets for search in array
 		float halfOfWidth = 0.5f;
 		Dictionary<string, float> wallPos = blockPoolControl.GetWallPosition();
 		Vector3 offset = new Vector3(0, 0, 0);

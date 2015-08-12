@@ -1,8 +1,13 @@
-﻿using UnityEngine;
+﻿// 
+// This script controls motion of every dropping cubes in Pool, 
+// after deleting completed row.
+// 
+
+using UnityEngine;
 using System.Collections;
 
 //
-// this class is used by BlockPoolController.
+// This class is only used by BlockPoolController.
 //
 public class _DummyParent : MonoBehaviour {
 	private bool _isLanded = false;

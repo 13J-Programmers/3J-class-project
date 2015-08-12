@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿// 
+// This script manages important game state
+// and moves game mode.
+// 
+
+using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -7,12 +12,12 @@ public class GameManager : MonoBehaviour {
 	public int score = 0; // obtained score
 	public float remainingTime = 180; // sec
 	BlockEntity blockEntity;
-//	GamrInfoViewer gameInfo;
+	//GamrInfoViewer gameInfo;
 
 	// Use this for initialization
 	void Start() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
-	//	gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
+		//gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
 
 		GameStart();
 	}

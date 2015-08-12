@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿// 
+// This script controls block position and rotation.
+// 
+
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,7 +49,7 @@ public class BlockController : MonoBehaviour {
 
 		// block can move in specific range
 		// 
-		//   wallPos : coordinate of wall of blockPool
+		//   wallPos : coordinate of wall of Pool
 		//   blockMinCoord : minimum x,z coordinate
 		//   blockMaxCoord : maximum x,z coordinate
 		//   halfOfWidth : blockWidth / 2

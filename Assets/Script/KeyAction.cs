@@ -1,3 +1,7 @@
+// 
+// This script will turn pressing key into game obj motion.
+// 
+
 using UnityEngine;
 using System.Collections;
 

@@ -1,3 +1,7 @@
+// 
+// This script displays important game status to screen.
+// 
+
 using UnityEngine;
 using System.Collections;
 

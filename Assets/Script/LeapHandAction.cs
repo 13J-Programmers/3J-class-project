@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿// 
+// This script will turn hand motion into game obj motion.
+// Implementer have to consider operability.
+// 
+
+using UnityEngine;
 using System.Collections;
 using Leap;
 

@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿// 
+// This script controls Pool which is stored cubes position.
+// control means merge new block in Pool and delete completed rows.
+// 
+
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
+//
 // Behavior about BlockPoolController class
+// 
+// Script Lifecycle Flowchart
 // 
 //   |call
 //   ∨
@@ -18,7 +26,6 @@ using System.Collections.Generic;
 // _DummyParent --------> isLanded = true
 //   StartDropping()
 // 
-// 
 // After remove completed row, we need to wait cubes dropping.
 // then recall ControlBlock()
 // 
@@ -26,19 +33,23 @@ public class BlockPoolController : MonoBehaviour {
 	public const int POOL_X = 6;      // width
 	public const int POOL_Y = 10;     // height
 	public const int POOL_Z = POOL_X; // depth
+	// for storing position of each cubes
 	public GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	GameObject ground, poolCubes;
 	_DummyParent dummyParent;
 	GameManager gameManager;
 
-	// Use this for initialization
+	// This function is always called before 
+	// any Start functions and also just after a prefab is instantiated.
 	void Awake() {
+		// find obj and get it's components
 		ground = GameObject.Find("BlockPool/Ground");
 		poolCubes = GameObject.Find("BlockPool/Cubes");
 		dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 
+	// Use this for initialization
 	void Start() {
 		// BlockPool Transforms
 		//

@@ -1,3 +1,7 @@
+// 
+// This script controls variable camera position and direction.
+// 
+
 using UnityEngine;
 using System.Collections;
 
