@@ -18,16 +18,18 @@ public class KeyAction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
+		Transform camera = Camera.main.transform;
+
 		// Pitch Block
 		if (Input.GetKeyDown("w")) {
-			Vector3 right = Camera.main.transform.TransformDirection(Vector3.right);
+			Vector3 right = camera.TransformDirection(Vector3.right);
 			control.PitchBlock(right);
 		}
 		else if (Input.GetKeyDown("s")) {
-			Vector3 right = Camera.main.transform.TransformDirection(Vector3.right);
-			control.PitchBlock(-1 * right);
+			Vector3 left = camera.TransformDirection(Vector3.left);
+			control.PitchBlock(left);
 		}
-
+		
 		// Yaw Block
 		else if (Input.GetKeyDown("e")) {
 			control.YawBlock(1);
@@ -38,12 +40,12 @@ public class KeyAction : MonoBehaviour {
 
 		// Roll Block
 		else if (Input.GetKeyDown("d")) {
-			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
-			control.RollBlock(forward);
+			Vector3 back = camera.TransformDirection(Vector3.back);
+			control.RollBlock(back);
 		}
 		else if (Input.GetKeyDown("a")) {
-			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
-			control.RollBlock(-1 * forward);
+			Vector3 forward = camera.TransformDirection(Vector3.forward);
+			control.RollBlock(forward);
 		}
 
 		// Rotate Camera 
@@ -59,19 +61,19 @@ public class KeyAction : MonoBehaviour {
 		
 		// Move Block
 		if (Input.GetKey("up")) {
-			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward) * speed;
+			Vector3 forward = camera.TransformDirection(Vector3.forward) * speed;
 			control.MoveBlock(forward);
 		}
 		else if (Input.GetKey("down")) {
-			Vector3 back = Camera.main.transform.TransformDirection(Vector3.back) * speed;
+			Vector3 back = camera.TransformDirection(Vector3.back) * speed;
 			control.MoveBlock(back);
 		}
 		else if (Input.GetKey("right")) {
-			Vector3 right = Camera.main.transform.TransformDirection(Vector3.right) * speed;
+			Vector3 right = camera.TransformDirection(Vector3.right) * speed;
 			control.MoveBlock(right);
 		}
 		else if (Input.GetKey("left")) {
-			Vector3 left = Camera.main.transform.TransformDirection(Vector3.left) * speed;
+			Vector3 left = camera.TransformDirection(Vector3.left) * speed;
 			control.MoveBlock(left);
 		}
 
