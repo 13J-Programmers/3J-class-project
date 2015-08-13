@@ -1,22 +1,23 @@
-// 
-// This script will turn pressing key into game obj motion.
-// 
+/// 
+/// @file   KeyAction.cs
+/// @brief  This script will turn pressing key into game obj motion.
+/// 
 
 using UnityEngine;
 using System.Collections;
 
 public class KeyAction : MonoBehaviour {
-	// A container for control target
+	/// A container for control target
 	GameObject target;
 	BlockController control;
 	CameraController cameraController;
 	
-	// Use this for initialization
+	/// Use this for initialization
 	void Start() {
 		cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
 	}
 	
-	// Update is called once per frame
+	/// Update is called once per frame
 	void Update() {
 		Transform camera = Camera.main.transform;
 
@@ -83,12 +84,14 @@ public class KeyAction : MonoBehaviour {
 		}
 	}
 
+	/// get component of the new block for comment
 	public void ConnectWithBlock() {
 		target = GameObject.Find("block(new)");
 		if (!target) return;
 		control = target.GetComponent<BlockController>();
 	}
 
+	/// get component of the _DummyBlock for disconnect
 	public void DisconnectWithBlock() {
 		target = GameObject.Find("_DummyBlock");
 		if (!target) return;

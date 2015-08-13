@@ -1,7 +1,9 @@
-﻿// 
-// This script will turn hand motion into game obj motion.
-// Implementer have to consider operability.
-// 
+﻿/// 
+/// @file  LeapHandAction.cs
+/// @brief 
+///   This script will turn hand motion into game obj motion.
+///   Implementer have to consider operability.
+/// 
 
 using UnityEngine;
 using System.Collections;

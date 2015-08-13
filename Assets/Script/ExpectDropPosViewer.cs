@@ -1,6 +1,7 @@
-﻿// 
-// This script displays block expected dropping position.
-// 
+﻿/// 
+/// @file  ExpectDropPosViewer.cs
+/// @brief This script displays block expected dropping position.
+/// 
 
 using UnityEngine;
 using System;
@@ -8,15 +9,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ExpectDropPosViewer : MonoBehaviour {
-	int POOL_X;
-	int POOL_Y;
-	int POOL_Z;
 	BlockPoolController blockPoolControl;
 	GameObject controllingBlock;
 	GameObject showDropPosBlock;
 	GameObject ground;
+	/// is syncing with the controlling block?
 	bool isSync = true;
 
+	/// This function is always called before 
+	/// any Start functions and also just after a prefab is instantiated.
 	void Awake() {
 		blockPoolControl = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 		ground = GameObject.Find("BlockPool/Ground");
@@ -43,7 +44,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 	// private methods --------------------------------
 
-	// round x,z coordinate
+	/// round x,z coordinate
 	private Vector3 roundXZ(Vector3 vector) {
 		Vector3 _vector;
 		_vector.x = (float)Math.Round(vector.x);
@@ -52,7 +53,9 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		return _vector;
 	}
 
-	// decide position of showDropPosBlock
+	/// decide position of showDropPosBlock
+	/// * @param position - original block position
+	/// * @return expected dropping position
 	private Vector3 ExpectDropPos(Vector3 position) {
 		// set expected x,z //
 		Vector3 correctedBlockPos = roundXZ(position);
@@ -118,7 +121,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		return correctedBlockPos;
 	}
 
-	// clone block to create skelton it
+	/// clone block to create skelton it
 	private void CloneSkeltonBlock() {
 		Vector3 originBlockPos = controllingBlock.transform.position;
 		Vector3 cloneBlockPos = ExpectDropPos(originBlockPos);

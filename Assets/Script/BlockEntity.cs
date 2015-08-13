@@ -1,21 +1,22 @@
-﻿// 
-// This script is for create block object instance.
-// 
+﻿/// 
+/// @file  BlockEntity.cs
+/// @brief This script is for create block object instance.
+/// 
 
 using UnityEngine;
 using System.Collections;
 
 public class BlockEntity : MonoBehaviour {
-	// block prefabs
 	public const int prefabMaxNum = 18;
+	/// block prefabs
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
 	public int nextBlockNum;
 	public int currentBlockNum;
 	KeyAction keyAction;
 	GameInfoViewer gameInfoViewer;
 
-	// BlockEntity methods are invoked from Start() in GameManager.
-	// therefore, initializing variables have to write in Awake().
+	/// BlockEntity methods are invoked from Start() in GameManager.
+	/// therefore, initializing variables have to write in Awake().
 	void Awake() {
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
 		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
@@ -23,7 +24,7 @@ public class BlockEntity : MonoBehaviour {
 		currentBlockNum = Random.Range(0, prefabMaxNum);
 	}
 
-	// Use this for initialization
+	/// Use this for initialization
 	void Start() {
 		// change every cube of block
 		BoxCollider bc;
@@ -38,7 +39,7 @@ public class BlockEntity : MonoBehaviour {
 		}
 	}
 	
-	// Update is called once per frame
+	/// Update is called once per frame
 	void Update() {
 		
 	}
@@ -66,6 +67,7 @@ public class BlockEntity : MonoBehaviour {
 
 	// private methods ------------------------------
 
+	/// set score to menber of CubeInfo component
 	private void SetScoreToCube(GameObject newBlock) {
 		CubeInfo cubeInfo;
 		cubeInfo = newBlock.AddComponent<CubeInfo>();

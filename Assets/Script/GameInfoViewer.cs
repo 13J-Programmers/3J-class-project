@@ -1,6 +1,7 @@
-// 
-// This script displays important game status to screen.
-// 
+/// 
+/// @file  GameInfoViewer.cs 
+/// @brief This script displays important game status to screen.
+/// 
 
 using UnityEngine;
 using System.Collections;
@@ -26,10 +27,10 @@ public class GameInfoViewer : MonoBehaviour {
 		guiStyle.normal = guiStyleState;
 	}
 
-	// show following item
-	//   * lines
-	//   * score
-	//   * game time
+	/// show following item
+	///   * lines
+	///   * score
+	///   * game time
 	private void OnGUI() {
 		GUI.Label(new Rect(10, Screen.height - 60, 100, 60), "Lines : " + gameManager.lines, guiStyle);
 		GUI.Label(new Rect(10, Screen.height - 40, 100, 60), "Score : " + gameManager.score, guiStyle);

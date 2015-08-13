@@ -1,6 +1,7 @@
-﻿// 
-// This script controls block position and rotation.
-// 
+﻿/// 
+/// @file   BlockController.cs
+/// @brief  controls block position and rotation.
+/// 
 
 using UnityEngine;
 using System;
@@ -13,9 +14,10 @@ public class BlockController : MonoBehaviour {
 	BlockEntity blockEntity;
 	ExpectDropPosViewer expectDropPosViewer;
 	// coordinate for check if collide the wall or not
-	Vector3 blockMinCoord, blockMaxCoord;
+	Vector3 blockMinCoord; ///< max coordinate in block
+	Vector3 blockMaxCoord; ///< min coordinate in block
 
-	// Use this for initialization
+	/// Use this for initialization
 	void Start() {
 		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
@@ -30,7 +32,7 @@ public class BlockController : MonoBehaviour {
 		);
 	}
 	
-	// Update is called once per frame
+	/// Update is called once per frame
 	void Update() {
 		// set the block min-max coordinate
 		SetMinMaxCoord();
@@ -38,12 +40,14 @@ public class BlockController : MonoBehaviour {
 		FixPosition();
 	}
 
-	// if the gameObject is out of camera range, destroy it.
+	/// if the gameObject is out of camera range, destroy it.
 	void OnBecameInvisible() {
 		Destroy(gameObject);
 	}
 
-	// move the block
+	/// move the block
+	/// @param x - moving x direction
+	/// @param z - moving z direction
 	public void MoveBlock(float x, float z) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 
@@ -81,12 +85,14 @@ public class BlockController : MonoBehaviour {
 		transform.Translate(new Vector3(x, 0, z), Space.World);
 	}
 
-	// MoveBlock arguments can be Vector3
+	/// MoveBlock arguments can be Vector3
 	public void MoveBlock(Vector3 vector) {
 		MoveBlock(vector.x, vector.z);
 	}
 
-	// pitch the block
+	/// pitch the block
+	/// this method can decide forward direction via camera.
+	/// @param direct - Vector3 right or left 
 	public void PitchBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Vector3 newDirect = CorrectDirection(direct);
@@ -97,13 +103,15 @@ public class BlockController : MonoBehaviour {
 			Rotate(0, 0, newDirect.z * 90);
 	}
 
-	// yaw the block
+	/// yaw the block
 	public void YawBlock(int direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Rotate(0, direct * 90, 0);
 	}
 
-	// roll the block
+	/// roll the block
+	/// this method can decide right direction via camera.
+	/// @param direct - Vector3 forward or back 
 	public void RollBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Vector3 newDirect = CorrectDirection(direct);
@@ -115,10 +123,11 @@ public class BlockController : MonoBehaviour {
 	}
 
 
-	// drop the block
-	//   change gameObject.name = "block(dropping)"
-	//   correct the position
-	//   add gravity to drop block
+	/// drop the block
+	/// steps:
+	///   1. change gameObject.name = "block(dropping)"
+	///   2. correct position of the block
+	///   3. add gravity to drop block
 	public void DropBlock() {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 
@@ -132,7 +141,7 @@ public class BlockController : MonoBehaviour {
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
 
-	// return correct coordinate
+	/// return correct coordinate
 	public Vector3 GetCorrectPosition() {
 		Vector3 correctedPos = roundXZ(transform.position);
 		return correctedPos;
@@ -141,13 +150,17 @@ public class BlockController : MonoBehaviour {
 
 	// private methods ------------------------------------------------
 
-	// rotate myself
+	/// rotate myself in world space coordinate
+	/// @param x - rotate in x-axis [deg]
+	/// @param y - rotate in y-axis [deg]
+	/// @param z - rotate in z-axis [deg]
 	private void Rotate(float x, float y, float z) {
 		Vector3 v = new Vector3(x, y, z);
 		transform.Rotate(v, Space.World);
 	}
 
-	// called when this collider/rigidbody has begun touching another rigidbody/collider.
+	/// called when this collider/rigidbody has begun touching another rigidbody/collider.
+	/// @param col - another collider info
 	private void OnCollisionEnter(Collision col) {
 		if (gameObject.name.CompareTo("block(dropping)") != 0) return;
 
@@ -184,7 +197,7 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 
-	// round x,z coordinate
+	/// round x,z coordinate
 	private Vector3 roundXZ(Vector3 vector) {
 		Vector3 _vector;
 		_vector.x = (float)Math.Round(vector.x);
@@ -193,20 +206,21 @@ public class BlockController : MonoBehaviour {
 		return _vector;
 	}
 
-	// return myself correct position
+	/// move correct position and return it position
+	/// @return corrected position
 	private Vector3 CorrectPosition() {
 		Vector3 correctedPos = roundXZ(transform.position);
 		transform.position = correctedPos;
 		return correctedPos;
 	}
 
-	// return myself correct position
+	/// return myself correct direction
 	private Vector3 CorrectDirection(Vector3 currentPosition) {
 		Vector3 correctedDir = roundXZ(currentPosition);
 		return correctedDir;
 	}
 
-	// set the block min-max x,y,z coordinate
+	/// set the block min-max x,y,z coordinate
 	private void SetMinMaxCoord() {
 		// init block min-max coordinate
 		blockMinCoord = blockMaxCoord = transform.position;
@@ -225,7 +239,7 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 
-	// after rotate, if part of the block into wall, fix position
+	/// after rotate, if part of the block into wall, fix position
 	private void FixPosition() {
 		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
 		if (wallPos["x-min"] > blockMinCoord.x) {

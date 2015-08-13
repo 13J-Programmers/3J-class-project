@@ -1,16 +1,26 @@
-﻿// 
-// This script provides swapping rendering mode in unity 5.0 on run time.
-//   refs: http://sassybot.com/blog/swapping-rendering-mode-in-unity-5-0/
-//
+﻿/// 
+/// @file StandardShader.cs
+/// @brief
+///   This script provides swapping rendering mode in unity 5.0 on run time.
+///   refs: http://sassybot.com/blog/swapping-rendering-mode-in-unity-5-0/
+///
 
 using UnityEngine;
 using System.Collections;
 
+/// 
+/// rendering mode enums (Opaque, Cutout, Fade, Transparent)
+/// 
 public enum BlendMode {
 	Opaque, Cutout, Fade, Transparent
 };
 
 public class StandardShader : MonoBehaviour {
+	/// 
+	/// swapping material's rendering mode
+	/// @param material - target material
+	/// @param blendMode - set enum BlendMode
+	/// 
 	public static void SetBlendMode(Material material, BlendMode blendMode) {
 		switch (blendMode) {
 			case BlendMode.Opaque:

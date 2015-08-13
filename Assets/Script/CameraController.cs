@@ -1,12 +1,13 @@
-// 
-// This script controls variable camera position and direction.
-// 
+/// 
+/// @file  CameraController.cs
+/// @brief This script controls camera position and direction.
+/// 
 
 using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
-	GameObject target; // staring target
+	GameObject target; ///< staring target
 
 	// Use this for initialization
 	void Start() {
@@ -20,6 +21,8 @@ public class CameraController : MonoBehaviour {
 		transform.LookAt(poolPos);
 	}
 
+	/// rotate camera on an axis of Pool center.
+	/// @param direct - rotating direction: 1 or -1
 	public void RotateCam(int direct) {
 		transform.RotateAround( target.transform.position, Vector3.up, direct * 45 * Time.deltaTime );
 	}

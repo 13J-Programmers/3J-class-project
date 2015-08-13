@@ -1,7 +1,7 @@
-﻿// 
-// This script manages important game state
-// and moves game mode.
-// 
+﻿/// 
+/// @file  GameManager.cs
+/// @brief This script manages important game state and moves game mode.
+/// 
 
 using UnityEngine;
 using System.Collections;

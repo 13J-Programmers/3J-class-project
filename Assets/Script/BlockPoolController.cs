@@ -1,46 +1,48 @@
-﻿// 
-// This script controls Pool which is stored cubes position.
-// control means merge new block in Pool and delete completed rows.
-// 
+﻿/// 
+/// @file   BlockPoolController.cs
+/// @brief 
+///   This script controls Pool which is stored cubes position.
+///   control means merge new block in Pool and delete completed rows.
+/// 
 
 using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-//
-// Behavior about BlockPoolController class
-// 
+///
+/// Behavior about BlockPoolController class
+/// 
 // Script Lifecycle Flowchart
 // 
-//   |call
-//   ∨
-// BlockPoolController
-//   ControlBlock() <--------+
-//   | MergeBlock()          | update()
-//   | SearchCubePos()       |   if (_DummyParent.isLanded) 
-//   | RemoveCompletedRow()  |     dummyParent.FinishDropping()
-//   |                       |     recall
-//   ∨                       |
-//
-// _DummyParent --------> isLanded = true
-//   StartDropping()
-// 
-// After remove completed row, we need to wait cubes dropping.
-// then recall ControlBlock()
-// 
+//       |call
+//       ∨
+//     BlockPoolController
+//       ControlBlock()  << -----+
+//       | MergeBlock()          | update()
+//       | SearchCubePos()       |   if (_DummyParent.isLanded) 
+//       | RemoveCompletedRow()  |     dummyParent.FinishDropping()
+//       |                       |     recall
+//       ∨                       |
+//    
+//     _DummyParent --------> isLanded = true
+//       StartDropping()
+/// 
+/// After remove completed row, we need to wait cubes dropping.
+/// then recall ControlBlock()
+/// 
 public class BlockPoolController : MonoBehaviour {
-	public const int POOL_X = 6;      // width
-	public const int POOL_Y = 10;     // height
-	public const int POOL_Z = POOL_X; // depth
-	// for storing position of each cubes
+	public const int POOL_X = 6;      ///< width
+	public const int POOL_Y = 10;     ///< height
+	public const int POOL_Z = POOL_X; ///< depth
+	/// for storing position of each cubes
 	public GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	GameObject ground, poolCubes;
 	_DummyParent dummyParent;
 	GameManager gameManager;
 
-	// This function is always called before 
-	// any Start functions and also just after a prefab is instantiated.
+	/// This function is always called before 
+	/// any Start functions and also just after a prefab is instantiated.
 	void Awake() {
 		// find obj and get it's components
 		ground = GameObject.Find("BlockPool/Ground");
@@ -98,6 +100,7 @@ public class BlockPoolController : MonoBehaviour {
 		*/
 	}
 
+	/// main process in Pool
 	public void ControlBlock(GameObject block) {
 		InitPool();
 		MergeBlock(block);
@@ -106,7 +109,7 @@ public class BlockPoolController : MonoBehaviour {
 		RemoveCompletedRow();
 	}
 
-	// return the 4 walls position
+	/// return the 4 walls position
 	public Dictionary<string, float> GetWallPosition() {
 		Dictionary<string, float> wallPosition = new Dictionary<string, float>();
 
@@ -125,7 +128,7 @@ public class BlockPoolController : MonoBehaviour {
 
 	// private methods ------------------------------
 
-	// init the pool block
+	/// init the Pool
 	private void InitPool() {
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
@@ -136,29 +139,29 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
-	// merge block cubes in BlockPool/Cubes
-	// 
-	// before:
-	//
-	//   ├── BlockPool
-	//   │   ├── Ground
-	//   │   ├── Wall
-	//   │   └── Cubes
-	//   └── block(dropping)
-	//       ├── Cube
-	//       ├── Cube
-	//       └── Cube
-	//   
-	// after:
-	//
-	//   └── BlockPool
-	//       ├── Ground
-	//       ├── Wall
-	//       └── Cubes
-	//           ├── Cube
-	//           ├── Cube
-	//           └── Cube
-	// 
+	/// merge block cubes in BlockPool/Cubes
+	/// 
+	///     before:
+	///    
+	///       ├── BlockPool
+	///       │   ├── Ground
+	///       │   ├── Wall
+	///       │   └── Cubes
+	///       └── block(dropping)
+	///           ├── Cube
+	///           ├── Cube
+	///           └── Cube
+	///       
+	///     after:
+	///    
+	///       └── BlockPool
+	///           ├── Ground
+	///           ├── Wall
+	///           └── Cubes
+	///               ├── Cube
+	///               ├── Cube
+	///               └── Cube
+	/// 
 	private void MergeBlock(GameObject block) {
 		if (block == null) return;
 		// move block cubes into poolCubes
@@ -178,8 +181,9 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
-	// collect each position of block's cubes
-	// blockPool[,,] has each cubes position
+	/// collect each position of block's cubes
+	/// blockPool[,,] has each cubes position
+	/// @see SetCubePos()
 	private void SearchCubePos() {
 		Dictionary<string, float> wallPos = GetWallPosition();
 
@@ -193,7 +197,7 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
-	// set the cube position to blockPool
+	/// set the cube position to Pool
 	private void SetCubePos(Transform obj, Vector3 offset) {
 		float halfOfWidth = 0.5f;
 		int x = (int)Mathf.Round(obj.position.x + offset.x - halfOfWidth);
@@ -209,8 +213,8 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
-	// sometimes, cube position is unexpected.
-	// therefore, cubes are need to correct position.
+	/// sometimes, cube is put unexpected position.
+	/// therefore, cubes need to correct position.
 	private void FixCubePos() {
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
@@ -227,19 +231,19 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
-	// remove completed row
-	//
-	// steps:
-	//   1. Marking cubes of every completed row. (A)
-	//   2. Marking cubes which above them. (B)
-	//   3. Cubes (B) belong to a Dummy parent
-	//   4. Add RigitBody to the Dummy parent
-	//   5. Remove (A)
-	//   6. Rid RigitBody from the Dummy parent
-	//   7. After cubes (B) landed, 
-	//      cubes (B) independent of the Dummy parent.
-	//   8. jump to first.
-	//
+	/// remove completed row
+	///
+	/// steps:
+	///   1. Marking cubes of every completed row. (A)
+	///   2. Marking cubes which above them. (B)
+	///   3. Cubes (B) belong to a Dummy parent
+	///   4. Add RigitBody to the Dummy parent
+	///   5. Remove (A)
+	///   6. Rid RigitBody from the Dummy parent
+	///   7. After cubes (B) landed, 
+	///      cubes (B) independent of the Dummy parent.
+	///   8. jump to first.
+	///
 	private bool RemoveCompletedRow() {
 		bool hasCompletedRow = false;
 		int removeRowNum = 0;
