@@ -3,6 +3,26 @@
 /// @brief This script manages important game state and moves game mode.
 /// 
 
+/**
+ * \mainpage Ecoris - Eco Tetris in 3D
+ * 
+ * \section s1 About this
+ * 
+ * Ecoris is the abbreviation of Eco-tetris.
+ * 
+ * features:
+ * - play tetris in 3d
+ * - gameplay with LEAP-MOTION
+ * - thinking ecology in this game
+ * - award the title depending on your score
+ * 
+ * \section s2 See Also
+ * 
+ * Every codes of this project are open.
+ * 
+ * - \link https://github.com/13J-Programmers/3J_class_project \endlink
+ */
+
 using UnityEngine;
 using System.Collections;
 
