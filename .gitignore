@@ -23,7 +23,7 @@
 sysinfo.txt
 *.stackdump
 
-# depend each development environment
+# depends on each development environment
 ProjectVersion.txt
 EditorBuildSettings.asset
 InputManager.asset
@@ -34,3 +34,7 @@ TimeManager.asset
 AudioManager.asset
 DynamicsManager.asset
 NetworkManager.asset
+
+# Doxygen files
+Doxyfile
+html/
