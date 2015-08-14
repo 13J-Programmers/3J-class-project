@@ -77,7 +77,7 @@ Unityが自動生成するmetaファイルは、必ずコミットすること�
 #### Pull Request
 
 Pull Requestがまだ作業中の場合、`[WIP]`（Work In Progress）をタイトル冒頭に付けるようにしましょう。
-こうすることにより、謝ってmergeすることを防ぐことができます。
+こうすることにより、誤ってmergeすることを防ぐことができます。
 
 #### Work Flow (GitHub Flow)
 
