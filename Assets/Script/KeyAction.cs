@@ -6,15 +6,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class KeyAction : MonoBehaviour {
-	/// A container for control target
-	GameObject target;
-	BlockController control;
-	CameraController cameraController;
-	
+public class KeyAction : UserAction {
 	/// Use this for initialization
 	void Start() {
-		cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+
 	}
 	
 	/// Update is called once per frame
@@ -24,29 +19,29 @@ public class KeyAction : MonoBehaviour {
 		// Pitch Block
 		if (Input.GetKeyDown("w")) {
 			Vector3 right = camera.TransformDirection(Vector3.right);
-			control.PitchBlock(right);
+			blockController.PitchBlock(right);
 		}
 		else if (Input.GetKeyDown("s")) {
 			Vector3 left = camera.TransformDirection(Vector3.left);
-			control.PitchBlock(left);
+			blockController.PitchBlock(left);
 		}
 		
 		// Yaw Block
 		else if (Input.GetKeyDown("e")) {
-			control.YawBlock(1);
+			blockController.YawBlock(1);
 		}
 		else if (Input.GetKeyDown("q")) {
-			control.YawBlock(-1);
+			blockController.YawBlock(-1);
 		}
 
 		// Roll Block
 		else if (Input.GetKeyDown("d")) {
 			Vector3 back = camera.TransformDirection(Vector3.back);
-			control.RollBlock(back);
+			blockController.RollBlock(back);
 		}
 		else if (Input.GetKeyDown("a")) {
 			Vector3 forward = camera.TransformDirection(Vector3.forward);
-			control.RollBlock(forward);
+			blockController.RollBlock(forward);
 		}
 
 		// Rotate Camera 
@@ -63,38 +58,24 @@ public class KeyAction : MonoBehaviour {
 		// Move Block
 		if (Input.GetKey("up")) {
 			Vector3 forward = camera.TransformDirection(Vector3.forward) * speed;
-			control.MoveBlock(forward);
+			blockController.MoveBlock(forward);
 		}
 		else if (Input.GetKey("down")) {
 			Vector3 back = camera.TransformDirection(Vector3.back) * speed;
-			control.MoveBlock(back);
+			blockController.MoveBlock(back);
 		}
 		else if (Input.GetKey("right")) {
 			Vector3 right = camera.TransformDirection(Vector3.right) * speed;
-			control.MoveBlock(right);
+			blockController.MoveBlock(right);
 		}
 		else if (Input.GetKey("left")) {
 			Vector3 left = camera.TransformDirection(Vector3.left) * speed;
-			control.MoveBlock(left);
+			blockController.MoveBlock(left);
 		}
 
 		// Drop Block 
 		if (Input.GetKeyDown("space")) {
-			control.DropBlock();
+			blockController.DropBlock();
 		}
-	}
-
-	/// get component of the new block for comment
-	public void ConnectWithBlock() {
-		target = GameObject.Find("block(new)");
-		if (!target) return;
-		control = target.GetComponent<BlockController>();
-	}
-
-	/// get component of the _DummyBlock for disconnect
-	public void DisconnectWithBlock() {
-		target = GameObject.Find("_DummyBlock");
-		if (!target) return;
-		control = target.GetComponent<BlockController>();
 	}
 }

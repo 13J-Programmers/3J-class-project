@@ -9,10 +9,9 @@ using UnityEngine;
 using System.Collections;
 using Leap;
 
-public class LeapHandAction : MonoBehaviour {
+public class LeapHandAction : UserAction {
 	Controller controller = new Controller();
-	BlockController blockController;
-	private GameObject block;
+	//private GameObject block;
 
 	// Use this for initialization
 	void Start() {
@@ -39,9 +38,11 @@ public class LeapHandAction : MonoBehaviour {
 		blockController.MoveBlock(hand_x, hand_z);
 	}
 
+	/*
 	void ConnectWithBlock() {
 		block = GameObject.Find("block");
 		if (!block) return;
 		blockController = block.GetComponent<BlockController>();
 	}
+	*/
 }
