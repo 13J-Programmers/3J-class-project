@@ -94,15 +94,16 @@ public class BlockController : MonoBehaviour {
 
 	/// pitch the block
 	/// this method can decide forward direction via camera.
-	/// @param direct - Vector3 right or left 
+	/// @param direct - Vector3 forward or back 
 	public void PitchBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
-		Vector3 newDirect = CorrectDirection(direct);
-		Debug.Log(newDirect);
-		if (Math.Abs(direct.x) >= Math.Abs(direct.z))
-			Rotate(newDirect.x * 90, 0, 0);
-		else if (Math.Abs(direct.x) < Math.Abs(direct.z))
-			Rotate(0, 0, newDirect.z * 90);
+		Vector3 newDirect = roundXZ(direct);
+		//Debug.Log(direct + " => " + newDirect + "; " + (Math.Abs(direct.x) >= Math.Abs(direct.z)) );
+		if (Math.Abs(direct.x) >= Math.Abs(direct.z)) {
+			Rotate(0, 0, -newDirect.x * 90);
+		} else {
+			Rotate(newDirect.z * 90, 0, 0);
+		}
 	}
 
 	/// yaw the block
@@ -113,15 +114,16 @@ public class BlockController : MonoBehaviour {
 
 	/// roll the block
 	/// this method can decide right direction via camera.
-	/// @param direct - Vector3 forward or back 
+	/// @param direct - Vector3 right or left 
 	public void RollBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
-		Vector3 newDirect = CorrectDirection(direct);
-		Debug.Log(newDirect);
-		if (Math.Abs(direct.x) >= Math.Abs(direct.z))
-			Rotate(newDirect.x * 90, 0, 0);
-		else if (Math.Abs(direct.x) < Math.Abs(direct.z))
-			Rotate(0, 0, newDirect.z * 90);
+		Vector3 newDirect = roundXZ(direct);
+		//Debug.Log(direct + " => " + newDirect + "; " + (Math.Abs(direct.x) >= Math.Abs(direct.z)) );
+		if (Math.Abs(direct.x) >= Math.Abs(direct.z)) {
+			Rotate(0, 0, -newDirect.x * 90);
+		} else {
+			Rotate(newDirect.z * 90, 0, 0);
+		}
 	}
 
 

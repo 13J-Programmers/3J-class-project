@@ -18,12 +18,12 @@ public class KeyAction : UserAction {
 
 		// Pitch Block
 		if (Input.GetKeyDown("w")) {
-			Vector3 right = camera.TransformDirection(Vector3.right);
-			blockController.PitchBlock(right);
+			Vector3 forward = camera.TransformDirection(Vector3.forward);
+			blockController.PitchBlock(forward);
 		}
 		else if (Input.GetKeyDown("s")) {
-			Vector3 left = camera.TransformDirection(Vector3.left);
-			blockController.PitchBlock(left);
+			Vector3 back = camera.TransformDirection(Vector3.back);
+			blockController.PitchBlock(back);
 		}
 		
 		// Yaw Block
@@ -36,12 +36,12 @@ public class KeyAction : UserAction {
 
 		// Roll Block
 		else if (Input.GetKeyDown("d")) {
-			Vector3 back = camera.TransformDirection(Vector3.back);
-			blockController.RollBlock(back);
+			Vector3 right = camera.TransformDirection(Vector3.right);
+			blockController.RollBlock(right);
 		}
 		else if (Input.GetKeyDown("a")) {
-			Vector3 forward = camera.TransformDirection(Vector3.forward);
-			blockController.RollBlock(forward);
+			Vector3 left = camera.TransformDirection(Vector3.left);
+			blockController.RollBlock(left);
 		}
 
 		// Rotate Camera 
