@@ -31,43 +31,39 @@ public class LeapHandAction : UserAction {
 		//HandList hands = frame.Hands;
 		//Hand hand = hands[0];
 		Hand hand = frame.Hands.Rightmost;
-		Vector position = hand.PalmPosition;
-		//Vector velocity = hand.PalmVelocity;
-		//Vector direction = hand.Direction;
-		Vector handAngle = new Vector( ///< the inclination of the hand
+		
+		// reject non confidence hand
+		if (hand.Confidence < 0.2) return;
+
+		DetectMovingAction(hand);
+		DetectRotatingAction(hand);
+		
+	}
+
+	/// Compute the inclination of the hand
+	private Vector ComputeHandAngle(Hand hand) {
+		Vector handAngle = new Vector(
 			hand.Direction.Pitch, 
 			hand.Direction.Yaw, 
 			hand.PalmNormal.Roll
 		);
+		return handAngle;
+	}
 
-		if (hand.Confidence < 0.2) return;
-
-		//print(handAngle);
-
-		/*
-		string fingers_pos = "";
-		foreach (Finger finger in hand.Fingers) {
-			fingers_pos += finger.TipPosition + " ";
-		}
-		print(fingers_pos);
-		*/
-
-		// Move
+	/// Parallel moving of block
+	private void DetectMovingAction(Hand hand) {
+		Vector position = hand.PalmPosition;
 		float game_scale = 0.01f;
-		float handX =  position.x * game_scale;
-		float handZ = -position.z * game_scale;
-		//blockController.MoveBlock(handX, handZ);
+		float handX =  position.x * game_scale; // hand x coordinate from LEAP
+		float handZ = -position.z * game_scale; // hand x coordinate from LEAP
+		float speed = 0.08f; // moving speed
 
+		const float point = 1f; // Detectable range from +point+ to infinity
+		
+		Vector handAngle = ComputeHandAngle(hand);
 		Transform camera = Camera.main.transform;
 
-		// Move speed
-		float speed = 0.08f;
-
-		// Detectable range from +point+ to infinity
-		const float point = 1f;
-
 		// Move Block
-		print("x : " + handX + ";  z : " + handZ);
 		if (handZ > point) {
 			Vector3 forward = camera.TransformDirection(Vector3.forward) * speed;
 			blockController.MoveBlock(forward);
@@ -84,15 +80,21 @@ public class LeapHandAction : UserAction {
 			Vector3 left = camera.TransformDirection(Vector3.left) * speed;
 			blockController.MoveBlock(left);
 		}
+		//print("x : " + handX + ";  z : " + handZ);
+	}
 
-
-		// define non rotatable angle range
+	/// Rotating of block
+	private void DetectRotatingAction(Hand hand) {
+		// define angle range of non rotatable
 		const float upRange = 0.6f;
 		const float downRange = -0.6f;
 		const float rightRange = 0.5f;
 		const float leftRange = -0.5f;
 		const float clockwiseRange = -0.6f;
 		const float counterClockwiseRange = 0.6f;
+
+		Vector handAngle = ComputeHandAngle(hand);
+		Transform camera = Camera.main.transform;
 
 		// Pitch Block
 		if (handAngle.x < downRange && isRotatedX == false) {
@@ -104,7 +106,6 @@ public class LeapHandAction : UserAction {
 			blockController.PitchBlock(back);
 			isRotatedX = true;
 		}
-
 		// Yaw Block
 		if (handAngle.y < leftRange && isRotatedY == false) {
 			blockController.YawBlock(-1);
@@ -113,7 +114,6 @@ public class LeapHandAction : UserAction {
 			blockController.YawBlock(1);
 			isRotatedY = true;
 		}
-
 		// Roll Block
 		if (handAngle.z < clockwiseRange && isRotatedZ == false) {
 			Vector3 right = camera.TransformDirection(Vector3.right);
@@ -125,23 +125,26 @@ public class LeapHandAction : UserAction {
 			isRotatedZ = true;
 		}
 
-		if (IsInside(handAngle.x, downRange, upRange)) {
+		// reset the flag which represent block rotated
+		if (IsVarOnInterval(handAngle.x, downRange, upRange)) {
 			isRotatedX = false;
 		}
-		if (IsInside(handAngle.y, leftRange, rightRange)) {
+		if (IsVarOnInterval(handAngle.y, leftRange, rightRange)) {
 			isRotatedY = false;
 		}
-		if (IsInside(handAngle.z, clockwiseRange, counterClockwiseRange)) {
+		if (IsVarOnInterval(handAngle.z, clockwiseRange, counterClockwiseRange)) {
 			isRotatedZ = false;
 		}
 	}
 
-	private bool RotateWith(Vector3 vector) {
-		return true;
+	/// verify the argument var is in a range (min, max)
+	private bool IsVarOnInterval(float var, float min, float max) {
+		return min < var && var < max;
 	}
 
-	private bool IsInside(float var, float min, float max) {
-		return min < var && var < max;
+	/// Dropping of block
+	private void DetectDroppingAction(Hand hand) {
+		//Vector velocity = hand.PalmVelocity;
 	}
 }
 
