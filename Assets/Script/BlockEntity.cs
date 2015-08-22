@@ -13,12 +13,14 @@ public class BlockEntity : MonoBehaviour {
 	public int nextBlockNum;
 	public int currentBlockNum;
 	KeyAction keyAction;
+	LeapHandAction leapHandAction;
 	GameInfoViewer gameInfoViewer;
 
 	/// BlockEntity methods are invoked from Start() in GameManager.
 	/// therefore, initializing variables have to write in Awake().
 	void Awake() {
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
+		leapHandAction = GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>();
 		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
 		nextBlockNum = Random.Range(0, prefabMaxNum);
 		currentBlockNum = Random.Range(0, prefabMaxNum);
@@ -61,8 +63,9 @@ public class BlockEntity : MonoBehaviour {
 		newBlock.AddComponent<ExpectDropPosViewer>();
 		SetScoreToCube(newBlock);
 
-		// connect Key and block
+		// connect user action and block
 		keyAction.ConnectWithBlock();
+		leapHandAction.ConnectWithBlock();
 	}
 
 	// private methods ------------------------------

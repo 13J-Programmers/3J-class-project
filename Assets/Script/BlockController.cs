@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class BlockController : MonoBehaviour {
 	BlockPoolController blockPool;
 	KeyAction keyAction;
+	LeapHandAction leapHandAction;
 	BlockEntity blockEntity;
 	ExpectDropPosViewer expectDropPosViewer;
 	// coordinate for check if collide the wall or not
@@ -21,6 +22,7 @@ public class BlockController : MonoBehaviour {
 	void Start() {
 		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
+		leapHandAction = GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>();
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		expectDropPosViewer = gameObject.GetComponent<ExpectDropPosViewer>();
 
@@ -169,11 +171,12 @@ public class BlockController : MonoBehaviour {
 			//
 			//                     block
 			//   BlockController --------> BlockPoolController
-			//               connect
-			//   keyAction -----X----> BlockController
+			//              disconnect
+			//   Actions -------X------> BlockController
 			//
 			blockPool.ControlBlock(gameObject);
 			keyAction.DisconnectWithBlock();
+			leapHandAction.DisconnectWithBlock();
 
 			// destory expected drop pos
 			expectDropPosViewer.StopShowing();
@@ -186,10 +189,11 @@ public class BlockController : MonoBehaviour {
 			if (!GameObject.Find("block(new)")) {
 				blockEntity.CreateRandomBlock();
 			}
-			//               connect
-			//   keyAction ----------> BlockController
+			//             connect
+			//   Actions ----------> BlockController
 			//
 			keyAction.ConnectWithBlock();
+			leapHandAction.ConnectWithBlock();
 
 			// All jobs has finished. So destroy blockControl script.
 			Destroy(gameObject.GetComponent<ExpectDropPosViewer>());
