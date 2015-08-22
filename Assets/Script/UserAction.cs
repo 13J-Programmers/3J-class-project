@@ -14,7 +14,7 @@ public class UserAction : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+
 	}
 	
 	// Update is called once per frame
