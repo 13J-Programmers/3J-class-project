@@ -22,7 +22,7 @@ public class UserAction : MonoBehaviour {
 	
 	}
 
-	/// get component of the new block for comment
+	/// get component of the new block for connect
 	public void ConnectWithBlock() {
 		target = GameObject.Find("block(new)");
 		if (!target) return;

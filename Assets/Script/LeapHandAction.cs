@@ -55,7 +55,7 @@ public class LeapHandAction : UserAction {
 		Vector position = hand.PalmPosition;
 		float game_scale = 0.01f;
 		float handX =  position.x * game_scale; // hand x coordinate from LEAP
-		float handZ = -position.z * game_scale; // hand x coordinate from LEAP
+		float handZ = -position.z * game_scale; // hand z coordinate from LEAP
 		float speed = 0.08f; // moving speed
 
 		const float point = 1f; // Detectable range from +point+ to infinity
