@@ -98,6 +98,7 @@ GameObject:
   - 224: {fileID: 17799803}
   - 222: {fileID: 17799805}
   - 114: {fileID: 17799804}
+  - 114: {fileID: 17799806}
   m_Layer: 5
   m_Name: Image - Good Ecorist
   m_TagString: Untagged
@@ -149,6 +150,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 17799802}
+--- !u!114 &17799806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 17799802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &73623663
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +367,7 @@ GameObject:
   - 224: {fileID: 157865463}
   - 222: {fileID: 157865465}
   - 114: {fileID: 157865464}
+  - 114: {fileID: 157865466}
   m_Layer: 5
   m_Name: Image - Basic Ecorist
   m_TagString: Untagged
@@ -403,6 +419,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 157865462}
+--- !u!114 &157865466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 157865462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: .501960814}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &197579690
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +738,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameFinish: 0
+  titles:
+  - Basic Ecorist
+  - Good Ecorist
+  - Super Ecorist
+  - Eco Master
 --- !u!222 &326794583
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -817,6 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa8c4b350c0646a89afca5532f56188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGamePlayMode: 0
   handedness: 
   lines: 0
   score: 0
@@ -1748,8 +1784,9 @@ GameObject:
   - 224: {fileID: 1060272278}
   - 222: {fileID: 1060272280}
   - 114: {fileID: 1060272279}
+  - 114: {fileID: 1060272281}
   m_Layer: 5
-  m_Name: Text - Score
+  m_Name: Text - Result
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1804,6 +1841,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1060272277}
+--- !u!114 &1060272281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1060272277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: .676470578, g: .676470578, b: .676470578, a: .501960814}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1114365345
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2460,7 @@ GameObject:
   - 224: {fileID: 1760015752}
   - 222: {fileID: 1760015754}
   - 114: {fileID: 1760015753}
+  - 114: {fileID: 1760015755}
   m_Layer: 5
   m_Name: Image - Eco Master
   m_TagString: Untagged
@@ -2460,6 +2512,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1760015751}
+--- !u!114 &1760015755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1760015751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1761011623
 GameObject:
   m_ObjectHideFlags: 0
@@ -2799,6 +2865,7 @@ GameObject:
   - 224: {fileID: 2131398052}
   - 222: {fileID: 2131398054}
   - 114: {fileID: 2131398053}
+  - 114: {fileID: 2131398055}
   m_Layer: 5
   m_Name: Image - Super Ecorist
   m_TagString: Untagged
@@ -2850,3 +2917,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2131398051}
+--- !u!114 &2131398055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2131398051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
