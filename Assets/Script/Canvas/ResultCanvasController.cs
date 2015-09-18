@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class CanvasController : MonoBehaviour {
+public class ResultCanvasController : MonoBehaviour, ICanvas {
 	public bool isGameFinish = false;
 	public string[] titles = new string[] {
 		"Basic Ecorist", "Good Ecorist", "Super Ecorist", "Eco Master"
