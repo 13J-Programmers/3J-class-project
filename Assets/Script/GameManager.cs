@@ -33,11 +33,11 @@ public class GameManager : MonoBehaviour {
 	public int score = 0; // obtained score
 	public float remainingTime = 180; // sec
 	BlockEntity blockEntity;
-	//GamrInfoViewer gameInfo;
+	GameInfoViewer gameInfoViewer;
 
 	void Awake() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
-		//gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
+		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
 	}
 
 	// Use this for initialization
@@ -72,15 +72,17 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver() {
 		print("GameOver");
+		var gameoverCanvas = 
+			GameObject.Find("GameoverCanvas").GetComponent<ICanvas>();
+		gameoverCanvas.ShowResult(score);
+		gameInfoViewer.enabled = false;
 	}
 
 	public void GameFinish() {
 		print("GameFinish");
 		var resultCanvas = 
-			GameObject.Find("ResultCanvas").GetComponent<ResultCanvasController>();
+			GameObject.Find("ResultCanvas").GetComponent<ICanvas>();
 		resultCanvas.ShowResult(score);
-		var gameInfoViewer = 
-			GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
 		gameInfoViewer.enabled = false;
 	}
 
