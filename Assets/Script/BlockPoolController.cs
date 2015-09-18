@@ -53,28 +53,21 @@ public class BlockPoolController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		// BlockPool Transforms
+		// starting BlockPool position and scale
 		//
 		// size : 5
 		// position : (0, -2.5, 0)
 		// scale : (0.5, 1.0, 0.5)
-		// 
+		//
+		//transform.Translate(new Vector3(0f, -2.5f, 0f), Space.World);
+		//transform.localScale = new Vector3(0.5f, 1.0f, 0.5f);
+		
 		// size : 6
 		// position : (0.5, -2.5, 0.5)
 		// scale : (0.6, 1.0, 0.6)
 		//
-		switch (POOL_X) {
-			case 5:
-				transform.Translate(new Vector3(0f, -2.5f, 0f), Space.World);
-				transform.localScale = new Vector3(0.5f, 1.0f, 0.5f);
-				break;
-			case 6:
-				transform.Translate(new Vector3(0.5f, -2.5f, 0.5f), Space.World);
-				transform.localScale = new Vector3(0.6f, 1.0f, 0.6f);
-				break;
-			default:
-				throw new Exception("Pool width is expected to be 5 or 6.");
-		}
+		transform.Translate(new Vector3(0.5f, -2.5f, 0.5f), Space.World);
+		transform.localScale = new Vector3(0.6f, 1.0f, 0.6f);
 	}
 	
 	// Update is called once per frame

@@ -3,15 +3,15 @@ using System.Collections;
 
 public class SoundController : MonoBehaviour {
 	public AudioClip[] BGM;
-	private AudioSource audio;
+	private AudioSource _audio;
 	private int i = 0;
 
 	// Use this for initialization
 	void Start() {
-		audio = this.GetComponent<AudioSource>();
-		audio.clip = BGM[i];
-		audio.loop = true;
-		audio.Play();
+		_audio = this.GetComponent<AudioSource>();
+		_audio.clip = BGM[i];
+		_audio.loop = true;
+		_audio.Play();
 	}
 
 	// Update is called once per frame
@@ -25,14 +25,14 @@ public class SoundController : MonoBehaviour {
 		} else {
 			i++;
 		}
-		audio.clip = BGM[i];
-		audio.Play();
+		_audio.clip = BGM[i];
+		_audio.Play();
 	}
 
 	public AudioClip startSE;
 	public void SoundSE() { // シーン切り替え時のSE
-		audio.clip = startSE;
-		audio.loop = false;
-		audio.Play();
+		_audio.clip = startSE;
+		_audio.loop = false;
+		_audio.Play();
 	}
 }
