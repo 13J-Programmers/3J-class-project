@@ -63,5 +63,11 @@ public class GameManager : MonoBehaviour {
 	public void GameFinish() {
 		// call result scene
 		print("GameFinish");
+		var resultCanvas = 
+			GameObject.Find("ResultCanvas").GetComponent<CanvasController>();
+		resultCanvas.ShowResult(score);
+		var gameInfoViewer = 
+			GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
+		gameInfoViewer.enabled = false;
 	}
 }
