@@ -27,6 +27,7 @@ using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
+	public bool isGamePlayMode = false;
 	public string handedness = "right";
 	public int lines = 0; // removed lines
 	public int score = 0; // obtained score
@@ -34,34 +35,46 @@ public class GameManager : MonoBehaviour {
 	BlockEntity blockEntity;
 	//GamrInfoViewer gameInfo;
 
-	// Use this for initialization
-	void Start() {
+	void Awake() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		//gameInfo = GameObject.Find("Canvas").GetComponent<GameInfoViewer>();
+	}
 
+	// Use this for initialization
+	void Start() {
 		GameStart();
 	}
 	
 	// Update is called once per frame
 	void Update() {
-		if (remainingTime <= 0)
+		// in game
+		if (isGamePlayMode) {
+			remainingTime -= Time.deltaTime;
+		}
+
+		if (isGamePlayMode && remainingTime <= 0) {
 			GameFinish();
-		remainingTime -= Time.deltaTime;
+			isGamePlayMode = false;
+		}
+
+		// in result
+		if (!isGamePlayMode && Input.GetKey("return")) {
+			RestartGame();
+		}
 	}
 
 	public void GameStart() {
+		isGamePlayMode = true;
 		score = 0;
 		remainingTime = 180;
 		blockEntity.CreateRandomBlock();
 	}
 
 	public void GameOver() {
-		// call result scene
 		print("GameOver");
 	}
 
 	public void GameFinish() {
-		// call result scene
 		print("GameFinish");
 		var resultCanvas = 
 			GameObject.Find("ResultCanvas").GetComponent<CanvasController>();
@@ -69,5 +82,10 @@ public class GameManager : MonoBehaviour {
 		var gameInfoViewer = 
 			GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
 		gameInfoViewer.enabled = false;
+	}
+
+	public void RestartGame() {
+		//Application.LoadLevel("Title");
+		GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel("Title", 1f);
 	}
 }
