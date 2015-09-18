@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// then recall ControlBlock()
 /// 
 public class BlockPoolController : MonoBehaviour {
-	public const int POOL_X = 6;      ///< width
+	public const int POOL_X = 5;      ///< width
 	public const int POOL_Y = 10;     ///< height
 	public const int POOL_Z = POOL_X; ///< depth
 	/// for storing position of each cubes
@@ -53,21 +53,23 @@ public class BlockPoolController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		int size = POOL_X;
 		// starting BlockPool position and scale
-		//
-		// size : 5
-		// position : (0, -2.5, 0)
-		// scale : (0.5, 1.0, 0.5)
-		//
-		//transform.Translate(new Vector3(0f, -2.5f, 0f), Space.World);
-		//transform.localScale = new Vector3(0.5f, 1.0f, 0.5f);
-		
-		// size : 6
-		// position : (0.5, -2.5, 0.5)
-		// scale : (0.6, 1.0, 0.6)
-		//
-		transform.Translate(new Vector3(0.5f, -2.5f, 0.5f), Space.World);
-		transform.localScale = new Vector3(0.6f, 1.0f, 0.6f);
+		if (size == 5) {
+			// size : 5
+			// position : (0, -2.5, 0)
+			// scale : (0.5, 1.0, 0.5)
+			transform.Translate(new Vector3(0f, -2.5f, 0f), Space.World);
+			transform.localScale = new Vector3(0.5f, 1.0f, 0.5f);
+		} else if (size == 6) {
+			// size : 6
+			// position : (0.5, -2.5, 0.5)
+			// scale : (0.6, 1.0, 0.6)
+			transform.Translate(new Vector3(0.5f, -2.5f, 0.5f), Space.World);
+			transform.localScale = new Vector3(0.6f, 1.0f, 0.6f);
+		} else {
+			throw new Exception("POOL_X is expected to be 5 or 6. Instead of " + POOL_X);
+		}
 	}
 	
 	// Update is called once per frame
