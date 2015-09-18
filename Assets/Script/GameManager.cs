@@ -87,7 +87,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void RestartGame() {
-		//Application.LoadLevel("Title");
-		GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel("Title", 1f);
+		if (GameObject.Find("FedeSystem")) {
+			GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel("Title", 1f);
+		} else {
+			Application.LoadLevel("Title");
+		}
 	}
 }
