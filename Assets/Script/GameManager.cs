@@ -27,7 +27,7 @@ using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-	public bool isCountUpMode = false;
+	public bool isCountDownMode = false;
 	public bool isGamePlayMode = false;
 	public bool isGameFinish = false;
 
@@ -48,16 +48,16 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		isCountUpMode = true;
-		StartCoroutine(CountUp());
+		isCountDownMode = true;
+		StartCoroutine(CountDown());
 	}
 	
 	// Update is called once per frame
 	void Update() {
 		// start
-		if (isCountUpMode) {
+		if (isCountDownMode) {
 			return;
-		} else if (!isCountUpMode && !isGamePlayMode && !isGameFinish) {
+		} else if (!isCountDownMode && !isGamePlayMode && !isGameFinish) {
 			GameStart();
 		}
 
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour {
 
 	// private ------------------------------------------
 
-	private IEnumerator CountUp() {
+	private IEnumerator CountDown() {
 		print(3);
 		startCanvas.SetText("3");
 		yield return new WaitForSeconds(1);
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour {
 		print("start!");
 		startCanvas.SetText("");
 		startCanvas.SetStart();
-		isCountUpMode = false;
+		isCountDownMode = false;
 		yield return new WaitForSeconds(1);
 		startCanvas.SetStart(false);
 	}
