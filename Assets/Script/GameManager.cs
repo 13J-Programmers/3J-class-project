@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour {
 
 		if (isGamePlayMode && remainingTime <= 0) {
 			GameFinish();
-			isGamePlayMode = false;
 		}
 
 		// in result
@@ -72,18 +71,16 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver() {
 		print("GameOver");
-		var gameoverCanvas = 
-			GameObject.Find("GameoverCanvas").GetComponent<ICanvas>();
+		FinishGameProcess();
+		var gameoverCanvas = GameObject.Find("GameoverCanvas").GetComponent<ICanvas>();
 		gameoverCanvas.ShowResult(score);
-		gameInfoViewer.enabled = false;
 	}
 
 	public void GameFinish() {
 		print("GameFinish");
-		var resultCanvas = 
-			GameObject.Find("ResultCanvas").GetComponent<ICanvas>();
+		FinishGameProcess();
+		var resultCanvas = GameObject.Find("ResultCanvas").GetComponent<ICanvas>();
 		resultCanvas.ShowResult(score);
-		gameInfoViewer.enabled = false;
 	}
 
 	public void RestartGame() {
@@ -93,4 +90,41 @@ public class GameManager : MonoBehaviour {
 			Application.LoadLevel("Title");
 		}
 	}
+
+	// private ------------------------------------------
+
+	/// perform this process when the game is finished.
+	private void FinishGameProcess() {
+		isGamePlayMode = false;
+		gameInfoViewer.enabled = false;
+		DisableGameModules();
+	}
+
+	/// stop specific game modules
+	private void DisableGameModules() {
+		// modules to be stopped
+		string[] modules = new string[] {
+			"Main Camera#CameraController", 
+			"BlockEntity#BlockEntity", 
+			"LeapHandAction#LeapHandAction", 
+			"KeyAction#KeyAction", 
+			"BlockPool#BlockPoolController", 
+			"block(new)#BlockController,ExpectDropPosViewer", 
+		};
+
+		// stop modules
+		foreach (string module in modules) {
+			string[] tmp = module.Split('#');
+			string objectName = tmp[0];
+			string[] moduleNames = tmp[1].Split(',');
+			foreach (string moduleName in moduleNames) {
+				//print(objectName + "." + moduleName);
+				Component targetModule = GameObject.Find(objectName).GetComponent(moduleName);
+				Destroy(targetModule);
+			}
+		}
+	}
 }
+
+
+
