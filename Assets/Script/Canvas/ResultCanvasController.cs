@@ -26,7 +26,7 @@ public class ResultCanvasController : MonoBehaviour, ICanvas {
 			titleImages[titleName] = GameObject.Find(path).GetComponent<Image>();
 		}
 
-		// un-enable image
+		// disable image
 		foreach (string titleName in titles) {
 			titleImages[titleName].enabled = false;
 		}
