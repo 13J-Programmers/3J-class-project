@@ -1004,13 +1004,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa8c4b350c0646a89afca5532f56188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCountDownMode: 0
+  isGamePlayMode: 0
+  isGameFinish: 0
   handedness: 
   lines: 0
   score: 0
   remainingTime: 180
-  isCountUpMode: 0
-  isGamePlayMode: 0
-  isGameFinish: 0
 --- !u!4 &383653125
 Transform:
   m_ObjectHideFlags: 0
