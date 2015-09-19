@@ -16,11 +16,6 @@ public class StartCanvasController : MonoBehaviour {
 		countUpText.enabled = true;
 		startImage.enabled = false;
 	}
-	
-	// Update is called once per frame
-	void Update() {
-	
-	}
 
 	public void SetText(string str) {
 		countUpText.text = str;
