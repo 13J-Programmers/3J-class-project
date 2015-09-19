@@ -27,26 +27,40 @@ using UnityEngine;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
+	public bool isCountUpMode = false;
 	public bool isGamePlayMode = false;
+	public bool isGameFinish = false;
+
 	public string handedness = "right";
 	public int lines = 0; // removed lines
 	public int score = 0; // obtained score
 	public float remainingTime = 180; // sec
+	
 	BlockEntity blockEntity;
 	GameInfoViewer gameInfoViewer;
+	StartCanvasController startCanvas;
 
 	void Awake() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
+		startCanvas = GameObject.Find("StartCanvas").GetComponent<StartCanvasController>();
 	}
 
 	// Use this for initialization
 	void Start() {
-		GameStart();
+		isCountUpMode = true;
+		StartCoroutine(CountUp());
 	}
 	
 	// Update is called once per frame
 	void Update() {
+		// start
+		if (isCountUpMode) {
+			return;
+		} else if (!isCountUpMode && !isGamePlayMode && !isGameFinish) {
+			GameStart();
+		}
+
 		// in game
 		if (isGamePlayMode) {
 			remainingTime -= Time.deltaTime;
@@ -93,9 +107,28 @@ public class GameManager : MonoBehaviour {
 
 	// private ------------------------------------------
 
+	private IEnumerator CountUp() {
+		print(3);
+		startCanvas.SetText("3");
+		yield return new WaitForSeconds(1);
+		print(2);
+		startCanvas.SetText("2");
+		yield return new WaitForSeconds(1);
+		print(1);
+		startCanvas.SetText("1");
+		yield return new WaitForSeconds(1);
+		print("start!");
+		startCanvas.SetText("");
+		startCanvas.SetStart();
+		isCountUpMode = false;
+		yield return new WaitForSeconds(1);
+		startCanvas.SetStart(false);
+	}
+
 	/// perform this process when the game is finished.
 	private void FinishGameProcess() {
 		isGamePlayMode = false;
+		isGameFinish = true;
 		gameInfoViewer.enabled = false;
 		DisableGameModules();
 	}
@@ -108,8 +141,8 @@ public class GameManager : MonoBehaviour {
 			"BlockEntity#BlockEntity", 
 			"LeapHandAction#LeapHandAction", 
 			"KeyAction#KeyAction", 
-			"BlockPool#BlockPoolController", 
-			"block(new)#BlockController,ExpectDropPosViewer", 
+			//"BlockPool#BlockPoolController", 
+			//"block(new)#BlockController,ExpectDropPosViewer", 
 		};
 
 		// stop modules
