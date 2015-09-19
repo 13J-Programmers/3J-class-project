@@ -6,6 +6,7 @@
 using UnityEngine;
 using System.Collections;
 
+// KeyAction extend UserAction
 public class KeyAction : UserAction {
 	/// Use this for initialization
 	void Start() {
@@ -15,6 +16,8 @@ public class KeyAction : UserAction {
 	/// Update is called once per frame
 	void Update() {
 		Transform camera = Camera.main.transform;
+
+		if (blockController == null) return;
 
 		// Pitch Block
 		if (Input.GetKeyDown("w")) {
