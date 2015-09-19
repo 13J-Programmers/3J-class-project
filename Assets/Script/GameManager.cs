@@ -29,6 +29,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 	public bool isCountDownMode = false;
 	public bool isGamePlayMode = false;
+	public int isTimesUpMode = 0; ///< 0: not started, 1: times up mode, 2: finish
 	public bool isGameFinish = false;
 
 	public string handedness = "right";
@@ -39,25 +40,48 @@ public class GameManager : MonoBehaviour {
 	BlockEntity blockEntity;
 	GameInfoViewer gameInfoViewer;
 	StartCanvasController startCanvas;
+	TimesUpCanvasController timesUpCanvas;
 
 	void Awake() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
 		startCanvas = GameObject.Find("StartCanvas").GetComponent<StartCanvasController>();
+		timesUpCanvas = GameObject.Find("TimesUpCanvas").GetComponent<TimesUpCanvasController>();
 	}
 
 	// Use this for initialization
 	void Start() {
+		// start count down
 		isCountDownMode = true;
 		StartCoroutine(CountDown());
 	}
 	
-	// Update is called once per frame
+	/// game flow:
+	/// 
+	///        |transition
+	///        ∨
+	///     CountDown (3,2,1,start!)
+	///        |
+	///        ∨
+	///     GamePlay------------+
+	///        |                |
+	///        |times_up        |pool_overflow
+	///        ∨                |
+	///     TimesUp             |
+	///        |                |
+	///        ∨                ∨
+	///     ShowResult       GameOver
+	///        |                |
+	///        ∨                |
+	///     RestartGame <~------+
+	///        |
+	///        |transition
+	///        ∨
+	/// 
 	void Update() {
 		// start
-		if (isCountDownMode) {
-			return;
-		} else if (!isCountDownMode && !isGamePlayMode && !isGameFinish) {
+		if (isCountDownMode) return;
+		if (!isCountDownMode && !isGamePlayMode && !isGameFinish) {
 			GameStart();
 		}
 
@@ -66,7 +90,18 @@ public class GameManager : MonoBehaviour {
 			remainingTime -= Time.deltaTime;
 		}
 
+		// to finish
 		if (isGamePlayMode && remainingTime <= 0) {
+			gameInfoViewer.enabled = false;
+
+			// display "Time's Up"
+			if (isTimesUpMode == 0) {
+				isTimesUpMode = 1;
+				DisableGameModules();
+				StartCoroutine(TimesUp());
+			}
+
+			if (isTimesUpMode == 1) return;
 			GameFinish();
 		}
 
@@ -84,14 +119,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		print("GameOver");
+		//print("GameOver");
 		FinishGameProcess();
+		DisableGameModules();
 		var gameoverCanvas = GameObject.Find("GameoverCanvas").GetComponent<ICanvas>();
 		gameoverCanvas.ShowResult(score);
 	}
 
 	public void GameFinish() {
-		print("GameFinish");
+		//print("GameFinish");
 		FinishGameProcess();
 		var resultCanvas = GameObject.Find("ResultCanvas").GetComponent<ICanvas>();
 		resultCanvas.ShowResult(score);
@@ -108,16 +144,12 @@ public class GameManager : MonoBehaviour {
 	// private ------------------------------------------
 
 	private IEnumerator CountDown() {
-		print(3);
 		startCanvas.SetText("3");
 		yield return new WaitForSeconds(1);
-		print(2);
 		startCanvas.SetText("2");
 		yield return new WaitForSeconds(1);
-		print(1);
 		startCanvas.SetText("1");
 		yield return new WaitForSeconds(1);
-		print("start!");
 		startCanvas.SetText("");
 		startCanvas.SetStart();
 		isCountDownMode = false;
@@ -125,12 +157,18 @@ public class GameManager : MonoBehaviour {
 		startCanvas.SetStart(false);
 	}
 
+	private IEnumerator TimesUp() {
+		timesUpCanvas.SetTimesUp();
+		yield return new WaitForSeconds(2);
+		timesUpCanvas.SetTimesUp(false);
+		isTimesUpMode = 2;
+	}
+
 	/// perform this process when the game is finished.
 	private void FinishGameProcess() {
 		isGamePlayMode = false;
 		isGameFinish = true;
 		gameInfoViewer.enabled = false;
-		DisableGameModules();
 	}
 
 	/// stop specific game modules
@@ -141,8 +179,6 @@ public class GameManager : MonoBehaviour {
 			"BlockEntity#BlockEntity", 
 			"LeapHandAction#LeapHandAction", 
 			"KeyAction#KeyAction", 
-			//"BlockPool#BlockPoolController", 
-			//"block(new)#BlockController,ExpectDropPosViewer", 
 		};
 
 		// stop modules
