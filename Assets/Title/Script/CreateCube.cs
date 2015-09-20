@@ -37,14 +37,14 @@ public class CreateCube : MonoBehaviour {
 		}
 		//print("生成キューブ:" + i);
 		Destroy(obj);
-		obj = (GameObject)Instantiate(cube[i], this.transform.position, Quaternion.identity);
+		obj = (GameObject)Instantiate(cube[i], this.transform.localPosition, Quaternion.identity);
 		int c = 0;
 		foreach (Transform child in obj.transform) { // objの子オブジェクトのタグ変更
-			child.GetComponent<MeshRenderer>().material = material;
+            //child.GetComponent<MeshRenderer>().material = material;
 			child.tag = "Trigger";
 			c++;
 		}
-		obj.GetComponent<MeshRenderer>().material = material;
+		//obj.GetComponent<MeshRenderer>().material = material;
 		obj.tag = "Trigger";
 	}
 }
