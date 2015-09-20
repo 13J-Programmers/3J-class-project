@@ -751,7 +751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: f6e77af5ecb3db74d86000d415a97623, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ed22d074eb4a445a9d333ecb24a8a37, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -780,7 +780,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 100}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: .5, y: .5}
 --- !u!1 &250954007
 GameObject:
@@ -1339,7 +1339,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 514704097}
   m_LocalRotation: {x: -.30078581, y: .361834139, z: -.124589495, w: -.873545349}
-  m_LocalPosition: {x: 7, y: 14, z: -7.0999999}
+  m_LocalPosition: {x: 7, y: 13, z: -7.0999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
