@@ -2,38 +2,38 @@
 using System.Collections;
 
 public class Key : MonoBehaviour {
-	// Use this for initialization
-	void Start() {
-	
-	}
+    private string nextSceneName;
+    void Start()
+    {
+        nextSceneName = "Main";
+    }
 	// Update is called once per frame
 	void Update() {
-		switchScene();
+        if (KeyEnter())
+            switchScene();
 	}
 
-	public int CameraChange() {
-		int f;
-		if (Input.GetKeyDown(KeyCode.Q)) {
-			f = 1;
-		} else {
-			f = 0;
-		}
-		return f;
+	public bool KeyQ() {
+        bool f = false;
+        if (Input.GetKeyDown(KeyCode.Q)) f = true;
+        return f;
 	}
 
-	public bool OptionTrigger() {
+	public bool KeyO(){
 		bool f = false;
-		if (Input.GetKeyDown(KeyCode.O)) {
-			f = true;
-		}
+        if (Input.GetKeyDown(KeyCode.O)) f = true;
 		return f;
 	}
 
-	public string nextSceneName;
-	public void switchScene() { // キーボードでシーン切り替え
-		if (Input.GetKeyDown(KeyCode.Return)) {
-			GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
-			GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel(nextSceneName, 1f);
-		}
-	}
+    public bool KeyEnter()
+    {
+        bool f = false;
+        if (Input.GetKeyDown(KeyCode.Return)) f = true;
+        return f;
+    }
+	public void switchScene()
+    { // キーボードでシーン切り替え
+        GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
+        GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel(nextSceneName, 1f);
+    }
 }
