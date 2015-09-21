@@ -11,7 +11,7 @@ using System.Collections;
 using Leap;
 
 public class LeapHandAction : UserAction {
-	Controller controller = new Controller();
+    Controller controller = new Controller();
 	private bool isRotatedX = false;
 	private bool isRotatedY = false;
 	private bool isRotatedZ = false;

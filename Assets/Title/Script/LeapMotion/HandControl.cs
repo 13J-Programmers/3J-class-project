@@ -5,20 +5,26 @@ using Leap;
 /// LeapMotionで手のひらを感知
 /// </summary>
 public class HandControl : MonoBehaviour {
+    private HandGesture handGesture;
     private Controller controller;
+    private InteractionBox interactionBox;
+    private Frame frame;
     public int debugPlamCount;//手のひらの個数
+    public int debugFingerCount;
     public float x, y, z;
-   
-	void Start () {
+    public GameObject[] fingerObject;
+    void Start () {
+        handGesture = GetComponent<HandGesture>();
         controller = new Controller();
-	}
+    }
 
     void Update()
     {
-        Frame frame = controller.Frame();
-        InteractionBox interactionBox = frame.InteractionBox;
+        frame = controller.Frame();
+        interactionBox = frame.InteractionBox;
         Hand hand = frame.Hands[0];
         debugPlamCount = frame.Hands.Count;
+        debugFingerCount = frame.Fingers.Count;
         this.GetComponent<Renderer>().enabled = hand.IsValid;
         this.GetComponent<Collider>().enabled = hand.IsValid;
         Vector plamPos = interactionBox.NormalizePoint(hand.PalmPosition);
@@ -31,6 +37,9 @@ public class HandControl : MonoBehaviour {
         Vector3 pos = this.transform.localPosition;
         pos.z = -pos.z;
         this.transform.localPosition = pos;
+        if (hand.GrabStrength > 0.6f)
+            handGesture.cameraStop(false);
+        else handGesture.cameraStop(true);
     }
     Vector3 ToVector3(Vector v)//座標の変換
     {
