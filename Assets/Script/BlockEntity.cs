@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using System.Collections;
+using Player.Action;
 
 public class BlockEntity : MonoBehaviour {
 	public const int prefabMaxNum = 18;
@@ -21,7 +22,7 @@ public class BlockEntity : MonoBehaviour {
 	void Awake() {
 		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
 		leapHandAction = GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>();
-		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
+		//gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
 		nextBlockNum = Random.Range(0, prefabMaxNum);
 		currentBlockNum = Random.Range(0, prefabMaxNum);
 	}

@@ -14,7 +14,7 @@ public class GameInfoViewer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
+		//blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	

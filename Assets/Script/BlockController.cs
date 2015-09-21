@@ -7,6 +7,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player.Action;
 
 public class BlockController : MonoBehaviour {
 	BlockPoolController blockPool;
