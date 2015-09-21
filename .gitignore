@@ -38,3 +38,4 @@ NetworkManager.asset
 # Doxygen files
 Doxyfile
 html/
+*.tar*
