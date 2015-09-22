@@ -29,9 +29,10 @@ public class CameraCircularMotion  : MonoBehaviour {
 		//print("MainCamera z:" + this.transform.position.z);
 		transform.LookAt(CameraPos); // カメラをtargetへ向かせる
 	}
-    public Vector3 outputPos()
-    {
-        Vector3 pos=target.transform.position;
-        return pos;
-    }
+	
+	public Vector3 outputPos()
+	{
+		Vector3 pos=target.transform.position;
+		return pos;
+	}
 }

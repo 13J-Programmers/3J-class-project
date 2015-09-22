@@ -2,38 +2,38 @@
 using System.Collections;
 
 public class Key : MonoBehaviour {
-    private string nextSceneName;
-    void Start()
-    {
-        nextSceneName = "Main";
-    }
+	private string nextSceneName;
+	void Start()
+	{
+		nextSceneName = "Main";
+	}
 	// Update is called once per frame
 	void Update() {
-        if (KeyEnter())
-            switchScene();
+		if (KeyEnter())
+			switchScene();
 	}
 
 	public bool KeyQ() {
-        bool f = false;
-        if (Input.GetKeyDown(KeyCode.Q)) f = true;
-        return f;
+		bool f = false;
+		if (Input.GetKeyDown(KeyCode.Q)) f = true;
+		return f;
 	}
 
 	public bool KeyO(){
 		bool f = false;
-        if (Input.GetKeyDown(KeyCode.O)) f = true;
+		if (Input.GetKeyDown(KeyCode.O)) f = true;
 		return f;
 	}
 
-    public bool KeyEnter()
-    {
-        bool f = false;
-        if (Input.GetKeyDown(KeyCode.Return)) f = true;
-        return f;
-    }
+	public bool KeyEnter()
+	{
+		bool f = false;
+		if (Input.GetKeyDown(KeyCode.Return)) f = true;
+		return f;
+	}
 	public void switchScene()
-    { // キーボードでシーン切り替え
-        GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
-        GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel(nextSceneName, 1f);
-    }
+	{ // キーボードでシーン切り替え
+		GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
+		GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel(nextSceneName, 1f);
+	}
 }

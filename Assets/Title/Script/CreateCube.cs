@@ -13,7 +13,7 @@ public class CreateCube : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		i = -1;
-        time = interval + 1.0f;
+		time = interval + 1.0f;
 	}
 	
 	// Update is called once per frame
@@ -38,10 +38,10 @@ public class CreateCube : MonoBehaviour {
 		//print("生成キューブ:" + i);
 		Destroy(obj);
 		obj = (GameObject)Instantiate(cube[i], this.transform.localPosition, Quaternion.identity);
-        obj.name = "Block";
-        int c = 0;
+		obj.name = "Block";
+		int c = 0;
 		foreach (Transform child in obj.transform) { // objの子オブジェクトのタグ変更
-            //child.GetComponent<MeshRenderer>().material = material;
+			//child.GetComponent<MeshRenderer>().material = material;
 			child.tag = "Trigger";
 			c++;
 		}
