@@ -3,10 +3,12 @@ using System.Collections;
 
 public class Key : MonoBehaviour {
 	private string nextSceneName;
+
 	void Start()
 	{
 		nextSceneName = "Main";
 	}
+
 	// Update is called once per frame
 	void Update() {
 		if (KeyEnter())
@@ -17,6 +19,8 @@ public class Key : MonoBehaviour {
 		bool f = false;
 		if (Input.GetKeyDown(KeyCode.Q)) f = true;
 		return f;
+		//^ 上のコードは三項演算子を使って、よりコンパクトにすることができます (mako)
+		//  return (Input.GetKeyDown(KeyCode.Q)) ? true : false;
 	}
 
 	public bool KeyO(){
@@ -31,6 +35,7 @@ public class Key : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Return)) f = true;
 		return f;
 	}
+	
 	public void switchScene()
 	{ // キーボードでシーン切り替え
 		GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();

@@ -7,11 +7,11 @@ public class LeapMotionSpace : MonoBehaviour {
 	/// </summary>
 	private GameObject target;
 
-	void Start () {
+	void Start() {
 		target = GameObject.Find("EmptyObject");
 	}
 
-	void Update ()
+	void Update()
 	{
 		Vector3 thisPos = target.transform.localPosition;
 		transform.position = thisPos;

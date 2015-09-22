@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Leap;
+
 /// <summary>
 /// LeapMotionで手のひらを感知
 /// </summary>
@@ -14,7 +15,7 @@ public class HandControl : MonoBehaviour {
 	public float x, y, z;
 	public GameObject[] fingerObject;
 
-	void Start () {
+	void Start() {
 		handGesture = GetComponent<HandGesture>();
 		controller = new Controller();
 	}
@@ -29,18 +30,21 @@ public class HandControl : MonoBehaviour {
 		this.GetComponent<Renderer>().enabled = hand.IsValid;
 		this.GetComponent<Collider>().enabled = hand.IsValid;
 		Vector plamPos = interactionBox.NormalizePoint(hand.PalmPosition);
-		int a = 4;//感知する領域を広げる
+		int a = 4;//感知する領域を広げる //< 一文字の変数は使わないこと。代わりに scale など
 		x = a * (plamPos.x - 0.5f);
 		y = a * plamPos.y;
 		z = a * (plamPos.z - 0.5f);
-		Vector p = new Vector(x, y, z);
+		Vector p = new Vector(x, y, z); //< 一文字の変数は使わないこと。代わりに pos など
 		this.transform.localPosition = ToVector3(p);
+		// >>>> ここから
 		Vector3 pos = this.transform.localPosition;
 		pos.z = -pos.z;
 		this.transform.localPosition = pos;
+		// <<<< ここまでの処理は、6行上のコードを new Vector(x, y, -z) とするだけで十分かも？ (mako)
 		if (hand.GrabStrength > 0.6f)
 			handGesture.cameraStop(false);
-		else handGesture.cameraStop(true);
+		else
+			handGesture.cameraStop(true);
 	}
 
 	Vector3 ToVector3(Vector v)//座標の変換

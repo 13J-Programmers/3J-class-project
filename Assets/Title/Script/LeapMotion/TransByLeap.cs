@@ -9,7 +9,7 @@ public class TransByLeap : MonoBehaviour {
 	private float maxLoadTime;
 	public GameObject loadBar;
 	public Animator OnAndOff;
-	private bool f;
+	private bool f; //< もっと説明的な変数名にしてください（mako）
 	private bool transFlag;
 	private GameObject mainCamera;
 	private GameObject emptyObject;
@@ -62,6 +62,7 @@ public class TransByLeap : MonoBehaviour {
 			transFlag = false;
 		canvas.enabled = true;
 	}
+	
 	void OnTriggerExit(Collider collider) //離れた時
 	{
 		if (!f)
@@ -71,6 +72,7 @@ public class TransByLeap : MonoBehaviour {
 		}
 		OnAndOff.SetBool("Touched", false);
 	}
+	
 	public void SceneTrans() // シーン切り替え
 	{
 		f = true;
