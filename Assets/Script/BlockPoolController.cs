@@ -37,9 +37,9 @@ public class BlockPoolController : MonoBehaviour {
 	public const int POOL_Z = POOL_X; ///< depth
 	/// for storing position of each cubes
 	public GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
-	GameObject ground, poolCubes;
-	_DummyParent dummyParent;
-	GameManager gameManager;
+	private GameObject ground, poolCubes;
+	private _DummyParent dummyParent;
+	private GameManager gameManager;
 
 	/// This function is always called before 
 	/// any Start functions and also just after a prefab is instantiated.

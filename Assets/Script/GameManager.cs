@@ -37,10 +37,10 @@ public class GameManager : MonoBehaviour {
 	public int score = 0; // obtained score
 	public float remainingTime = 180; // sec
 	
-	BlockEntity blockEntity;
-	GameInfoViewer gameInfoViewer;
-	StartCanvasController startCanvas;
-	TimesUpCanvasController timesUpCanvas;
+	private BlockEntity blockEntity;
+	private GameInfoViewer gameInfoViewer;
+	private StartCanvasController startCanvas;
+	private TimesUpCanvasController timesUpCanvas;
 
 	void Awake() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
@@ -56,28 +56,28 @@ public class GameManager : MonoBehaviour {
 		StartCoroutine(CountDown());
 	}
 	
-	/// game flow:
-	/// 
-	///        |transition
-	///        ∨
-	///     CountDown (3,2,1,start!)
-	///        |
-	///        ∨
-	///     GamePlay------------+
-	///        |                |
-	///        |times_up        |pool_overflow
-	///        ∨                |
-	///     TimesUp             |
-	///        |                |
-	///        ∨                ∨
-	///     ShowResult       GameOver
-	///        |                |
-	///        ∨                |
-	///     RestartGame <~------+
-	///        |
-	///        |transition
-	///        ∨
-	/// 
+	// game flow:
+	// 
+	//        |transition
+	//        ∨
+	//     CountDown (3,2,1,start!)
+	//        |
+	//        ∨
+	//     GamePlay------------+
+	//        |                |
+	//        |times_up        |pool_overflow
+	//        ∨                |
+	//     TimesUp             |
+	//        |                |
+	//        ∨                ∨
+	//     ShowResult       GameOver
+	//        |                |
+	//        ∨                |
+	//     RestartGame <~------+
+	//        |
+	//        |transition
+	//        ∨
+	// 
 	void Update() {
 		// start
 		if (isCountDownMode) return;
@@ -143,7 +143,10 @@ public class GameManager : MonoBehaviour {
 
 	// private ------------------------------------------
 
+	/// display number to count down.
+	/// then shows image "start!".
 	private IEnumerator CountDown() {
+		// display number
 		startCanvas.SetText("3");
 		yield return new WaitForSeconds(1);
 		startCanvas.SetText("2");
@@ -151,13 +154,16 @@ public class GameManager : MonoBehaviour {
 		startCanvas.SetText("1");
 		yield return new WaitForSeconds(1);
 		startCanvas.SetText("");
+		// display image
 		startCanvas.SetStart();
 		isCountDownMode = false;
 		yield return new WaitForSeconds(1);
 		startCanvas.SetStart(false);
 	}
 
+	/// display image "Times Up" while 2 seconds.
 	private IEnumerator TimesUp() {
+		// display image
 		timesUpCanvas.SetTimesUp();
 		yield return new WaitForSeconds(2);
 		timesUpCanvas.SetTimesUp(false);

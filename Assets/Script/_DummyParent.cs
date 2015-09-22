@@ -1,28 +1,28 @@
-﻿// 
-// This script controls motion of every dropping cubes in Pool, 
-// after deleting completed row.
-// 
+﻿/// 
+/// @file  _DummyParent.cs
+/// @brief
+///   This script controls motion of every dropping cubes in Pool, 
+///   after deleting completed row.
+/// 
 
 using UnityEngine;
 using System.Collections;
 
-//
-// This class is only used by BlockPoolController.
-//
+///
+/// This class is only used by BlockPoolController.
+///
 public class _DummyParent : MonoBehaviour {
 	private bool _isLanded = false;
 	public bool isLanded {
 		get { return _isLanded; }
 		// set { _isLanded = value; }
 	}
-	GameObject poolCubes;
+	private GameObject poolCubes;
 
-	// Use this for initialization
 	void Start() {
 		poolCubes = GameObject.Find("BlockPool/Cubes");
 	}
 	
-	// Update is called once per frame
 	void Update() {
 		if (transform.childCount == 0) {
 			Setup();

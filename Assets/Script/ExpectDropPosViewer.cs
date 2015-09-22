@@ -9,12 +9,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ExpectDropPosViewer : MonoBehaviour {
-	BlockPoolController blockPoolControl;
-	GameObject controllingBlock;
-	GameObject showDropPosBlock;
-	GameObject ground;
+	private BlockPoolController blockPoolControl;
+	private GameObject controllingBlock;
+	private GameObject showDropPosBlock;
+	private GameObject ground;
 	/// is syncing with the controlling block?
-	bool isSync = true;
+	private bool isSync = true;
 
 	/// This function is always called before 
 	/// any Start functions and also just after a prefab is instantiated.

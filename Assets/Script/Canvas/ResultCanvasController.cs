@@ -30,11 +30,6 @@ public class ResultCanvasController : MonoBehaviour, ICanvas {
 			titleImages[titleName].enabled = false;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update() {
-		
-	}
 
 	/// Show result screen.
 	/// Display the gained score and more details.

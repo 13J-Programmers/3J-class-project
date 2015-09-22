@@ -10,14 +10,14 @@ using System.Collections.Generic;
 using Player.Action;
 
 public class BlockController : MonoBehaviour {
-	BlockPoolController blockPool;
-	KeyAction keyAction;
-	LeapHandAction leapHandAction;
-	BlockEntity blockEntity;
-	ExpectDropPosViewer expectDropPosViewer;
+	private BlockPoolController blockPool;
+	private KeyAction keyAction;
+	private LeapHandAction leapHandAction;
+	private BlockEntity blockEntity;
+	private ExpectDropPosViewer expectDropPosViewer;
 	// coordinate for check if collide the wall or not
-	Vector3 blockMinCoord; ///< max coordinate in block
-	Vector3 blockMaxCoord; ///< min coordinate in block
+	private Vector3 blockMinCoord; ///< max coordinate in block
+	private Vector3 blockMaxCoord; ///< min coordinate in block
 
 	/// Use this for initialization
 	void Start() {

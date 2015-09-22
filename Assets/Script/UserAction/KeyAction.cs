@@ -12,7 +12,7 @@ namespace Player.Action {
 		private Transform mainCamera;
 		private float moveSpeed = 0.1f;
 
-		/// Use this for initialization
+		// Use this for initialization
 		void Start() {
 			cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
 		}
@@ -27,7 +27,7 @@ namespace Player.Action {
 			return base.blockController;
 		}
 
-		// Move Block in X-axis
+		/// Move Block in X-axis
 		override
 		protected void DetectMotionX() {
 			if (Input.GetKey("right")) {
@@ -39,7 +39,7 @@ namespace Player.Action {
 			}
 		}
 
-		// Drop Block 
+		/// Drop Block 
 		override
 		protected void DetectMotionY() {
 			if (Input.GetKeyDown("space")) {
@@ -59,7 +59,7 @@ namespace Player.Action {
 			}
 		}
 
-		// Pitch Block
+		/// Pitch Block
 		override
 		protected void DetectRotationX() {
 			if (Input.GetKeyDown("w")) {
@@ -71,7 +71,7 @@ namespace Player.Action {
 			}
 		}
 
-		// Yaw Block
+		/// Yaw Block
 		override
 		protected void DetectRotationY() {
 			if (Input.GetKeyDown("e")) {
@@ -81,7 +81,7 @@ namespace Player.Action {
 			}
 		}
 
-		// Roll Block
+		/// Roll Block
 		override
 		protected void DetectRotationZ() {
 			if (Input.GetKeyDown("d")) {
@@ -93,7 +93,7 @@ namespace Player.Action {
 			}
 		}
 
-		// Rotate Camera 
+		/// Rotate Camera 
 		override
 		protected void DetectRotationCamera() {
 			if (Input.GetKey("return")) {

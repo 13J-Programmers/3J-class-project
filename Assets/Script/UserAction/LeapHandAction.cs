@@ -36,9 +36,9 @@ namespace Player.Action {
 		public bool isRotatedY = false;
 		public bool isRotatedZ = false;
 		private float rotateScale = 10;
-		private float pitch;// = hand.Direction.Pitch * rotateScale;
-		private float yaw;//   = hand.Direction.Yaw   * rotateScale;
-		private float roll;//  = hand.PalmNormal.Roll * rotateScale;
+		private float pitch;
+		private float yaw;
+		private float roll;
 
 		// Use this for initialization
 		void Start() {
@@ -84,7 +84,7 @@ namespace Player.Action {
 			return base.blockController && hand.Confidence > 0.2;
 		}
 
-		// move block with opened hand in x-axis
+		/// move block with opened hand in x-axis
 		override
 		protected void DetectMotionX() {
 			float handX = hand.PalmPosition.x;
@@ -99,7 +99,7 @@ namespace Player.Action {
 			}
 		}
 
-		// Drop Block with clenched fists
+		/// Drop Block with clenched fists
 		override
 		protected void DetectMotionY() {
 			float velocityY = hand.PalmVelocity.y;
@@ -110,7 +110,7 @@ namespace Player.Action {
 			}
 		}
 
-		// move block with opened hand in z-axis
+		/// move block with opened hand in z-axis
 		override
 		protected void DetectMotionZ() {
 			float handZ = -hand.PalmPosition.z;
@@ -125,7 +125,7 @@ namespace Player.Action {
 			}
 		}
 
-		// Pitch Block
+		/// Pitch Block
 		override
 		protected void DetectRotationX() {
 			if (isFingersFolded(hand)) return;
@@ -144,7 +144,7 @@ namespace Player.Action {
 			isRotatedX = true;
 		}
 
-		// Yaw Block
+		/// Yaw Block
 		override
 		protected void DetectRotationY() {
 			if (isFingersFolded(hand)) return;
@@ -161,7 +161,7 @@ namespace Player.Action {
 			isRotatedY = true;
 		}
 
-		// Roll Block
+		/// Roll Block
 		override
 		protected void DetectRotationZ() {
 			if (isFingersFolded(hand)) return;

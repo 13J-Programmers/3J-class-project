@@ -7,10 +7,10 @@ using UnityEngine;
 using System.Collections;
 
 public class GameInfoViewer : MonoBehaviour {
-	GameManager gameManager;
-	BlockEntity blockEntity;
-	GUIStyle guiStyle;
-	GUIStyleState guiStyleState;
+	private GameManager gameManager;
+	private BlockEntity blockEntity;
+	private GUIStyle guiStyle;
+	private GUIStyleState guiStyleState;
 
 	// Use this for initialization
 	void Start() {

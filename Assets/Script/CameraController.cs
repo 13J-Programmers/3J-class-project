@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
-	GameObject target; ///< staring target
+	private GameObject target; ///< staring target
 
 	// Use this for initialization
 	void Start() {

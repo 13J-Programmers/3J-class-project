@@ -13,9 +13,9 @@ public class BlockEntity : MonoBehaviour {
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
 	public int nextBlockNum;
 	public int currentBlockNum;
-	KeyAction keyAction;
-	LeapHandAction leapHandAction;
-	GameInfoViewer gameInfoViewer;
+	private KeyAction keyAction;
+	private LeapHandAction leapHandAction;
+	private GameInfoViewer gameInfoViewer;
 
 	/// BlockEntity methods are invoked from Start() in GameManager.
 	/// therefore, initializing variables have to write in Awake().
