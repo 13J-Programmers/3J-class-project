@@ -58,7 +58,6 @@ namespace Player.Action {
 		override
 		protected void InitPerFrame() {
 			mainCamera = Camera.main.transform;
-			//print(mainCamera.TransformDirection(Vector3.forward));
 
 			frame = controller.Frame();
 			hands = frame.Hands;

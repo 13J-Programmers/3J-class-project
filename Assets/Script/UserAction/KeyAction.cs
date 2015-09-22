@@ -20,7 +20,6 @@ namespace Player.Action {
 		override
 		protected void InitPerFrame() {
 			mainCamera = Camera.main.transform;
-			//print(mainCamera.TransformDirection(Vector3.forward));
 		}
 
 		override
@@ -54,7 +53,6 @@ namespace Player.Action {
 			if (Input.GetKey("up")) {
 				Vector3 forward = mainCamera.TransformDirection(Vector3.forward) * moveSpeed;
 				blockController.MoveBlock(forward);
-				//print(forward);
 			} else if (Input.GetKey("down")) {
 				Vector3 back = mainCamera.TransformDirection(Vector3.back) * moveSpeed;
 				blockController.MoveBlock(back);
