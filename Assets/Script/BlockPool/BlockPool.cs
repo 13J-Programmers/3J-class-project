@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 ///
 /// three-dimensional array behaves pool of Tetoris
@@ -108,62 +111,92 @@ public class BlockPool {
 
 	private bool[,,] SearchCubeThatMustBeRemoved() {
 		bool[,,] mustBeRemovedCubes = new bool[this.GetSizeX(), this.GetSizeY(), this.GetSizeZ()];
-		for (int z = 0; z < this.GetSizeZ(); z++) {
-			for (int y = 0; y < this.GetSizeY(); y++) {
-				bool isCompleted = true;
-				for (int x = 0; x < this.GetSizeX(); x++) {
-					if (blockPool[x, y, z] == null) isCompleted = false;
-				}
-				if (!isCompleted) continue;
 
-				// check completed row
-				for (int x = 0; x < this.GetSizeX(); x++) {
-					mustBeRemovedCubes[x, y, z] = true;
-				}
-			}
-		}
-		for (int x = 0; x < this.GetSizeX(); x++) {
-			for (int y = 0; y < this.GetSizeY(); y++) {
-				bool isCompleted = true;
-				for (int z = 0; z < this.GetSizeZ(); z++) {
-					if (blockPool[x, y, z] == null) isCompleted = false;
-				}
-				if (!isCompleted) continue;
+		Array3D<GameObject> pool = new Array3D<GameObject>();
+		pool.SetArray3D(blockPool);
+		Array3D<bool> checkedPool = new Array3D<bool>();
+		checkedPool.SetArray3D(mustBeRemovedCubes);
 
-				// check completed row
-				for (int z = 0; z < this.GetSizeZ(); z++) {
-					mustBeRemovedCubes[x, y, z] = true;
-				}
-			}
-		}
-		return mustBeRemovedCubes;
+		for (int z = 0; z < this.GetSizeZ(); z++)
+			for (int y = 0; y < this.GetSizeY(); y++)
+				if (pool.TakeXRow(y, z).All(e => e != null))
+					checkedPool.SetXRow(y, z, true);
+
+		for (int x = 0; x < this.GetSizeX(); x++)
+			for (int y = 0; y < this.GetSizeY(); y++)
+				if (pool.TakeZRow(x, y).All(e => e != null))
+					checkedPool.SetZRow(x, y, true);
+
+		return checkedPool.GetArray3D();
 	}
 
 
 	private int CountCompletedRow(bool[,,] checkedPool) {
 		int completedRowNum = 0;
-		for (int z = 0; z < this.GetSizeZ(); z++) {
-			for (int y = 0; y < this.GetSizeY(); y++) {
-				bool isCompleted = true;
-				for (int x = 0; x < this.GetSizeX(); x++) {
-					if (checkedPool[x, y, z] == false) isCompleted = false;
-				}
-				if (!isCompleted) continue;
 
-				completedRowNum++;
-			}
-		}
-		for (int x = 0; x < this.GetSizeX(); x++) {
-			for (int y = 0; y < this.GetSizeY(); y++) {
-				bool isCompleted = true;
-				for (int z = 0; z < this.GetSizeZ(); z++) {
-					if (checkedPool[x, y, z] == false) isCompleted = false;
-				}
-				if (!isCompleted) continue;
+		Array3D<bool> pool = new Array3D<bool>();
+		pool.SetArray3D(checkedPool);
 
-				completedRowNum++;
-			}
-		}
+		for (int z = 0; z < this.GetSizeZ(); z++)
+			for (int y = 0; y < this.GetSizeY(); y++)
+				if (pool.TakeXRow(y, z).All(e => e == true))
+					completedRowNum++;
+
+		for (int x = 0; x < this.GetSizeX(); x++)
+			for (int y = 0; y < this.GetSizeY(); y++)
+				if (pool.TakeZRow(x, y).All(e => e == true))
+					completedRowNum++;
+
 		return completedRowNum;
+	}
+}
+
+
+
+public class Array3D<T> {
+	private T[,,] array = new T[0, 0, 0];
+	public int GetSizeX() { return this.array.GetLength(0); }
+	public int GetSizeY() { return this.array.GetLength(1); }
+	public int GetSizeZ() { return this.array.GetLength(2); }
+
+	// array copy to member array
+	public void SetArray3D(T[,,] array) {
+		this.array = new T[array.GetLength(0), array.GetLength(1), array.GetLength(2)];
+		for (int x = 0; x < array.GetLength(0); x++)
+			for (int y = 0; y < array.GetLength(1); y++)
+				for (int z = 0; z < array.GetLength(2); z++)
+					this.array[x, y, z] = array[x, y, z];
+	}
+
+	public T[,,] GetArray3D() {
+		return this.array;
+	}
+
+	public T[] TakeXRow(int specY, int specZ) {
+		T[] reduceArray = new T[this.GetSizeX()];
+		for (int x = 0; x < this.GetSizeX(); x++) {
+			reduceArray[x] = array[x, specY, specZ];
+		}
+		return reduceArray;
+	}
+
+	public T[] TakeZRow(int specX, int specY) {
+		T[] reduceArray = new T[this.GetSizeZ()];
+		for (int z = 0; z < this.GetSizeZ(); z++) {
+			reduceArray[z] = array[specX, specY, z];
+		}
+		return reduceArray;
+	}
+
+	public void SetXRow(int specY, int specZ, T value) {
+		for (int x = 0; x < this.GetSizeX(); x++) {
+			array[x, specY, specZ] = value;
+		}
+	}
+
+	public void SetZRow(int specX, int specY, T value) {
+		for (int z = 0; z < this.GetSizeZ(); z++) {
+			array[specX, specY, z] = value;
+		}
 	}
 }
