@@ -1923,6 +1923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a73cdb1af28b46f5960d2fac5f02aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRotatedX: 0
+  isRotatedY: 0
+  isRotatedZ: 0
 --- !u!4 &953188388
 Transform:
   m_ObjectHideFlags: 0
