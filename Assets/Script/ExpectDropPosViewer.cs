@@ -91,10 +91,10 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 				if (cubePosY < 0) {
 					isCube = true;
-				} else if (BlockPoolController.GetSizeY() <= cubePosY) {
+				} else if (blockPoolController.GetSizeY() <= cubePosY) {
 					continue;
-				} else if (!(0 <= cubePosX && cubePosX < BlockPoolController.GetSizeX() 
-						&& 0 <= cubePosZ && cubePosZ < BlockPoolController.GetSizeZ())) {
+				} else if (!(0 <= cubePosX && cubePosX < blockPoolController.GetSizeX() 
+						&& 0 <= cubePosZ && cubePosZ < blockPoolController.GetSizeZ())) {
 					continue;
 				} else if (blockPoolController.GetPool().GetGameObject(cubePosX, cubePosY, cubePosZ) != null) {
 					isCube = true;

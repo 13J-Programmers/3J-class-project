@@ -5,11 +5,18 @@ using System.Collections;
 /// three-dimensional array behaves pool of Tetoris
 /// 
 public class BlockPool {
-	public const int POOL_X = 5;      ///< width
-	public const int POOL_Y = 10;     ///< height
-	public const int POOL_Z = POOL_X; ///< depth
+	public int POOL_X; ///< width
+	public int POOL_Y; ///< height
+	public int POOL_Z; ///< depth
 	/// for storing position of each cubes
-	public GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
+	public GameObject[,,] blockPool;// = new GameObject[POOL_X, POOL_Y, POOL_Z];
+
+	public BlockPool(int width, int height, int depth) {
+		POOL_X = width;
+		POOL_Y = height;
+		POOL_Z = depth;
+		blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
+	}
 
 	public GameObject GetGameObject(int x, int y, int z) {
 		return blockPool[x, y, z];
