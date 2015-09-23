@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameoverCanvasController : MonoBehaviour, ICanvas {
+public class GameoverCanvasController : MonoBehaviour, IResultCanvas {
 	// Use this for initialization
 	void Start() {
 		gameObject.GetComponent<Canvas>().enabled = false;

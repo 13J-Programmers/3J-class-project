@@ -122,14 +122,14 @@ public class GameManager : MonoBehaviour {
 		//print("GameOver");
 		FinishGameProcess();
 		DisableGameModules();
-		var gameoverCanvas = GameObject.Find("GameoverCanvas").GetComponent<ICanvas>();
+		var gameoverCanvas = GameObject.Find("GameoverCanvas").GetComponent<IResultCanvas>();
 		gameoverCanvas.ShowResult(score);
 	}
 
 	public void GameFinish() {
 		//print("GameFinish");
 		FinishGameProcess();
-		var resultCanvas = GameObject.Find("ResultCanvas").GetComponent<ICanvas>();
+		var resultCanvas = GameObject.Find("ResultCanvas").GetComponent<IResultCanvas>();
 		resultCanvas.ShowResult(score);
 	}
 
@@ -155,18 +155,18 @@ public class GameManager : MonoBehaviour {
 		yield return new WaitForSeconds(1);
 		startCanvas.SetText("");
 		// display image
-		startCanvas.SetStart();
+		startCanvas.SetImage();
 		isCountDownMode = false;
 		yield return new WaitForSeconds(1);
-		startCanvas.SetStart(false);
+		startCanvas.SetImage(false);
 	}
 
 	/// display image "Times Up" while 2 seconds.
 	private IEnumerator TimesUp() {
 		// display image
-		timesUpCanvas.SetTimesUp();
+		timesUpCanvas.SetImage();
 		yield return new WaitForSeconds(2);
-		timesUpCanvas.SetTimesUp(false);
+		timesUpCanvas.SetImage(false);
 		isTimesUpMode = 2;
 	}
 

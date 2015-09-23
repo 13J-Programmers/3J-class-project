@@ -13,11 +13,11 @@ public class TimesUpCanvasController : MonoBehaviour {
 		timesUpImage.enabled = false;
 	}
 	
-	public void SetTimesUp() {
-		SetTimesUp(true);
+	public void SetImage() {
+		SetImage(true);
 	}
 
-	public void SetTimesUp(bool flag) {
+	public void SetImage(bool flag) {
 		timesUpImage.enabled = flag;
 	}
 }

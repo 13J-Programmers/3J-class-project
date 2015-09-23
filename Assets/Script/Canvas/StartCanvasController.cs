@@ -21,11 +21,11 @@ public class StartCanvasController : MonoBehaviour {
 		countUpText.text = str;
 	}
 
-	public void SetStart() {
-		SetStart(true);
+	public void SetImage() {
+		SetImage(true);
 	}
 
-	public void SetStart(bool flag) {
+	public void SetImage(bool flag) {
 		startImage.enabled = flag;
 	}
 }

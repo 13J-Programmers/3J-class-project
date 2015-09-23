@@ -2,6 +2,6 @@
 using System.Collections;
 
 /// interface for canvas displayed when the game is finished.
-interface ICanvas {
+interface IResultCanvas {
 	void ShowResult(int score);
 }
