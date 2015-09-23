@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour {
 
 	/// stop specific game modules
 	private void DisableGameModules() {
-		string[] moduleNames = new string[] {
+		string[] moduleNames = {
 			"Main Camera#CameraController", 
 			"BlockEntity#BlockEntity", 
 			"LeapHandAction#LeapHandAction", 
