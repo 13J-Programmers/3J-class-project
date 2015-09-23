@@ -32,29 +32,26 @@ using System.Collections.Generic;
 /// then recall ControlBlock()
 /// 
 public class BlockPoolController : MonoBehaviour {
-	public const int POOL_X = 5;      ///< width
-	public const int POOL_Y = 10;     ///< height
-	public const int POOL_Z = POOL_X; ///< depth
-	/// for storing position of each cubes
-	public GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
+	private BlockPool blockPool = new BlockPool();
 	private GameObject ground, poolCubes;
 	private _DummyParent dummyParent;
 	private GameManager gameManager;
 
-	/// This function is always called before 
-	/// any Start functions and also just after a prefab is instantiated.
+	public static int GetSizeX() { return BlockPool.POOL_X; }
+	public static int GetSizeY() { return BlockPool.POOL_Y; }
+	public static int GetSizeZ() { return BlockPool.POOL_Z; }
+	public BlockPool GetPool() { return blockPool; }
+
 	void Awake() {
-		// find obj and get it's components
 		ground = GameObject.Find("BlockPool/Ground");
 		poolCubes = GameObject.Find("BlockPool/Cubes");
 		dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 
-	// Use this for initialization
 	void Start() {
-		int size = POOL_X;
-		// starting BlockPool position and scale
+		int size = BlockPool.POOL_X;
+		// set position of BlockPool obj and scale
 		if (size == 5) {
 			// size : 5
 			// position : (0, -2.5, 0)
@@ -68,11 +65,10 @@ public class BlockPoolController : MonoBehaviour {
 			transform.Translate(new Vector3(0.5f, -2.5f, 0.5f), Space.World);
 			transform.localScale = new Vector3(0.6f, 1.0f, 0.6f);
 		} else {
-			throw new Exception("POOL_X is expected to be 5 or 6. Instead of " + POOL_X);
+			throw new Exception("POOL_X is expected to be 5 or 6. Instead of " + BlockPool.POOL_X);
 		}
 	}
 	
-	// Update is called once per frame
 	void Update() {
 		if (dummyParent.isLanded) {
 			dummyParent.FinishDropping();
@@ -116,8 +112,6 @@ public class BlockPoolController : MonoBehaviour {
 		wallPosition["x-max"] = wallXMax.transform.position.x;
 		wallPosition["z-min"] = wallZMin.transform.position.z;
 		wallPosition["z-max"] = wallZMax.transform.position.z;
-		// print("Wall x min-max : " + wallPos["x-min"] + "..." + wallPos["x-max"]);
-		// print("Wall z min-max : " + wallPos["z-min"] + "..." + wallPos["z-max"]);
 		return wallPosition;
 	}
 
@@ -125,13 +119,7 @@ public class BlockPoolController : MonoBehaviour {
 
 	/// init the Pool
 	private void InitPool() {
-		for (int z = 0; z < POOL_Z; z++) {
-			for (int y = 0; y < POOL_Y; y++) {
-				for (int x = 0; x < POOL_X; x++) {
-					blockPool[x, y, z] = null;
-				}
-			}
-		}
+		blockPool.Init();
 	}
 
 	/// merge block cubes in BlockPool/Cubes
@@ -202,21 +190,23 @@ public class BlockPoolController : MonoBehaviour {
 		// print("target: " + obj.transform.position);
 		// print("index : >> " + new Vector3(x, y, z));
 		try {
-			blockPool[x, y, z] = obj.gameObject;
+			blockPool.SetGameObject(x, y, z, obj.gameObject);
 		} catch (IndexOutOfRangeException) {
 			gameManager.GameOver();
 		}
 	}
 
 	/// sometimes, cube is put unexpected position.
-	/// therefore, cubes need to correct position.
+	/// therefore, cubes need to correct y position.
 	private void FixCubePos() {
-		for (int z = 0; z < POOL_Z; z++) {
-			for (int y = 0; y < POOL_Y; y++) {
-				for (int x = 0; x < POOL_X; x++) {
-					if (blockPool[x, y, z] == null) continue;
-					Vector3 currentPos = blockPool[x, y, z].transform.position;
-					blockPool[x, y, z].transform.position = new Vector3(
+		for (int z = 0; z < BlockPool.POOL_Z; z++) {
+			for (int y = 0; y < BlockPool.POOL_Y; y++) {
+				for (int x = 0; x < BlockPool.POOL_X; x++) {
+					//if (blockPool[x, y, z] == null) continue;
+					if (blockPool.GetGameObject(x, y, z) == null) continue;
+					//Vector3 currentPos = blockPool[x, y, z].transform.position;
+					Vector3 currentPos = blockPool.GetGameObject(x, y, z).transform.position;
+					blockPool.GetGameObject(x, y, z).transform.position = new Vector3(
 						currentPos.x,
 						(float)Math.Round(currentPos.y),
 						currentPos.z
@@ -226,6 +216,41 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
+	private void RemoveCompletedRow() {
+		blockPool.RemoveCompletedRow();
+	}
+}
+
+
+///
+/// three-dimensional array behaves pool of Tetoris
+/// 
+public class BlockPool {
+	public const int POOL_X = 5;      ///< width
+	public const int POOL_Y = 10;     ///< height
+	public const int POOL_Z = POOL_X; ///< depth
+	/// for storing position of each cubes
+	public GameObject[,,] blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
+
+	public GameObject GetGameObject(int x, int y, int z) {
+		return blockPool[x, y, z];
+	}
+	public void SetGameObject(int x, int y, int z, GameObject gameObj) {
+		blockPool[x, y, z] = gameObj;
+	}
+
+	public void Init() {
+		for (int z = 0; z < POOL_Z; z++) {
+			for (int y = 0; y < POOL_Y; y++) {
+				for (int x = 0; x < POOL_X; x++) {
+					this.SetGameObject(x, y, z, null);
+				}
+			}
+		}
+	}
+
+	/// TODO: need refactor
+	///
 	/// remove completed row
 	///
 	/// steps:
@@ -239,7 +264,10 @@ public class BlockPoolController : MonoBehaviour {
 	///      cubes (B) independent of the Dummy parent.
 	///   8. jump to first.
 	///
-	private bool RemoveCompletedRow() {
+	public bool RemoveCompletedRow() {
+		_DummyParent dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
+		GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
 		bool hasCompletedRow = false;
 		int removeRowNum = 0;
 		bool[,,] willRemoveCube = new bool[POOL_X, POOL_Y, POOL_Z];
@@ -313,7 +341,7 @@ public class BlockPoolController : MonoBehaviour {
 				for (int x = 0; x < POOL_X; x++) {
 					if (willRemoveCube[x, y, z] == true) {
 						cubeScore += blockPool[x, y, z].GetComponent<CubeInfo>().score;
-						Destroy(blockPool[x, y, z]);
+						MonoBehaviour.Destroy(blockPool[x, y, z]);
 					}
 				}
 			}
@@ -328,7 +356,6 @@ public class BlockPoolController : MonoBehaviour {
 		return true;
 	}
 }
-
 
 
 

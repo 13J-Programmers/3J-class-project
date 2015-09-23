@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ExpectDropPosViewer : MonoBehaviour {
-	private BlockPoolController blockPoolControl;
+	private BlockPoolController blockPoolController;
 	private GameObject controllingBlock;
 	private GameObject showDropPosBlock;
 	private GameObject ground;
@@ -19,7 +19,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	/// This function is always called before 
 	/// any Start functions and also just after a prefab is instantiated.
 	void Awake() {
-		blockPoolControl = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
+		blockPoolController = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 		ground = GameObject.Find("BlockPool/Ground");
 		controllingBlock = gameObject;
 	}
@@ -63,7 +63,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		// set expected y //
 		// get offsets for search in array
 		float halfOfWidth = 0.5f;
-		Dictionary<string, float> wallPos = blockPoolControl.GetWallPosition();
+		Dictionary<string, float> wallPos = blockPoolController.GetWallPosition();
 		Vector3 offset = new Vector3(0, 0, 0);
 		offset.x = -wallPos["x-min"] - halfOfWidth;
 		offset.z = -wallPos["z-min"] - halfOfWidth;
@@ -91,12 +91,12 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 				if (cubePosY < 0) {
 					isCube = true;
-				} else if (BlockPoolController.POOL_Y <= cubePosY) {
+				} else if (BlockPoolController.GetSizeY() <= cubePosY) {
 					continue;
-				} else if (!(0 <= cubePosX && cubePosX < BlockPoolController.POOL_X 
-						&& 0 <= cubePosZ && cubePosZ < BlockPoolController.POOL_Z)) {
+				} else if (!(0 <= cubePosX && cubePosX < BlockPoolController.GetSizeX() 
+						&& 0 <= cubePosZ && cubePosZ < BlockPoolController.GetSizeZ())) {
 					continue;
-				} else if (blockPoolControl.blockPool[cubePosX, cubePosY, cubePosZ] != null) {
+				} else if (blockPoolController.GetPool().GetGameObject(cubePosX, cubePosY, cubePosZ) != null) {
 					isCube = true;
 				}
 				// print(
