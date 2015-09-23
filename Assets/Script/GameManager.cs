@@ -25,6 +25,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class GameManager : MonoBehaviour {
 	public bool isCountDownMode = false;
@@ -179,27 +180,42 @@ public class GameManager : MonoBehaviour {
 
 	/// stop specific game modules
 	private void DisableGameModules() {
-		// modules to be stopped
-		string[] modules = new string[] {
+		string[] moduleNames = new string[] {
 			"Main Camera#CameraController", 
 			"BlockEntity#BlockEntity", 
 			"LeapHandAction#LeapHandAction", 
 			"KeyAction#KeyAction", 
 		};
 
-		// stop modules
-		foreach (string module in modules) {
-			string[] tmp = module.Split('#');
-			string objectName = tmp[0];
-			string[] moduleNames = tmp[1].Split(',');
-			foreach (string moduleName in moduleNames) {
-				//print(objectName + "." + moduleName);
-				Component targetModule = GameObject.Find(objectName).GetComponent(moduleName);
-				Destroy(targetModule);
-			}
+		var moduleInfos = moduleNames
+			.Select(str => str.Split('#'))
+			.Select(ary => new ComponentInfo(ary[0], ary[1]));
+
+		foreach (var moduleInfo in moduleInfos) {
+			Destroy(moduleInfo.GetComponent());
 		}
 	}
 }
 
+
+/// instance has a componentName and attachedObjName
+public class ComponentInfo {
+	public string attachedObjName;
+	public string componentName;
+	
+	public ComponentInfo(string attachedObjName, string componentName) {
+		this.attachedObjName = attachedObjName;
+		this.componentName = componentName;
+	}
+
+	override
+	public string ToString() {
+		return attachedObjName + "#" + componentName;
+	}
+
+	public Component GetComponent() {
+		return GameObject.Find(attachedObjName).GetComponent(componentName);
+	}
+}
 
 
