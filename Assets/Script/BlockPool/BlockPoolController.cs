@@ -37,9 +37,9 @@ public class BlockPoolController : MonoBehaviour {
 	private _DummyParent dummyParent;
 	private GameManager gameManager;
 
-	public int GetSizeX() { return blockPool.POOL_X; }
-	public int GetSizeY() { return blockPool.POOL_Y; }
-	public int GetSizeZ() { return blockPool.POOL_Z; }
+	public int GetSizeX() { return blockPool.GetSizeX(); }
+	public int GetSizeY() { return blockPool.GetSizeY(); }
+	public int GetSizeZ() { return blockPool.GetSizeZ(); }
 	public BlockPool GetPool() { return blockPool; }
 
 	void Awake() {
@@ -50,7 +50,7 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	void Start() {
-		int size = blockPool.POOL_X;
+		int size = blockPool.GetSizeX();
 		// set position of BlockPool obj and scale
 		if (size == 5) {
 			// size : 5
@@ -65,7 +65,7 @@ public class BlockPoolController : MonoBehaviour {
 			transform.Translate(new Vector3(0.5f, -2.5f, 0.5f), Space.World);
 			transform.localScale = new Vector3(0.6f, 1.0f, 0.6f);
 		} else {
-			throw new Exception("POOL_X is expected to be 5 or 6. Instead of " + blockPool.POOL_X);
+			throw new Exception("POOL_X is expected to be 5 or 6. Instead of " + blockPool.GetSizeX());
 		}
 	}
 	
@@ -199,9 +199,9 @@ public class BlockPoolController : MonoBehaviour {
 	/// sometimes, cube is put unexpected position.
 	/// therefore, cubes need to correct y position.
 	private void FixCubePos() {
-		for (int z = 0; z < blockPool.POOL_Z; z++) {
-			for (int y = 0; y < blockPool.POOL_Y; y++) {
-				for (int x = 0; x < blockPool.POOL_X; x++) {
+		for (int z = 0; z < blockPool.GetSizeZ(); z++) {
+			for (int y = 0; y < blockPool.GetSizeY(); y++) {
+				for (int x = 0; x < blockPool.GetSizeX(); x++) {
 					if (blockPool.GetGameObject(x, y, z) == null) continue;
 					Vector3 currentPos = blockPool.GetGameObject(x, y, z).transform.position;
 					blockPool.GetGameObject(x, y, z).transform.position = new Vector3(

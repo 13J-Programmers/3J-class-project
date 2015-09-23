@@ -5,11 +5,10 @@ using System.Collections;
 /// three-dimensional array behaves pool of Tetoris
 /// 
 public class BlockPool {
-	public int POOL_X; ///< width
-	public int POOL_Y; ///< height
-	public int POOL_Z; ///< depth
-	/// for storing position of each cubes
-	public GameObject[,,] blockPool;// = new GameObject[POOL_X, POOL_Y, POOL_Z];
+	private int POOL_X; ///< width
+	private int POOL_Y; ///< height
+	private int POOL_Z; ///< depth
+	public GameObject[,,] blockPool; ///< for storing position of each cubes
 
 	public BlockPool(int width, int height, int depth) {
 		POOL_X = width;
@@ -18,6 +17,9 @@ public class BlockPool {
 		blockPool = new GameObject[POOL_X, POOL_Y, POOL_Z];
 	}
 
+	public int GetSizeX() { return this.POOL_X; }
+	public int GetSizeY() { return this.POOL_Y; }
+	public int GetSizeZ() { return this.POOL_Z; }
 	public GameObject GetGameObject(int x, int y, int z) {
 		return blockPool[x, y, z];
 	}
@@ -54,46 +56,9 @@ public class BlockPool {
 		_DummyParent dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
 		GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-		bool hasCompletedRow = false;
-		int removeRowNum = 0;
-		bool[,,] willRemoveCube = new bool[POOL_X, POOL_Y, POOL_Z];
-		bool[,,] onRemoveCube   = new bool[POOL_X, POOL_Y, POOL_Z];
-
-		// check completed row
-		for (int z = 0; z < POOL_Z; z++) {
-			for (int y = 0; y < POOL_Y; y++) {
-				bool isCompleted = true;
-				for (int x = 0; x < POOL_X; x++) {
-					if (blockPool[x, y, z] == null) isCompleted = false;
-				}
-				if (!isCompleted) continue;
-
-				hasCompletedRow = true;
-				removeRowNum++;
-
-				// check completed row
-				for (int x = 0; x < POOL_X; x++) {
-					willRemoveCube[x, y, z] = true;
-				}
-			}
-		}
-		for (int x = 0; x < POOL_X; x++) {
-			for (int y = 0; y < POOL_Y; y++) {
-				bool isCompleted = true;
-				for (int z = 0; z < POOL_Z; z++) {
-					if (blockPool[x, y, z] == null) isCompleted = false;
-				}
-				if (!isCompleted) continue;
-
-				hasCompletedRow = true;
-				removeRowNum++;
-
-				// check completed row
-				for (int z = 0; z < POOL_Z; z++) {
-					willRemoveCube[x, y, z] = true;
-				}
-			}
-		}
+		bool[,,] willBeRemovedCube = SearchCubeThatMustBeRemoved();
+		int removeRowNum = CountCompletedRow(willBeRemovedCube);
+		bool hasCompletedRow = (removeRowNum > 0) ? true : false;
 		
 		if (!hasCompletedRow) return false;
 
@@ -107,13 +72,12 @@ public class BlockPool {
 				for (int y = 0; y < POOL_Y; y++) {
 					if (blockPool[x, y, z] == null) continue;
 
-					if (willRemoveCube[x, y, z] == true) {
+					if (willBeRemovedCube[x, y, z] == true) {
 						hasRemoveCube = true;
 						continue;
 					}
 
 					if (hasRemoveCube) {
-						onRemoveCube[x, y, z] = true;
 						blockPool[x, y, z].transform.parent = dummyParent.transform;
 					}
 				}
@@ -125,7 +89,7 @@ public class BlockPool {
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
 				for (int x = 0; x < POOL_X; x++) {
-					if (willRemoveCube[x, y, z] == true) {
+					if (willBeRemovedCube[x, y, z] == true) {
 						cubeScore += blockPool[x, y, z].GetComponent<CubeInfo>().score;
 						MonoBehaviour.Destroy(blockPool[x, y, z]);
 					}
@@ -140,5 +104,66 @@ public class BlockPool {
 		dummyParent.StartDropping();
 
 		return true;
+	}
+
+	private bool[,,] SearchCubeThatMustBeRemoved() {
+		bool[,,] mustBeRemovedCubes = new bool[this.GetSizeX(), this.GetSizeY(), this.GetSizeZ()];
+		for (int z = 0; z < this.GetSizeZ(); z++) {
+			for (int y = 0; y < this.GetSizeY(); y++) {
+				bool isCompleted = true;
+				for (int x = 0; x < this.GetSizeX(); x++) {
+					if (blockPool[x, y, z] == null) isCompleted = false;
+				}
+				if (!isCompleted) continue;
+
+				// check completed row
+				for (int x = 0; x < this.GetSizeX(); x++) {
+					mustBeRemovedCubes[x, y, z] = true;
+				}
+			}
+		}
+		for (int x = 0; x < this.GetSizeX(); x++) {
+			for (int y = 0; y < this.GetSizeY(); y++) {
+				bool isCompleted = true;
+				for (int z = 0; z < this.GetSizeZ(); z++) {
+					if (blockPool[x, y, z] == null) isCompleted = false;
+				}
+				if (!isCompleted) continue;
+
+				// check completed row
+				for (int z = 0; z < this.GetSizeZ(); z++) {
+					mustBeRemovedCubes[x, y, z] = true;
+				}
+			}
+		}
+		return mustBeRemovedCubes;
+	}
+
+
+	private int CountCompletedRow(bool[,,] checkedPool) {
+		int completedRowNum = 0;
+		for (int z = 0; z < this.GetSizeZ(); z++) {
+			for (int y = 0; y < this.GetSizeY(); y++) {
+				bool isCompleted = true;
+				for (int x = 0; x < this.GetSizeX(); x++) {
+					if (checkedPool[x, y, z] == false) isCompleted = false;
+				}
+				if (!isCompleted) continue;
+
+				completedRowNum++;
+			}
+		}
+		for (int x = 0; x < this.GetSizeX(); x++) {
+			for (int y = 0; y < this.GetSizeY(); y++) {
+				bool isCompleted = true;
+				for (int z = 0; z < this.GetSizeZ(); z++) {
+					if (checkedPool[x, y, z] == false) isCompleted = false;
+				}
+				if (!isCompleted) continue;
+
+				completedRowNum++;
+			}
+		}
+		return completedRowNum;
 	}
 }
