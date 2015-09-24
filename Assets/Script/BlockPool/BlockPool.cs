@@ -6,7 +6,7 @@ using System.Linq;
 
 ///
 /// three-dimensional array behaves pool of Tetoris
-/// 
+///
 public class BlockPool {
 	private int POOL_X; ///< width
 	private int POOL_Y; ///< height
@@ -51,7 +51,7 @@ public class BlockPool {
 	///   4. Add RigitBody to the Dummy parent
 	///   5. Remove (A)
 	///   6. Rid RigitBody from the Dummy parent
-	///   7. After cubes (B) landed, 
+	///   7. After cubes (B) landed,
 	///      cubes (B) independent of the Dummy parent.
 	///   8. jump to first.
 	///
@@ -62,7 +62,7 @@ public class BlockPool {
 		bool[,,] willBeRemovedCube = SearchCubeThatMustBeRemoved();
 		int removeRowNum = CountCompletedRow(willBeRemovedCube);
 		bool hasCompletedRow = (removeRowNum > 0) ? true : false;
-		
+
 		if (!hasCompletedRow) return false;
 
 		// add num of rows to display
@@ -93,6 +93,7 @@ public class BlockPool {
 			for (int y = 0; y < POOL_Y; y++) {
 				for (int x = 0; x < POOL_X; x++) {
 					if (willBeRemovedCube[x, y, z] == true) {
+						generateSmoke(blockPool[x, y, z].transform.position);
 						cubeScore += blockPool[x, y, z].GetComponent<CubeInfo>().score;
 						MonoBehaviour.Destroy(blockPool[x, y, z]);
 					}
@@ -148,6 +149,11 @@ public class BlockPool {
 					completedRowNum++;
 
 		return completedRowNum;
+	}
+
+	private void generateSmoke(Vector3 pos) {
+		GameObject prefab = (GameObject)Resources.Load("Particle/Smoke");
+		MonoBehaviour.Instantiate(prefab, pos, Quaternion.identity);
 	}
 }
 
