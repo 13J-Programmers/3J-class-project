@@ -117,26 +117,16 @@ public class BlockPoolController : MonoBehaviour {
 
 	/// merge block cubes in BlockPool/Cubes
 	/// 
-	///     before:
-	///    
-	///       ├── BlockPool
-	///       │   ├── Ground
-	///       │   ├── Wall
-	///       │   └── Cubes
-	///       └── block(dropping)
-	///           ├── Cube
-	///           ├── Cube
-	///           └── Cube
-	///       
-	///     after:
-	///    
-	///       └── BlockPool
-	///           ├── Ground
-	///           ├── Wall
-	///           └── Cubes
-	///               ├── Cube
-	///               ├── Cube
-	///               └── Cube
+	///     before:              ->       after:
+	///                                   
+	///       ├── BlockPool                 └── BlockPool
+	///       │   ├── Ground                    ├── Ground
+	///       │   ├── Walls                     ├── Walls
+	///       │   └── Cubes                     └── Cubes
+	///       └── block(dropping)                   ├── Cube
+	///           ├── Cube                          ├── Cube
+	///           ├── Cube                          └── Cube
+	///           └── Cube                
 	/// 
 	private void MergeBlock(GameObject block) {
 		if (block == null) return;
