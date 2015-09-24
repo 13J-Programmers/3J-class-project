@@ -9,12 +9,14 @@ public class Array3D<T> {
 	public int GetSizeZ() { return this.array.GetLength(2); }
 
 	// array copy to member array
-	public void SetArray3D(T[,,] array) {
+	public Array3D<T> Set(T[,,] array) {
 		this.array = new T[array.GetLength(0), array.GetLength(1), array.GetLength(2)];
 		for (int x = 0; x < array.GetLength(0); x++)
 			for (int y = 0; y < array.GetLength(1); y++)
 				for (int z = 0; z < array.GetLength(2); z++)
 					this.array[x, y, z] = array[x, y, z];
+
+		return this;
 	}
 
 	public T[,,] GetArray3D() {
