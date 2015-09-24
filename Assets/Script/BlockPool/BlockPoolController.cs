@@ -206,18 +206,14 @@ public class BlockPoolController : MonoBehaviour {
 			for (int y = 0; y < blockPool.GetSizeY(); y++) {
 				for (int x = 0; x < blockPool.GetSizeX(); x++) {
 					if (blockPool.GetGameObject(x, y, z) == null) continue;
-					Vector3 currentPos = blockPool.GetGameObject(x, y, z).transform.position;
-					blockPool.GetGameObject(x, y, z).transform.position = new Vector3(
-						currentPos.x,
-						(float)Math.Round(currentPos.y),
-						currentPos.z
-					);
+					blockPool.GetGameObject(x, y, z).transform.position = 
+						RoundY(blockPool.GetGameObject(x, y, z).transform.position);
 				}
 			}
 		}
 	}
 
-	private Vector3 RoundY(Vector3 vector3) {
+	private Vector3 RoundY(Vector3 vector) {
 		Vector3 _vector;
 		_vector.x = vector.x;
 		_vector.y = (float)Math.Round(vector.y);
