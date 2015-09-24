@@ -102,23 +102,6 @@ public class BlockPoolController : MonoBehaviour {
 			dummyParent.StartDropping();
 		}
 	}
-
-	/*
-	/// return the 4 walls position
-	public Dictionary<string, float> GetWallPosition() {
-		Dictionary<string, float> wallPosition = new Dictionary<string, float>();
-
-		GameObject wallXMin = GameObject.Find("BlockPool/Walls/min-x");
-		GameObject wallXMax = GameObject.Find("BlockPool/Walls/max-x");
-		GameObject wallZMin = GameObject.Find("BlockPool/Walls/min-z");
-		GameObject wallZMax = GameObject.Find("BlockPool/Walls/max-z");
-		wallPosition["x-min"] = wallXMin.transform.position.x;
-		wallPosition["x-max"] = wallXMax.transform.position.x;
-		wallPosition["z-min"] = wallZMin.transform.position.z;
-		wallPosition["z-max"] = wallZMax.transform.position.z;
-		return wallPosition;
-	}
-	*/
 	
 	public Wall GetWall() {
 		return GameObject.Find("BlockPool/Walls").GetComponent<Wall>();
