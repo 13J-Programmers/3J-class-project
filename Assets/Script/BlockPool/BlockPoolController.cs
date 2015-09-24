@@ -97,23 +97,16 @@ public class BlockPoolController : MonoBehaviour {
 		MergeBlock(block);
 		SearchCubePos();
 		FixCubePos();
-		RemoveCompletedRow();
+		if (RemoveCompletedRow()) {
+			// start to drop dummyParent
+			dummyParent.StartDropping();
+		}
+	}
+	
+	public Wall GetWall() {
+		return GameObject.Find("BlockPool/Walls").GetComponent<Wall>();
 	}
 
-	/// return the 4 walls position
-	public Dictionary<string, float> GetWallPosition() {
-		Dictionary<string, float> wallPosition = new Dictionary<string, float>();
-
-		GameObject wallXMin = GameObject.Find("BlockPool/Wall(x-min)");
-		GameObject wallXMax = GameObject.Find("BlockPool/Wall(x-max)");
-		GameObject wallZMin = GameObject.Find("BlockPool/Wall(z-min)");
-		GameObject wallZMax = GameObject.Find("BlockPool/Wall(z-max)");
-		wallPosition["x-min"] = wallXMin.transform.position.x;
-		wallPosition["x-max"] = wallXMax.transform.position.x;
-		wallPosition["z-min"] = wallZMin.transform.position.z;
-		wallPosition["z-max"] = wallZMax.transform.position.z;
-		return wallPosition;
-	}
 
 	// private methods ------------------------------
 
@@ -124,26 +117,16 @@ public class BlockPoolController : MonoBehaviour {
 
 	/// merge block cubes in BlockPool/Cubes
 	/// 
-	///     before:
-	///    
-	///       ├── BlockPool
-	///       │   ├── Ground
-	///       │   ├── Wall
-	///       │   └── Cubes
-	///       └── block(dropping)
-	///           ├── Cube
-	///           ├── Cube
-	///           └── Cube
-	///       
-	///     after:
-	///    
-	///       └── BlockPool
-	///           ├── Ground
-	///           ├── Wall
-	///           └── Cubes
-	///               ├── Cube
-	///               ├── Cube
-	///               └── Cube
+	///     before:              ->       after:
+	///                                   
+	///       ├── BlockPool                 └── BlockPool
+	///       │   ├── Ground                    ├── Ground
+	///       │   ├── Walls                     ├── Walls
+	///       │   └── Cubes                     └── Cubes
+	///       └── block(dropping)                   ├── Cube
+	///           ├── Cube                          ├── Cube
+	///           ├── Cube                          └── Cube
+	///           └── Cube                
 	/// 
 	private void MergeBlock(GameObject block) {
 		if (block == null) return;
@@ -168,11 +151,11 @@ public class BlockPoolController : MonoBehaviour {
 	/// blockPool[,,] has each cubes position
 	/// @see SetCubePos()
 	private void SearchCubePos() {
-		Dictionary<string, float> wallPos = GetWallPosition();
+		Wall wallPos = GetWall();
 
 		Vector3 offset = new Vector3(0, 0, 0);
-		offset.x = -wallPos["x-min"];
-		offset.z = -wallPos["z-min"];
+		offset.x = -wallPos.GetMinX();
+		offset.z = -wallPos.GetMinZ();
 		offset.y = -ground.transform.position.y;
 
 		foreach (Transform cube in poolCubes.transform) {
@@ -203,19 +186,23 @@ public class BlockPoolController : MonoBehaviour {
 			for (int y = 0; y < blockPool.GetSizeY(); y++) {
 				for (int x = 0; x < blockPool.GetSizeX(); x++) {
 					if (blockPool.GetGameObject(x, y, z) == null) continue;
-					Vector3 currentPos = blockPool.GetGameObject(x, y, z).transform.position;
-					blockPool.GetGameObject(x, y, z).transform.position = new Vector3(
-						currentPos.x,
-						(float)Math.Round(currentPos.y),
-						currentPos.z
-					);
+					blockPool.GetGameObject(x, y, z).transform.position = 
+						RoundY(blockPool.GetGameObject(x, y, z).transform.position);
 				}
 			}
 		}
 	}
 
-	private void RemoveCompletedRow() {
-		blockPool.RemoveCompletedRow();
+	private Vector3 RoundY(Vector3 vector) {
+		Vector3 _vector;
+		_vector.x = vector.x;
+		_vector.y = (float)Math.Round(vector.y);
+		_vector.z = vector.z;
+		return _vector;
+	}
+
+	private bool RemoveCompletedRow() {
+		return blockPool.RemoveCompletedRow();
 	}
 }
 
