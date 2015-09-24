@@ -56,7 +56,6 @@ public class BlockController : MonoBehaviour {
 
 		// block can move in specific range
 		// 
-		//   wallPos : coordinate of wall of Pool
 		//   blockMinCoord : minimum x,z coordinate
 		//   blockMaxCoord : maximum x,z coordinate
 		//   halfOfWidth : blockWidth / 2
@@ -72,16 +71,16 @@ public class BlockController : MonoBehaviour {
 		// 
 		// if block collides wall, it cannot move
 		// 
-		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
+		Wall wall = blockPool.GetWall();
 		float halfOfWidth = transform.localScale.x / 2;
-		if (wallPos["x-min"] > blockMinCoord.x - halfOfWidth) {
+		if (wall.GetMinX() > blockMinCoord.x - halfOfWidth) {
 			x = (x < 0) ? 0 : x;
-		} else if (wallPos["x-max"] < blockMaxCoord.x + halfOfWidth) {
+		} else if (wall.GetMaxX() < blockMaxCoord.x + halfOfWidth) {
 			x = (x > 0) ? 0 : x;
 		}
-		if (wallPos["z-min"] > blockMinCoord.z - halfOfWidth) {
+		if (wall.GetMinZ() > blockMinCoord.z - halfOfWidth) {
 			z = (z < 0) ? 0 : z;
-		} else if (wallPos["z-max"] < blockMaxCoord.z + halfOfWidth) {
+		} else if (wall.GetMaxZ() < blockMaxCoord.z + halfOfWidth) {
 			z = (z > 0) ? 0 : z;
 		}
 		
@@ -248,15 +247,15 @@ public class BlockController : MonoBehaviour {
 
 	/// after rotate, if part of the block into wall, fix position
 	private void FixPosition() {
-		Dictionary<string, float> wallPos = blockPool.GetWallPosition();
-		if (wallPos["x-min"] > blockMinCoord.x) {
+		Wall wall = blockPool.GetWall();
+		if (wall.GetMinX() > blockMinCoord.x) {
 			transform.Translate(Vector3.right, Space.World);
-		} else if (wallPos["x-max"] < blockMaxCoord.x) {
+		} else if (wall.GetMaxX() < blockMaxCoord.x) {
 			transform.Translate(Vector3.left, Space.World);
 		}
-		if (wallPos["z-min"] > blockMinCoord.z) {
+		if (wall.GetMinZ() > blockMinCoord.z) {
 			transform.Translate(Vector3.forward, Space.World);
-		} else if (wallPos["z-max"] < blockMaxCoord.z) {
+		} else if (wall.GetMaxZ() < blockMaxCoord.z) {
 			transform.Translate(Vector3.back, Space.World);
 		}
 	}

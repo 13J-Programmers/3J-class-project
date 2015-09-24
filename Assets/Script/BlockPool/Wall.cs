@@ -14,7 +14,7 @@ public class Wall : MonoBehaviour {
 		return GameObject.Find("BlockPool/Walls/" + path);
 	}
 
-	void Start() {
+	void Update() {
 		float minX = GetWall("min-x").transform.position.x;
 		float maxX = GetWall("max-x").transform.position.x;
 		float minZ = GetWall("min-z").transform.position.z;

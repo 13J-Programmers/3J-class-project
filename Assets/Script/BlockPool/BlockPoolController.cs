@@ -103,20 +103,27 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
+	/*
 	/// return the 4 walls position
 	public Dictionary<string, float> GetWallPosition() {
 		Dictionary<string, float> wallPosition = new Dictionary<string, float>();
 
-		GameObject wallXMin = GameObject.Find("BlockPool/Walls/x-min");
-		GameObject wallXMax = GameObject.Find("BlockPool/Walls/x-max");
-		GameObject wallZMin = GameObject.Find("BlockPool/Walls/z-min");
-		GameObject wallZMax = GameObject.Find("BlockPool/Walls/z-max");
+		GameObject wallXMin = GameObject.Find("BlockPool/Walls/min-x");
+		GameObject wallXMax = GameObject.Find("BlockPool/Walls/max-x");
+		GameObject wallZMin = GameObject.Find("BlockPool/Walls/min-z");
+		GameObject wallZMax = GameObject.Find("BlockPool/Walls/max-z");
 		wallPosition["x-min"] = wallXMin.transform.position.x;
 		wallPosition["x-max"] = wallXMax.transform.position.x;
 		wallPosition["z-min"] = wallZMin.transform.position.z;
 		wallPosition["z-max"] = wallZMax.transform.position.z;
 		return wallPosition;
 	}
+	*/
+	
+	public Wall GetWall() {
+		return GameObject.Find("BlockPool/Walls").GetComponent<Wall>();
+	}
+
 
 	// private methods ------------------------------
 
@@ -171,11 +178,11 @@ public class BlockPoolController : MonoBehaviour {
 	/// blockPool[,,] has each cubes position
 	/// @see SetCubePos()
 	private void SearchCubePos() {
-		Dictionary<string, float> wallPos = GetWallPosition();
+		Wall wallPos = GetWall();
 
 		Vector3 offset = new Vector3(0, 0, 0);
-		offset.x = -wallPos["x-min"];
-		offset.z = -wallPos["z-min"];
+		offset.x = -wallPos.GetMinX();
+		offset.z = -wallPos.GetMinZ();
 		offset.y = -ground.transform.position.y;
 
 		foreach (Transform cube in poolCubes.transform) {

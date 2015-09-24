@@ -63,10 +63,10 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		// set expected y //
 		// get offsets for search in array
 		float halfOfWidth = 0.5f;
-		Dictionary<string, float> wallPos = blockPoolController.GetWallPosition();
+		Wall wall = blockPoolController.GetWall();
 		Vector3 offset = new Vector3(0, 0, 0);
-		offset.x = -wallPos["x-min"] - halfOfWidth;
-		offset.z = -wallPos["z-min"] - halfOfWidth;
+		offset.x = -wall.GetMinX() - halfOfWidth;
+		offset.z = -wall.GetMinZ() - halfOfWidth;
 		offset.y = -ground.transform.position.y - halfOfWidth;
 
 		// set y of controllingBlock
