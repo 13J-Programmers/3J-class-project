@@ -97,7 +97,10 @@ public class BlockPoolController : MonoBehaviour {
 		MergeBlock(block);
 		SearchCubePos();
 		FixCubePos();
-		RemoveCompletedRow();
+		if (RemoveCompletedRow()) {
+			// start to drop dummyParent
+			dummyParent.StartDropping();
+		}
 	}
 
 	/// return the 4 walls position
