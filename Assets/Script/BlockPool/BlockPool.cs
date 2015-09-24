@@ -57,6 +57,7 @@ public class BlockPool {
 	///
 	public bool RemoveCompletedRow() {
 		GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		_DummyParent dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
 
 		bool[,,] willBeRemovedCube = SearchCubeThatMustBeRemoved();
 		int removeRowNum = CountCompletedRow(willBeRemovedCube);

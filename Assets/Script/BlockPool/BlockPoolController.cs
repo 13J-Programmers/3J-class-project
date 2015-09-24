@@ -217,8 +217,16 @@ public class BlockPoolController : MonoBehaviour {
 		}
 	}
 
-	private void RemoveCompletedRow() {
-		blockPool.RemoveCompletedRow();
+	private Vector3 RoundY(Vector3 vector3) {
+		Vector3 _vector;
+		_vector.x = vector.x;
+		_vector.y = (float)Math.Round(vector.y);
+		_vector.z = vector.z;
+		return _vector;
+	}
+
+	private bool RemoveCompletedRow() {
+		return blockPool.RemoveCompletedRow();
 	}
 }
 
