@@ -4,16 +4,25 @@
 /// 
 
 using UnityEngine;
+using System;
 using System.Collections;
 
 namespace Player.Action {
+	/// PlayerAction < BaseAction < MonoBehaviour
 	public abstract class PlayerAction : BaseAction {
 		protected BlockController blockController;
 		protected CameraController cameraController;
-		private GameObject target; ///< A container for control target
+
+		/// these access modifier prevent the child script use Start()
+		/// but, it doesn't work.
+		protected sealed override void Start() {
+			cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+			GameObject.Find("BlockEntity").GetComponent<BlockEntity>()
+				.CreateNewBlock += new EventHandler(ConnectWithBlock);
+		}
 		
-		// these access modifier prevent the child script use Update()
-		// but, it doesn't work.
+		/// these access modifier prevent the child script use Update()
+		/// but, it doesn't work.
 		protected sealed override void Update() {
 			InitPerFrame();
 			if (ValidatePerFrame() == false) return;
@@ -42,15 +51,15 @@ namespace Player.Action {
 		protected abstract void DetectRotationCamera();
 
 		/// get component of the new block for comment
-		public void ConnectWithBlock() {
-			target = GameObject.Find("block(new)");
+		public void ConnectWithBlock(object sender, EventArgs e) {
+			GameObject target = GameObject.Find("block(new)");
 			if (!target) return;
 			blockController = target.GetComponent<BlockController>();
 		}
 
 		/// get component of the _DummyBlock for disconnect
 		public void DisconnectWithBlock() {
-			target = GameObject.Find("_DummyBlock");
+			GameObject target = GameObject.Find("_DummyBlock");
 			if (!target) return;
 			blockController = target.GetComponent<BlockController>();
 		}

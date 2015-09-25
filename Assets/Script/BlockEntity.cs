@@ -4,6 +4,7 @@
 /// 
 
 using UnityEngine;
+using System;
 using System.Collections;
 using Player.Action;
 
@@ -17,13 +18,14 @@ public class BlockEntity : MonoBehaviour {
 
 	public int GetPrefabMaxNum() { return prefabMaxNum; }
 
+	public event EventHandler CreateNewBlock;
+
 	/// BlockEntity methods are invoked from Start() in GameManager.
 	/// therefore, initializing variables have to write in Awake().
 	void Awake() {
 		PushNextBlock(RandomBlock());
 	}
 
-	/// Use this for initialization
 	void Start() {
 		// change every cube of block
 		BoxCollider bc;
@@ -55,13 +57,16 @@ public class BlockEntity : MonoBehaviour {
 		newBlock.AddComponent<ExpectDropPosViewer>();
 		SetScoreToCube(newBlock);
 
-		ConnectBlockWithUserAction();
+		// notification of new block creation
+		if (CreateNewBlock != null) {
+			CreateNewBlock(this, EventArgs.Empty);
+		}
 	}
 
 	// private methods ------------------------------
 
 	private GameObject RandomBlock() {
-		int randNum = Random.Range(0, this.GetPrefabMaxNum());
+		int randNum = UnityEngine.Random.Range(0, this.GetPrefabMaxNum());
 		return blocks[randNum];
 	}
 
@@ -81,11 +86,5 @@ public class BlockEntity : MonoBehaviour {
 			cubeInfo = t.gameObject.AddComponent<CubeInfo>();
 			cubeInfo.score = 20;
 		}
-	}
-
-	/// connect user action and block
-	private void ConnectBlockWithUserAction() {
-		GameObject.Find("KeyAction").GetComponent<KeyAction>().ConnectWithBlock();
-		GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>().ConnectWithBlock();
 	}
 }

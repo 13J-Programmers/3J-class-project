@@ -11,6 +11,7 @@ using System.Collections;
 using Leap;
 
 namespace Player.Action {
+	/// LeapHandAction < PlayerAction < BaseAction < MonoBehaviour
 	public class LeapHandAction : PlayerAction {
 		// leap motion
 		private Controller controller = new Controller();
@@ -39,11 +40,6 @@ namespace Player.Action {
 		private float pitch;
 		private float yaw;
 		private float roll;
-
-		// Use this for initialization
-		void Start() {
-			cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
-		}
 
 		private bool isFingersFolded(Hand hand) {
 			Vector origin = hand.Fingers[0].TipPosition;

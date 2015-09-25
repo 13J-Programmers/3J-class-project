@@ -191,11 +191,6 @@ public class BlockController : MonoBehaviour {
 			if (!GameObject.Find("block(new)")) {
 				blockEntity.CreateRandomBlock();
 			}
-			//             connect
-			//   Actions ----------> BlockController
-			//
-			keyAction.ConnectWithBlock();
-			leapHandAction.ConnectWithBlock();
 
 			// All jobs has finished. So destroy blockControl script.
 			Destroy(gameObject.GetComponent<ExpectDropPosViewer>());
