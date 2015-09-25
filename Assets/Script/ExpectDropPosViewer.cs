@@ -27,6 +27,8 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		CloneSkeltonBlock();
+		BlockController.StartFalling += new EventHandler(StopSync);
+		BlockController.StopFalling += new EventHandler(StopShowing);
 	}
 	
 	// Update is called once per frame
@@ -34,11 +36,12 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		SyncOriginBlock();
 	}
 
-	public void StopSync() {
+	public void StopSync(object sender, EventArgs e) {
 		isSync = false;
 	}
 
-	public void StopShowing() {
+	/// destory expected drop pos
+	public void StopShowing(object sender, EventArgs e) {
 		Destroy(showDropPosBlock);
 	}
 

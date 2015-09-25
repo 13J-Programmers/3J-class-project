@@ -7,15 +7,10 @@ using UnityEngine;
 using System.Collections;
 
 namespace Player.Action {
-	// KeyAction extend UserAction
+	/// KeyAction < PlayerAction < BaseAction < MonoBehaviour
 	public class KeyAction : PlayerAction {
 		private Transform mainCamera;
 		private float moveSpeed = 0.1f;
-
-		// Use this for initialization
-		void Start() {
-			cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
-		}
 
 		override
 		protected void InitPerFrame() {

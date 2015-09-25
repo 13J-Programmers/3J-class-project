@@ -11,21 +11,20 @@ using Player.Action;
 
 public class BlockController : MonoBehaviour {
 	private BlockPoolController blockPool;
-	private KeyAction keyAction;
-	private LeapHandAction leapHandAction;
 	private BlockEntity blockEntity;
-	private ExpectDropPosViewer expectDropPosViewer;
 	// coordinate for check if collide the wall or not
 	private Vector3 blockMinCoord; ///< max coordinate in block
 	private Vector3 blockMaxCoord; ///< min coordinate in block
 
+	/// send notification when this block start falling.
+	public static event EventHandler StartFalling;
+	/// send notification when this block stop falling.
+	public static event EventHandler StopFalling;
+
 	/// Use this for initialization
 	void Start() {
 		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
-		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
-		leapHandAction = GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>();
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
-		expectDropPosViewer = gameObject.GetComponent<ExpectDropPosViewer>();
 
 		// can vary only y position
 		GetComponent<Rigidbody>().constraints = (
@@ -73,14 +72,14 @@ public class BlockController : MonoBehaviour {
 		// 
 		Wall wall = blockPool.GetWall();
 		float halfOfWidth = transform.localScale.x / 2;
-		if (wall.GetMinX() > blockMinCoord.x - halfOfWidth) {
+		if (blockMinCoord.x - halfOfWidth < wall.GetMinX()) {
 			x = (x < 0) ? 0 : x;
-		} else if (wall.GetMaxX() < blockMaxCoord.x + halfOfWidth) {
+		} else if (blockMaxCoord.x + halfOfWidth > wall.GetMaxX()) {
 			x = (x > 0) ? 0 : x;
 		}
-		if (wall.GetMinZ() > blockMinCoord.z - halfOfWidth) {
+		if (blockMinCoord.z - halfOfWidth < wall.GetMinZ()) {
 			z = (z < 0) ? 0 : z;
-		} else if (wall.GetMaxZ() < blockMaxCoord.z + halfOfWidth) {
+		} else if (blockMaxCoord.z + halfOfWidth > wall.GetMaxZ()) {
 			z = (z > 0) ? 0 : z;
 		}
 		
@@ -140,7 +139,9 @@ public class BlockController : MonoBehaviour {
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().AddForce(Vector3.down * 500);
 
-		expectDropPosViewer.StopSync();
+		if (StartFalling != null) {
+			StartFalling(this, EventArgs.Empty);
+		}
 		
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
@@ -173,15 +174,12 @@ public class BlockController : MonoBehaviour {
 			//
 			//                     block
 			//   BlockController --------> BlockPoolController
-			//              disconnect
-			//   Actions -------X------> BlockController
 			//
 			blockPool.ControlBlock(gameObject);
-			keyAction.DisconnectWithBlock();
-			leapHandAction.DisconnectWithBlock();
 
-			// destory expected drop pos
-			expectDropPosViewer.StopShowing();
+			if (StopFalling != null) {
+				StopFalling(this, EventArgs.Empty);
+			}
 
 			// create new block to do next phase
 			//
@@ -191,11 +189,6 @@ public class BlockController : MonoBehaviour {
 			if (!GameObject.Find("block(new)")) {
 				blockEntity.CreateRandomBlock();
 			}
-			//             connect
-			//   Actions ----------> BlockController
-			//
-			keyAction.ConnectWithBlock();
-			leapHandAction.ConnectWithBlock();
 
 			// All jobs has finished. So destroy blockControl script.
 			Destroy(gameObject.GetComponent<ExpectDropPosViewer>());
@@ -248,14 +241,14 @@ public class BlockController : MonoBehaviour {
 	/// after rotate, if part of the block into wall, fix position
 	private void FixPosition() {
 		Wall wall = blockPool.GetWall();
-		if (wall.GetMinX() > blockMinCoord.x) {
+		if (blockMinCoord.x < wall.GetMinX()) {
 			transform.Translate(Vector3.right, Space.World);
-		} else if (wall.GetMaxX() < blockMaxCoord.x) {
+		} else if (blockMaxCoord.x > wall.GetMaxX()) {
 			transform.Translate(Vector3.left, Space.World);
 		}
-		if (wall.GetMinZ() > blockMinCoord.z) {
+		if (blockMinCoord.z < wall.GetMinZ()) {
 			transform.Translate(Vector3.forward, Space.World);
-		} else if (wall.GetMaxZ() < blockMaxCoord.z) {
+		} else if (blockMaxCoord.z > wall.GetMaxZ()) {
 			transform.Translate(Vector3.back, Space.World);
 		}
 	}
