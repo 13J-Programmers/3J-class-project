@@ -17,8 +17,8 @@ namespace Player.Action {
 		/// but, it doesn't work.
 		protected sealed override void Start() {
 			cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
-			GameObject.Find("BlockEntity").GetComponent<BlockEntity>()
-				.CreateNewBlock += new EventHandler(ConnectWithBlock);
+			BlockEntity.CreateNewBlock += new EventHandler(ConnectWithBlock);
+			BlockController.StopFalling += new EventHandler(DisconnectWithBlock);
 		}
 		
 		/// these access modifier prevent the child script use Update()
@@ -58,7 +58,7 @@ namespace Player.Action {
 		}
 
 		/// get component of the _DummyBlock for disconnect
-		public void DisconnectWithBlock() {
+		public void DisconnectWithBlock(object sender, EventArgs e) {
 			GameObject target = GameObject.Find("_DummyBlock");
 			if (!target) return;
 			blockController = target.GetComponent<BlockController>();

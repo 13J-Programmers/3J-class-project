@@ -11,21 +11,20 @@ using Player.Action;
 
 public class BlockController : MonoBehaviour {
 	private BlockPoolController blockPool;
-	private KeyAction keyAction;
-	private LeapHandAction leapHandAction;
 	private BlockEntity blockEntity;
-	private ExpectDropPosViewer expectDropPosViewer;
 	// coordinate for check if collide the wall or not
 	private Vector3 blockMinCoord; ///< max coordinate in block
 	private Vector3 blockMaxCoord; ///< min coordinate in block
 
+	/// send notification when this block start falling.
+	public static event EventHandler StartFalling;
+	/// send notification when this block stop falling.
+	public static event EventHandler StopFalling;
+
 	/// Use this for initialization
 	void Start() {
 		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
-		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
-		leapHandAction = GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>();
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
-		expectDropPosViewer = gameObject.GetComponent<ExpectDropPosViewer>();
 
 		// can vary only y position
 		GetComponent<Rigidbody>().constraints = (
@@ -140,7 +139,9 @@ public class BlockController : MonoBehaviour {
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().AddForce(Vector3.down * 500);
 
-		expectDropPosViewer.StopSync();
+		if (StartFalling != null) {
+			StartFalling(this, EventArgs.Empty);
+		}
 		
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
@@ -173,15 +174,12 @@ public class BlockController : MonoBehaviour {
 			//
 			//                     block
 			//   BlockController --------> BlockPoolController
-			//              disconnect
-			//   Actions -------X------> BlockController
 			//
 			blockPool.ControlBlock(gameObject);
-			keyAction.DisconnectWithBlock();
-			leapHandAction.DisconnectWithBlock();
 
-			// destory expected drop pos
-			expectDropPosViewer.StopShowing();
+			if (StopFalling != null) {
+				StopFalling(this, EventArgs.Empty);
+			}
 
 			// create new block to do next phase
 			//

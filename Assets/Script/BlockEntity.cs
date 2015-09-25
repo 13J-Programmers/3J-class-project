@@ -16,7 +16,7 @@ public class BlockEntity : MonoBehaviour {
 	public int GetPrefabMaxNum() { return prefabMaxNum; }
 
 	/// send notification when new block is created
-	public event EventHandler CreateNewBlock;
+	public static event EventHandler CreateNewBlock;
 
 	/// BlockEntity methods are invoked from Start() in GameManager.
 	/// therefore, initializing variables have to write in Awake().
