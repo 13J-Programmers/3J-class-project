@@ -25,6 +25,7 @@ public class BlockEntity : MonoBehaviour {
 	}
 
 	void Start() {
+		GameManager.StartGame       += new EventHandler(CreateRandomBlock);
 		BlockController.StopFalling += new EventHandler(CreateRandomBlock);
 
 		// change every cube of block

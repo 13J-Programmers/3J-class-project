@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,7 +18,7 @@ public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 
 	// Use this for initialization
 	void Start() {
-		gameObject.GetComponent<Canvas>().enabled = false;
+		GameManager.FinishGame += new EventHandler(ShowResult);
 
 		// init to set Images component
 		foreach (string titleName in titles) {
@@ -29,6 +30,11 @@ public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 		foreach (string titleName in titles) {
 			titleImages[titleName].enabled = false;
 		}
+	}
+
+	public void ShowResult(object sender, EventArgs e) {
+		GameManager game = (GameManager)sender;
+		ShowResult(game.score);
 	}
 
 	/// Show result screen.

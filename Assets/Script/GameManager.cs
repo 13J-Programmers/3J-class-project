@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour {
 	private StartCanvasController startCanvas;
 	private TimesUpCanvasController timesUpCanvas;
 
+	public static event EventHandler StartGame;
+	public static event EventHandler FinishGame;
+	public static event EventHandler EndGame; ///< when game-over
+
 	void Awake() {
 		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
@@ -117,22 +121,27 @@ public class GameManager : MonoBehaviour {
 		isGamePlayMode = true;
 		score = 0;
 		remainingTime = 180;
-		blockEntity.CreateRandomBlock(this, EventArgs.Empty);
+
+		if (StartGame != null) {
+			StartGame(this, EventArgs.Empty);
+		}
 	}
 
 	public void GameOver() {
-		//print("GameOver");
 		FinishGameProcess();
 		DisableGameModules();
-		var gameoverCanvas = GameObject.Find("GameoverCanvas").GetComponent<IResultCanvas>();
-		gameoverCanvas.ShowResult(score);
+
+		if (EndGame != null) {
+			EndGame(this, EventArgs.Empty);
+		}
 	}
 
 	public void GameFinish() {
-		//print("GameFinish");
 		FinishGameProcess();
-		var resultCanvas = GameObject.Find("ResultCanvas").GetComponent<IResultCanvas>();
-		resultCanvas.ShowResult(score);
+
+		if (FinishGame != null) {
+			FinishGame(this, EventArgs.Empty);
+		}
 	}
 
 	public void RestartGame() {
