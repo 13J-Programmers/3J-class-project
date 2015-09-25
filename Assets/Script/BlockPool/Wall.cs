@@ -3,8 +3,8 @@ using System;
 using System.Collections;
 
 public class Wall : MonoBehaviour {
-	Range<float> xRange;
-	Range<float> zRange;
+	Range<float> xRange = new Range<float>(-0, 0);
+	Range<float> zRange = new Range<float>(-0, 0);
 
 	public float GetMinX() { return xRange.GetMin(); }
 	public float GetMaxX() { return xRange.GetMax(); }
