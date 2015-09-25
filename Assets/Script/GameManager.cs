@@ -24,6 +24,7 @@
  */
 
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Linq;
 
@@ -116,7 +117,7 @@ public class GameManager : MonoBehaviour {
 		isGamePlayMode = true;
 		score = 0;
 		remainingTime = 180;
-		blockEntity.CreateRandomBlock();
+		blockEntity.CreateRandomBlock(this, EventArgs.Empty);
 	}
 
 	public void GameOver() {
