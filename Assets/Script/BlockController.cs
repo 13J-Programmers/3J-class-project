@@ -175,7 +175,7 @@ public class BlockController : MonoBehaviour {
 			//                     block
 			//   BlockController --------> BlockPoolController
 			//
-			blockPool.ControlBlock(gameObject);
+			blockPool.AddBlock(gameObject);
 
 			if (StopFalling != null) {
 				StopFalling(this, EventArgs.Empty);

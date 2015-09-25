@@ -72,7 +72,7 @@ public class BlockPoolController : MonoBehaviour {
 	void Update() {
 		if (dummyParent.isLanded) {
 			dummyParent.FinishDropping();
-			ControlBlock(null);
+			UpdateBlockPool();
 		}
 
 		// for debug
@@ -92,9 +92,13 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	/// main process in Pool
-	public void ControlBlock(GameObject block) {
+	public void AddBlock(GameObject block) {
 		InitPool();
 		MergeBlock(block);
+		UpdateBlockPool();
+	}
+
+	public void UpdateBlockPool() {
 		SearchCubePos();
 		FixCubePos();
 		if (RemoveCompletedRow()) {
