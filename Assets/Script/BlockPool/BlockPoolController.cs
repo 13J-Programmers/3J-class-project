@@ -19,10 +19,10 @@ using System.Collections.Generic;
 //       ∨
 //     BlockPoolController
 //       ControlBlock()  << -----+
-//       | MergeBlock()          | update()
-//       | SearchCubePos()       |   if (_DummyParent.isLanded) 
-//       | RemoveCompletedRow()  |     dummyParent.FinishDropping()
-//       |                       |     recall
+//       | InitPool()            | update()
+//       | MergeBlock()          |   if (_DummyParent.isLanded) 
+//       | SearchCubePos()       |     dummyParent.FinishDropping()
+//       | RemoveCompletedRow()  |     recall
 //       ∨                       |
 //    
 //     _DummyParent --------> isLanded = true
