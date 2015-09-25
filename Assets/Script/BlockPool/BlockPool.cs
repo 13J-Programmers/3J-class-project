@@ -109,8 +109,8 @@ public class BlockPool {
 	private bool[,,] SearchCubeThatMustBeRemoved() {
 		bool[,,] mustBeRemovedCubes = new bool[this.GetSizeX(), this.GetSizeY(), this.GetSizeZ()];
 
-		Array3D<GameObject> pool = new Array3D<GameObject>().Set(blockPool);
-		Array3D<bool> checkedPool = new Array3D<bool>().Set(mustBeRemovedCubes);
+		Array3D<GameObject> pool = new Array3D<GameObject>(blockPool);
+		Array3D<bool> checkedPool = new Array3D<bool>(mustBeRemovedCubes);
 
 		for (int z = 0; z < this.GetSizeZ(); z++)
 			for (int y = 0; y < this.GetSizeY(); y++)
@@ -129,7 +129,7 @@ public class BlockPool {
 	private int CountCompletedRow(bool[,,] checkedPool) {
 		int completedRowNum = 0;
 
-		Array3D<bool> pool = new Array3D<bool>().Set(checkedPool);
+		Array3D<bool> pool = new Array3D<bool>(checkedPool);
 
 		for (int z = 0; z < this.GetSizeZ(); z++)
 			for (int y = 0; y < this.GetSizeY(); y++)
