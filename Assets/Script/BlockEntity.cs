@@ -13,18 +13,14 @@ public class BlockEntity : MonoBehaviour {
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
 	public int nextBlockNum;
 	public int currentBlockNum;
-	private KeyAction keyAction;
-	private LeapHandAction leapHandAction;
-	private GameInfoViewer gameInfoViewer;
+	private Queue queue = new Queue();
+
+	public int GetPrefabMaxNum() { return prefabMaxNum; }
 
 	/// BlockEntity methods are invoked from Start() in GameManager.
 	/// therefore, initializing variables have to write in Awake().
 	void Awake() {
-		keyAction = GameObject.Find("KeyAction").GetComponent<KeyAction>();
-		leapHandAction = GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>();
-		//gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
-		nextBlockNum = Random.Range(0, prefabMaxNum);
-		currentBlockNum = Random.Range(0, prefabMaxNum);
+		PushNextBlock(RandomBlock());
 	}
 
 	/// Use this for initialization
@@ -41,22 +37,17 @@ public class BlockEntity : MonoBehaviour {
 			}
 		}
 	}
-	
-	/// Update is called once per frame
-	void Update() {
-		
-	}
 
 	public void CreateRandomBlock() {
-		// shift block number
-		int randNum = currentBlockNum = nextBlockNum;
-		nextBlockNum = Random.Range(0, prefabMaxNum);
+		// shift new block list
+		GameObject randBlock = ShiftNextBlock();
+		PushNextBlock(RandomBlock());
 
 		// create new block
 		GameObject newBlock = Instantiate(
-			blocks[randNum], // instance object
+			randBlock, // instance object
 			new Vector3(0, 10, 0), // coordinate
-			blocks[randNum].transform.rotation // rotation
+			randBlock.transform.rotation // rotation
 		) as GameObject;
 
 		newBlock.name = "block(new)";
@@ -64,12 +55,22 @@ public class BlockEntity : MonoBehaviour {
 		newBlock.AddComponent<ExpectDropPosViewer>();
 		SetScoreToCube(newBlock);
 
-		// connect user action and block
-		keyAction.ConnectWithBlock();
-		leapHandAction.ConnectWithBlock();
+		ConnectBlockWithUserAction();
 	}
 
 	// private methods ------------------------------
+
+	private GameObject RandomBlock() {
+		int randNum = Random.Range(0, this.GetPrefabMaxNum());
+		return blocks[randNum];
+	}
+
+	private void PushNextBlock(GameObject gameObject) {
+		queue.Enqueue(gameObject);
+	}
+	private GameObject ShiftNextBlock() {
+		return (GameObject)queue.Dequeue();
+	}
 
 	/// set score to menber of CubeInfo component
 	private void SetScoreToCube(GameObject newBlock) {
@@ -80,5 +81,11 @@ public class BlockEntity : MonoBehaviour {
 			cubeInfo = t.gameObject.AddComponent<CubeInfo>();
 			cubeInfo.score = 20;
 		}
+	}
+
+	/// connect user action and block
+	private void ConnectBlockWithUserAction() {
+		GameObject.Find("KeyAction").GetComponent<KeyAction>().ConnectWithBlock();
+		GameObject.Find("LeapHandAction").GetComponent<LeapHandAction>().ConnectWithBlock();
 	}
 }
