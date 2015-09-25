@@ -15,12 +15,10 @@ public class _DummyParent : MonoBehaviour {
 	private bool _isLanded = false;
 	public bool isLanded {
 		get { return _isLanded; }
-		// set { _isLanded = value; }
 	}
-	private GameObject poolCubes;
 
-	void Start() {
-		poolCubes = GameObject.Find("BlockPool/Cubes");
+	private GameObject GetPoolCubesObj() {
+		return GameObject.Find("BlockPool/Cubes");
 	}
 	
 	void Update() {
@@ -46,7 +44,7 @@ public class _DummyParent : MonoBehaviour {
 			dropedCubes.Add(cube);
 		}
 		foreach (Transform cube in dropedCubes) {
-			cube.transform.parent = poolCubes.transform;
+			cube.transform.parent = GetPoolCubesObj().transform;
 		}
 	}
 

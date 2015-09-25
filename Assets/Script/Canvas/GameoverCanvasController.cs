@@ -3,6 +3,10 @@ using System;
 using System.Collections;
 
 public class GameoverCanvasController : MonoBehaviour, IResultCanvas {
+	private Canvas GetCanvas() {
+		return GameObject.Find("GameoverCanvas").GetComponent<Canvas>();
+	}
+
 	void Start() {
 		GameManager.EndGame += new EventHandler(ShowResult);
 	}
@@ -13,6 +17,6 @@ public class GameoverCanvasController : MonoBehaviour, IResultCanvas {
 	}
 
 	public void ShowResult(int score) {
-		gameObject.GetComponent<Canvas>().enabled = true;
+		GetCanvas().enabled = true;
 	}
 }

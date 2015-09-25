@@ -33,20 +33,20 @@ using System.Collections.Generic;
 /// 
 public class BlockPoolController : MonoBehaviour {
 	private BlockPool blockPool = new BlockPool(5, 10, 5);
-	private GameObject ground, poolCubes;
-	private _DummyParent dummyParent;
-	private GameManager gameManager;
 
 	public int GetSizeX() { return blockPool.GetSizeX(); }
 	public int GetSizeY() { return blockPool.GetSizeY(); }
 	public int GetSizeZ() { return blockPool.GetSizeZ(); }
 	public BlockPool GetPool() { return blockPool; }
 
-	void Awake() {
-		ground = GameObject.Find("BlockPool/Ground");
-		poolCubes = GameObject.Find("BlockPool/Cubes");
-		dummyParent = GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
-		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+	private GameObject GetPoolCubesObj() { return GameObject.Find("BlockPool/Cubes"); }
+	private GameObject GetGroundObj()    { return GameObject.Find("BlockPool/Ground"); }
+
+	private _DummyParent GetDummyParent() {
+		return GameObject.Find("_DummyParent").GetComponent<_DummyParent>();
+	}
+	private GameManager GetGameManager() {
+		return GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 
 	void Start() {
@@ -72,8 +72,8 @@ public class BlockPoolController : MonoBehaviour {
 	}
 	
 	void Update() {
-		if (dummyParent.isLanded) {
-			dummyParent.FinishDropping();
+		if (GetDummyParent().isLanded) {
+			GetDummyParent().FinishDropping();
 			UpdateBlockPool();
 		}
 
@@ -110,7 +110,7 @@ public class BlockPoolController : MonoBehaviour {
 		FixCubePos();
 		if (RemoveCompletedRow()) {
 			// start to drop dummyParent
-			dummyParent.StartDropping();
+			GetDummyParent().StartDropping();
 		}
 	}
 	
@@ -144,7 +144,7 @@ public class BlockPoolController : MonoBehaviour {
 		// move block cubes into poolCubes
 		block.tag = "BlockPool";
 		block.name = "Cube";
-		block.transform.parent = poolCubes.transform;
+		block.transform.parent = GetPoolCubesObj().transform;
 		// remove rigitbody
 		Destroy(block.GetComponent<Rigidbody>());
 
@@ -154,7 +154,7 @@ public class BlockPoolController : MonoBehaviour {
 		}
 		foreach (Transform cube in blockCubes) {
 			cube.tag = "BlockPool";
-			cube.transform.parent = poolCubes.transform;
+			cube.transform.parent = GetPoolCubesObj().transform;
 		}
 	}
 
@@ -167,9 +167,9 @@ public class BlockPoolController : MonoBehaviour {
 		Vector3 offset = new Vector3(0, 0, 0);
 		offset.x = -wallPos.GetMinX();
 		offset.z = -wallPos.GetMinZ();
-		offset.y = -ground.transform.position.y;
+		offset.y = -GetGroundObj().transform.position.y;
 
-		foreach (Transform cube in poolCubes.transform) {
+		foreach (Transform cube in GetPoolCubesObj().transform) {
 			SetCubePos(cube, offset);
 		}
 	}
@@ -186,7 +186,7 @@ public class BlockPoolController : MonoBehaviour {
 		try {
 			blockPool.SetGameObject(x, y, z, obj.gameObject);
 		} catch (IndexOutOfRangeException) {
-			gameManager.GameOver();
+			GetGameManager().GameOver();
 		}
 	}
 

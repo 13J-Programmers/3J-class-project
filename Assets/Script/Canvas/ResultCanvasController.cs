@@ -9,27 +9,23 @@ public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 		"Basic Ecorist", "Good Ecorist", "Super Ecorist", "Eco Master"
 	};
 
-	private Dictionary<string, Image> titleImages = new Dictionary<string, Image>();
-	private Text resultText;
+	private Canvas GetCanvas() {
+		return GameObject.Find("ResultCanvas").GetComponent<Canvas>();
+	}
 
-	void Awake() {
-		resultText = GameObject.Find("ResultCanvas/Text - Result").GetComponent<Text>();
+	private Text GetText() {
+		return GameObject.Find("ResultCanvas/Text - Result").GetComponent<Text>();
+	}
+
+	private Image GetImage(string titleName) {
+		string path = "ResultCanvas/Title/Image - " + titleName;
+		if (!GameObject.Find(path)) throw new Exception("not found image."); 
+		return GameObject.Find(path).GetComponent<Image>();
 	}
 
 	// Use this for initialization
 	void Start() {
 		GameManager.FinishGame += new EventHandler(ShowResult);
-
-		// init to set Images component
-		foreach (string titleName in titles) {
-			string path = "ResultCanvas/Title/Image - " + titleName;
-			titleImages[titleName] = GameObject.Find(path).GetComponent<Image>();
-		}
-
-		// disable image
-		foreach (string titleName in titles) {
-			titleImages[titleName].enabled = false;
-		}
 	}
 
 	public void ShowResult(object sender, EventArgs e) {
@@ -43,7 +39,7 @@ public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 	/// 
 	/// @param score - player's score
 	public void ShowResult(int score) {
-		gameObject.GetComponent<Canvas>().enabled = true;
+		GetCanvas().enabled = true;
 
 		string title;
 		if (score < 500) {
@@ -55,9 +51,9 @@ public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 		} else {
 			title = "Eco Master";
 		}
-		titleImages[title].enabled = true;
+		GetImage(title).enabled = true;
 
-		resultText.text = "Score : " + score;
+		GetText().text = "Score : " + score;
 	}
 }
 
