@@ -6,18 +6,16 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using Player.Action;
 
 public class BlockEntity : MonoBehaviour {
 	public const int prefabMaxNum = 18;
 	/// block prefabs
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
-	public int nextBlockNum;
-	public int currentBlockNum;
 	private Queue queue = new Queue();
 
 	public int GetPrefabMaxNum() { return prefabMaxNum; }
 
+	/// send notification when new block is created
 	public event EventHandler CreateNewBlock;
 
 	/// BlockEntity methods are invoked from Start() in GameManager.
