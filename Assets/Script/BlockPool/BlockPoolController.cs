@@ -50,6 +50,8 @@ public class BlockPoolController : MonoBehaviour {
 	}
 
 	void Start() {
+		BlockController.StopFalling += new EventHandler(AddBlock);
+
 		int size = blockPool.GetSizeX();
 		// set position of BlockPool obj and scale
 		if (size == 5) {
@@ -89,6 +91,11 @@ public class BlockPoolController : MonoBehaviour {
 			}
 		}
 		*/
+	}
+
+	public void AddBlock(object sender, EventArgs e) {
+		MonoBehaviour block = (MonoBehaviour)sender;
+		AddBlock(block.gameObject);
 	}
 
 	/// main process in Pool

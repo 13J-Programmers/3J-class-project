@@ -168,20 +168,12 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("block(dropping)") != 0) return;
 
 		if (col.gameObject.tag == "BlockPool") {
-			// following script behaves:
-			//
-			//                     block
-			//   BlockController --------> BlockPoolController
-			//
-			blockPool.AddBlock(gameObject);
-
 			if (StopFalling != null) {
 				StopFalling(this, EventArgs.Empty);
 			}
 
 			// All jobs has finished. So destroy blockControl script.
-			Destroy(gameObject.GetComponent<ExpectDropPosViewer>());
-			Destroy(this); // destroy BlockController component
+			Destroy(this);
 		}
 	}
 
