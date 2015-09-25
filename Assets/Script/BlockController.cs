@@ -72,14 +72,14 @@ public class BlockController : MonoBehaviour {
 		// 
 		Wall wall = blockPool.GetWall();
 		float halfOfWidth = transform.localScale.x / 2;
-		if (wall.GetMinX() > blockMinCoord.x - halfOfWidth) {
+		if (blockMinCoord.x - halfOfWidth < wall.GetMinX()) {
 			x = (x < 0) ? 0 : x;
-		} else if (wall.GetMaxX() < blockMaxCoord.x + halfOfWidth) {
+		} else if (blockMaxCoord.x + halfOfWidth > wall.GetMaxX()) {
 			x = (x > 0) ? 0 : x;
 		}
-		if (wall.GetMinZ() > blockMinCoord.z - halfOfWidth) {
+		if (blockMinCoord.z - halfOfWidth < wall.GetMinZ()) {
 			z = (z < 0) ? 0 : z;
-		} else if (wall.GetMaxZ() < blockMaxCoord.z + halfOfWidth) {
+		} else if (blockMaxCoord.z + halfOfWidth > wall.GetMaxZ()) {
 			z = (z > 0) ? 0 : z;
 		}
 		
@@ -241,14 +241,14 @@ public class BlockController : MonoBehaviour {
 	/// after rotate, if part of the block into wall, fix position
 	private void FixPosition() {
 		Wall wall = blockPool.GetWall();
-		if (wall.GetMinX() > blockMinCoord.x) {
+		if (blockMinCoord.x < wall.GetMinX()) {
 			transform.Translate(Vector3.right, Space.World);
-		} else if (wall.GetMaxX() < blockMaxCoord.x) {
+		} else if (blockMaxCoord.x > wall.GetMaxX()) {
 			transform.Translate(Vector3.left, Space.World);
 		}
-		if (wall.GetMinZ() > blockMinCoord.z) {
+		if (blockMinCoord.z < wall.GetMinZ()) {
 			transform.Translate(Vector3.forward, Space.World);
-		} else if (wall.GetMaxZ() < blockMaxCoord.z) {
+		} else if (blockMaxCoord.z > wall.GetMaxZ()) {
 			transform.Translate(Vector3.back, Space.World);
 		}
 	}
