@@ -25,6 +25,9 @@ public class BlockEntity : MonoBehaviour {
 	}
 
 	void Start() {
+		GameManager.StartGame       += new EventHandler(CreateRandomBlock);
+		BlockController.StopFalling += new EventHandler(CreateRandomBlock);
+
 		// change every cube of block
 		BoxCollider bc;
 		Vector3 colliderSize = new Vector3(0.95f, 0.95f, 0.95f);
@@ -38,7 +41,9 @@ public class BlockEntity : MonoBehaviour {
 		}
 	}
 
-	public void CreateRandomBlock() {
+	public void CreateRandomBlock(object sender, EventArgs e) {
+		if (GameObject.Find("block(new)")) return;
+
 		// shift new block list
 		GameObject randBlock = ShiftNextBlock();
 		PushNextBlock(RandomBlock());

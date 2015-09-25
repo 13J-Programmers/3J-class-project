@@ -11,14 +11,19 @@ namespace Player.Action {
 	/// PlayerAction < BaseAction < MonoBehaviour
 	public abstract class PlayerAction : BaseAction {
 		protected BlockController blockController;
-		protected CameraController cameraController;
+
+		protected BlockController GetBlockController() {
+			return blockController;
+		}
+		protected CameraController GetCameraController() {
+			return GameObject.Find("Main Camera").GetComponent<CameraController>();
+		}
 
 		/// these access modifier prevent the child script use Start()
 		/// but, it doesn't work.
 		protected sealed override void Start() {
-			cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
-			BlockEntity.CreateNewBlock += new EventHandler(ConnectWithBlock);
-			BlockController.StopFalling += new EventHandler(DisconnectWithBlock);
+			BlockEntity.CreateNewBlock  += new EventHandler(ConnectWithBlock);
+			BlockController.StartFalling += new EventHandler(DisconnectWithBlock);
 		}
 		
 		/// these access modifier prevent the child script use Update()

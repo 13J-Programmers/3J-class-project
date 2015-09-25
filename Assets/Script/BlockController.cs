@@ -11,7 +11,6 @@ using Player.Action;
 
 public class BlockController : MonoBehaviour {
 	private BlockPoolController blockPool;
-	private BlockEntity blockEntity;
 	// coordinate for check if collide the wall or not
 	private Vector3 blockMinCoord; ///< max coordinate in block
 	private Vector3 blockMaxCoord; ///< min coordinate in block
@@ -24,7 +23,6 @@ public class BlockController : MonoBehaviour {
 	/// Use this for initialization
 	void Start() {
 		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
-		blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 
 		// can vary only y position
 		GetComponent<Rigidbody>().constraints = (
@@ -170,29 +168,12 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("block(dropping)") != 0) return;
 
 		if (col.gameObject.tag == "BlockPool") {
-			// following script behaves:
-			//
-			//                     block
-			//   BlockController --------> BlockPoolController
-			//
-			blockPool.ControlBlock(gameObject);
-
 			if (StopFalling != null) {
 				StopFalling(this, EventArgs.Empty);
 			}
 
-			// create new block to do next phase
-			//
-			//               create
-			//   BlockPool ----------> BlockEntity
-			//
-			if (!GameObject.Find("block(new)")) {
-				blockEntity.CreateRandomBlock();
-			}
-
 			// All jobs has finished. So destroy blockControl script.
-			Destroy(gameObject.GetComponent<ExpectDropPosViewer>());
-			Destroy(this); // destroy BlockController component
+			Destroy(this);
 		}
 	}
 

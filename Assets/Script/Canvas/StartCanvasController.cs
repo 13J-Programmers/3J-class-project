@@ -3,22 +3,21 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class StartCanvasController : MonoBehaviour {
-	private Text countUpText;
-	private Image startImage;
-
-	void Awake() {
-		countUpText = GameObject.Find("StartCanvas/Text - CountUp").GetComponent<Text>();
-		startImage = GameObject.Find("StartCanvas/Image - Start").GetComponent<Image>();
+	private Text GetText() {
+		return GameObject.Find("StartCanvas/Text - CountUp").GetComponent<Text>();
 	}
 
-	// Use this for initialization
+	private Image GetImage() {
+		return GameObject.Find("StartCanvas/Image - Start").GetComponent<Image>();
+	}
+
 	void Start() {
-		countUpText.enabled = true;
-		startImage.enabled = false;
+		GetText().enabled = true;
+		GetImage().enabled = false;
 	}
 
 	public void SetText(string str) {
-		countUpText.text = str;
+		GetText().text = str;
 	}
 
 	public void SetImage() {
@@ -26,6 +25,6 @@ public class StartCanvasController : MonoBehaviour {
 	}
 
 	public void SetImage(bool flag) {
-		startImage.enabled = flag;
+		GetImage().enabled = flag;
 	}
 }

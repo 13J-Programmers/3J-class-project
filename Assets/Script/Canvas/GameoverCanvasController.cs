@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class GameoverCanvasController : MonoBehaviour, IResultCanvas {
-	// Use this for initialization
+	private Canvas GetCanvas() {
+		return GameObject.Find("GameoverCanvas").GetComponent<Canvas>();
+	}
+
 	void Start() {
-		gameObject.GetComponent<Canvas>().enabled = false;
+		GameManager.EndGame += new EventHandler(ShowResult);
+	}
+
+	public void ShowResult(object sender, EventArgs e) {
+		GameManager game = (GameManager)sender;
+		ShowResult(game.score);
 	}
 
 	public void ShowResult(int score) {
-		gameObject.GetComponent<Canvas>().enabled = true;
+		GetCanvas().enabled = true;
 	}
 }

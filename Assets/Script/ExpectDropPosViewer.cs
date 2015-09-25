@@ -12,7 +12,6 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	private BlockPoolController blockPoolController;
 	private GameObject controllingBlock;
 	private GameObject showDropPosBlock;
-	private GameObject ground;
 	/// is syncing with the controlling block?
 	private bool isSync = true;
 
@@ -20,7 +19,6 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	/// any Start functions and also just after a prefab is instantiated.
 	void Awake() {
 		blockPoolController = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
-		ground = GameObject.Find("BlockPool/Ground");
 		controllingBlock = gameObject;
 	}
 
@@ -43,6 +41,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	/// destory expected drop pos
 	public void StopShowing(object sender, EventArgs e) {
 		Destroy(showDropPosBlock);
+		Destroy(this);
 	}
 
 	// private methods --------------------------------
@@ -70,7 +69,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Vector3 offset = new Vector3(0, 0, 0);
 		offset.x = -wall.GetMinX() - halfOfWidth;
 		offset.z = -wall.GetMinZ() - halfOfWidth;
-		offset.y = -ground.transform.position.y - halfOfWidth;
+		offset.y = -GameObject.Find("BlockPool/Ground").transform.position.y - halfOfWidth;
 
 		// set y of controllingBlock
 		int maxPosY = (int)Math.Round(controllingBlock.transform.position.y);
