@@ -33,17 +33,16 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		SyncOriginBlock();
 	}
 
-	public void StopSync(object sender, EventArgs e) {
+	// private methods --------------------------------
+
+	private void StopSync(object sender, EventArgs e) {
 		isSync = false;
 	}
 
-	/// destory expected drop pos
-	public void StopShowing(object sender, EventArgs e) {
+	private void StopShowing(object sender, EventArgs e) {
 		Destroy(showDropPosBlock);
 		Destroy(this);
 	}
-
-	// private methods --------------------------------
 
 	/// round x,z coordinate
 	private Vector3 roundXZ(Vector3 vector) {
