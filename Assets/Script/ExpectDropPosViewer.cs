@@ -44,21 +44,14 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Destroy(this);
 	}
 
-	/// round x,z coordinate
-	private Vector3 roundXZ(Vector3 vector) {
-		Vector3 _vector;
-		_vector.x = (float)Math.Round(vector.x);
-		_vector.y = vector.y;
-		_vector.z = (float)Math.Round(vector.z);
-		return _vector;
-	}
+	
 
 	/// decide position of showDropPosBlock
 	/// * @param position - original block position
 	/// * @return expected dropping position
 	private Vector3 ExpectDropPos(Vector3 position) {
 		// set expected x,z //
-		Vector3 correctedBlockPos = roundXZ(position);
+		Vector3 correctedBlockPos = VectorUtil.RoundXZ(position);
 
 		// set expected y //
 		// get offsets for search in array
@@ -74,9 +67,13 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Vector3 maxHeight = new Vector3(0, maxPosY, 0);
 
 		var blockCubesPos = new ArrayList();
-		blockCubesPos.Add(roundXZ(GetControllingBlockObj().transform.position) - maxHeight);
+		blockCubesPos.Add(
+			VectorUtil.RoundXZ(GetControllingBlockObj().transform.position) - maxHeight
+		);
 		foreach (Transform cube in GetControllingBlockObj().transform) {
-			blockCubesPos.Add(roundXZ(cube.gameObject.transform.position) - maxHeight);
+			blockCubesPos.Add(
+				VectorUtil.RoundXZ(cube.gameObject.transform.position) - maxHeight
+			);
 		}
 
 		// set expected y

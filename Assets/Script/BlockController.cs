@@ -89,7 +89,7 @@ public class BlockController : MonoBehaviour {
 	/// @param direct - Vector3 forward or back 
 	public void PitchBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
-		Vector3 newDirect = RoundXZ(direct);
+		Vector3 newDirect = VectorUtil.RoundXZ(direct);
 		//Debug.Log(direct + " => " + newDirect + "; " + (Math.Abs(direct.x) >= Math.Abs(direct.z)) );
 		if (Math.Abs(direct.x) >= Math.Abs(direct.z)) {
 			Rotate(0, 0, -newDirect.x * 90);
@@ -109,7 +109,7 @@ public class BlockController : MonoBehaviour {
 	/// @param direct - Vector3 right or left 
 	public void RollBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
-		Vector3 newDirect = RoundXZ(direct);
+		Vector3 newDirect = VectorUtil.RoundXZ(direct);
 		//Debug.Log(direct + " => " + newDirect + "; " + (Math.Abs(direct.x) >= Math.Abs(direct.z)) );
 		if (Math.Abs(direct.x) >= Math.Abs(direct.z)) {
 			Rotate(0, 0, -newDirect.x * 90);
@@ -142,7 +142,7 @@ public class BlockController : MonoBehaviour {
 
 	/// return correct coordinate
 	public Vector3 GetCorrectPosition() {
-		Vector3 correctedPos = RoundXZ(transform.position);
+		Vector3 correctedPos = VectorUtil.RoundXZ(transform.position);
 		return correctedPos;
 	}
 
@@ -174,26 +174,17 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 
-	/// round x,z coordinate
-	private Vector3 RoundXZ(Vector3 vector) {
-		Vector3 _vector;
-		_vector.x = (float)Math.Round(vector.x);
-		_vector.y = vector.y;
-		_vector.z = (float)Math.Round(vector.z);
-		return _vector;
-	}
-
 	/// move correct position and return it position
 	/// @return corrected position
 	private Vector3 CorrectPosition() {
-		Vector3 correctedPos = RoundXZ(transform.position);
+		Vector3 correctedPos = VectorUtil.RoundXZ(transform.position);
 		transform.position = correctedPos;
 		return correctedPos;
 	}
 
 	/// return myself correct direction
 	private Vector3 CorrectDirection(Vector3 currentPosition) {
-		Vector3 correctedDir = RoundXZ(currentPosition);
+		Vector3 correctedDir = VectorUtil.RoundXZ(currentPosition);
 		return correctedDir;
 	}
 
