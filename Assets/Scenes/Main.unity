@@ -3164,7 +3164,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1760015751}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -3292,8 +3292,6 @@ MonoBehaviour:
   - {fileID: 122244, guid: 665d91711dc834138b918579f7fbb239, type: 2}
   - {fileID: 131804, guid: af6777c9fb0a140449b50b9d20af10f7, type: 2}
   - {fileID: 134384, guid: ce70ff75ebd664ecf8fb5a8f61520cb4, type: 2}
-  nextBlockNum: 0
-  currentBlockNum: 0
 --- !u!4 &1839811671
 Transform:
   m_ObjectHideFlags: 0
