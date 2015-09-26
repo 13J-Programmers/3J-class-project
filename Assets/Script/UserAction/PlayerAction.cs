@@ -22,7 +22,7 @@ namespace Player.Action {
 		/// these access modifier prevent the child script use Start()
 		/// but, it doesn't work.
 		protected sealed override void Start() {
-			BlockEntity.CreateNewBlock  += new EventHandler(ConnectWithBlock);
+			BlockEntity.CreateNewBlock   += new EventHandler(ConnectWithBlock);
 			BlockController.StartFalling += new EventHandler(DisconnectWithBlock);
 		}
 		
@@ -56,14 +56,14 @@ namespace Player.Action {
 		protected abstract void DetectRotationCamera();
 
 		/// get component of the new block for comment
-		public void ConnectWithBlock(object sender, EventArgs e) {
+		private void ConnectWithBlock(object sender, EventArgs e) {
 			GameObject target = GameObject.Find("block(new)");
 			if (!target) return;
 			blockController = target.GetComponent<BlockController>();
 		}
 
 		/// get component of the _DummyBlock for disconnect
-		public void DisconnectWithBlock(object sender, EventArgs e) {
+		private void DisconnectWithBlock(object sender, EventArgs e) {
 			GameObject target = GameObject.Find("_DummyBlock");
 			if (!target) return;
 			blockController = target.GetComponent<BlockController>();

@@ -93,7 +93,7 @@ public class BlockPoolController : MonoBehaviour {
 		*/
 	}
 
-	public void AddBlock(object sender, EventArgs e) {
+	private void AddBlock(object sender, EventArgs e) {
 		MonoBehaviour block = (MonoBehaviour)sender;
 		AddBlock(block.gameObject);
 	}

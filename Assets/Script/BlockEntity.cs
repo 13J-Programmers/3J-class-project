@@ -41,7 +41,7 @@ public class BlockEntity : MonoBehaviour {
 		}
 	}
 
-	public void CreateRandomBlock(object sender, EventArgs e) {
+	private void CreateRandomBlock(object sender, EventArgs e) {
 		if (GameObject.Find("block(new)")) return;
 
 		// shift new block list
