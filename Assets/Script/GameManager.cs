@@ -38,10 +38,6 @@ public class GameManager : MonoBehaviour {
 	public int lines = 0; ///< removed lines
 	public int score = 0; ///< obtained score
 	public float remainingTime = 180; ///< sec
-	
-	//private GameInfoViewer gameInfoViewer;
-	//private StartCanvasController startCanvas;
-	//private TimesUpCanvasController timesUpCanvas;
 
 	private GameInfoViewer GetGameInfoViewer() {
 		return GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
@@ -56,12 +52,6 @@ public class GameManager : MonoBehaviour {
 	public static event EventHandler StartGame;
 	public static event EventHandler FinishGame;
 	public static event EventHandler EndGame; ///< when game-over
-
-	void Awake() {
-		//gameInfoViewer = GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
-		//startCanvas = GameObject.Find("StartCanvas").GetComponent<StartCanvasController>();
-		//timesUpCanvas = GameObject.Find("TimesUpCanvas").GetComponent<TimesUpCanvasController>();
-	}
 
 	// Use this for initialization
 	void Start() {
@@ -105,7 +95,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		// to finish
-		if (isGamePlayMode && remainingTime <= 0) {
+		if (isGamePlayMode && remainingTime <= 1) {
 			GetGameInfoViewer().enabled = false;
 
 			// display "Time's Up"
