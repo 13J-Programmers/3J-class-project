@@ -28,7 +28,7 @@ public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 		GameManager.FinishGame += new EventHandler(ShowResult);
 	}
 
-	public void ShowResult(object sender, EventArgs e) {
+	private void ShowResult(object sender, EventArgs e) {
 		GameManager game = (GameManager)sender;
 		ShowResult(game.score);
 	}
