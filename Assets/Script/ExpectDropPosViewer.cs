@@ -9,17 +9,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ExpectDropPosViewer : MonoBehaviour {
-	private BlockPoolController blockPoolController;
-	private GameObject controllingBlock;
+	/// gameobject to show expected drop position
 	private GameObject showDropPosBlock;
-	/// is syncing with the controlling block?
+	/// this has syncing status with the controlling block
 	private bool isSync = true;
 
-	/// This function is always called before 
-	/// any Start functions and also just after a prefab is instantiated.
-	void Awake() {
-		blockPoolController = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
-		controllingBlock = gameObject;
+	private BlockPoolController GetBlockPoolController() {
+		return GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
+	}
+	private GameObject GetControllingBlockObj() {
+		return gameObject;
 	}
 
 	// Use this for initialization
@@ -34,51 +33,47 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		SyncOriginBlock();
 	}
 
-	public void StopSync(object sender, EventArgs e) {
+	// private methods --------------------------------
+
+	private void StopSync(object sender, EventArgs e) {
 		isSync = false;
 	}
 
-	/// destory expected drop pos
-	public void StopShowing(object sender, EventArgs e) {
+	private void StopShowing(object sender, EventArgs e) {
 		Destroy(showDropPosBlock);
 		Destroy(this);
 	}
 
-	// private methods --------------------------------
-
-	/// round x,z coordinate
-	private Vector3 roundXZ(Vector3 vector) {
-		Vector3 _vector;
-		_vector.x = (float)Math.Round(vector.x);
-		_vector.y = vector.y;
-		_vector.z = (float)Math.Round(vector.z);
-		return _vector;
-	}
+	
 
 	/// decide position of showDropPosBlock
 	/// * @param position - original block position
 	/// * @return expected dropping position
 	private Vector3 ExpectDropPos(Vector3 position) {
 		// set expected x,z //
-		Vector3 correctedBlockPos = roundXZ(position);
+		Vector3 correctedBlockPos = VectorUtil.RoundXZ(position);
 
 		// set expected y //
 		// get offsets for search in array
 		float halfOfWidth = 0.5f;
-		Wall wall = blockPoolController.GetWall();
+		Wall wall = GetBlockPoolController().GetWall();
 		Vector3 offset = new Vector3(0, 0, 0);
 		offset.x = -wall.GetMinX() - halfOfWidth;
 		offset.z = -wall.GetMinZ() - halfOfWidth;
 		offset.y = -GameObject.Find("BlockPool/Ground").transform.position.y - halfOfWidth;
 
-		// set y of controllingBlock
-		int maxPosY = (int)Math.Round(controllingBlock.transform.position.y);
+		// set y of GetControllingBlockObj()
+		int maxPosY = (int)Math.Round(GetControllingBlockObj().transform.position.y);
 		Vector3 maxHeight = new Vector3(0, maxPosY, 0);
 
 		var blockCubesPos = new ArrayList();
-		blockCubesPos.Add(roundXZ(controllingBlock.transform.position) - maxHeight);
-		foreach (Transform cube in controllingBlock.transform) {
-			blockCubesPos.Add(roundXZ(cube.gameObject.transform.position) - maxHeight);
+		blockCubesPos.Add(
+			VectorUtil.RoundXZ(GetControllingBlockObj().transform.position) - maxHeight
+		);
+		foreach (Transform cube in GetControllingBlockObj().transform) {
+			blockCubesPos.Add(
+				VectorUtil.RoundXZ(cube.gameObject.transform.position) - maxHeight
+			);
 		}
 
 		// set expected y
@@ -93,12 +88,12 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 				if (cubePosY < 0) {
 					isCube = true;
-				} else if (blockPoolController.GetSizeY() <= cubePosY) {
+				} else if (GetBlockPoolController().GetSizeY() <= cubePosY) {
 					continue;
-				} else if (!(0 <= cubePosX && cubePosX < blockPoolController.GetSizeX() 
-						&& 0 <= cubePosZ && cubePosZ < blockPoolController.GetSizeZ())) {
+				} else if (!(0 <= cubePosX && cubePosX < GetBlockPoolController().GetSizeX() 
+						&& 0 <= cubePosZ && cubePosZ < GetBlockPoolController().GetSizeZ())) {
 					continue;
-				} else if (blockPoolController.GetPool().GetGameObject(cubePosX, cubePosY, cubePosZ) != null) {
+				} else if (GetBlockPoolController().GetPool().GetGameObject(cubePosX, cubePosY, cubePosZ) != null) {
 					isCube = true;
 				}
 				// print(
@@ -125,14 +120,14 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 	/// clone block to create skelton it
 	private void CloneSkeltonBlock() {
-		Vector3 originBlockPos = controllingBlock.transform.position;
+		Vector3 originBlockPos = GetControllingBlockObj().transform.position;
 		Vector3 cloneBlockPos = ExpectDropPos(originBlockPos);
 
 		// instantiate
 		showDropPosBlock = Instantiate(
-			controllingBlock, 
+			GetControllingBlockObj(), 
 			cloneBlockPos,
-			controllingBlock.transform.rotation
+			GetControllingBlockObj().transform.rotation
 		) as GameObject;
 		showDropPosBlock.name = "block(expected-drop-pos)";
 
@@ -161,12 +156,12 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		if (!GameObject.Find("block(expected-drop-pos)")) return;
 		if (!isSync) return;
 
-		Vector3 originBlockPos = controllingBlock.transform.position;
+		Vector3 originBlockPos = GetControllingBlockObj().transform.position;
 		Vector3 cloneBlockPos = ExpectDropPos(originBlockPos);
 
 		if (!showDropPosBlock) return;
 		showDropPosBlock.transform.localPosition = cloneBlockPos;
-		showDropPosBlock.transform.rotation = controllingBlock.transform.rotation;
+		showDropPosBlock.transform.rotation = GetControllingBlockObj().transform.rotation;
 	}
 }
 

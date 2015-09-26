@@ -198,18 +198,10 @@ public class BlockPoolController : MonoBehaviour {
 				for (int x = 0; x < blockPool.GetSizeX(); x++) {
 					if (blockPool.GetGameObject(x, y, z) == null) continue;
 					blockPool.GetGameObject(x, y, z).transform.position = 
-						RoundY(blockPool.GetGameObject(x, y, z).transform.position);
+						VectorUtil.RoundY(blockPool.GetGameObject(x, y, z).transform.position);
 				}
 			}
 		}
-	}
-
-	private Vector3 RoundY(Vector3 vector) {
-		Vector3 _vector;
-		_vector.x = vector.x;
-		_vector.y = (float)Math.Round(vector.y);
-		_vector.z = vector.z;
-		return _vector;
 	}
 
 	private bool RemoveCompletedRow() {
