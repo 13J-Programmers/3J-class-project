@@ -6,24 +6,21 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Player.Action;
 
 public class BlockController : MonoBehaviour {
-	private BlockPoolController blockPool;
 	// coordinate for check if collide the wall or not
 	private Vector3 blockMinCoord; ///< max coordinate in block
 	private Vector3 blockMaxCoord; ///< min coordinate in block
 
-	/// send notification when this block start falling.
-	public static event EventHandler StartFalling;
-	/// send notification when this block stop falling.
-	public static event EventHandler StopFalling;
+	public static event EventHandler StartFalling; ///< when start falling
+	public static event EventHandler StopFalling;  ///< when stop falling
+
+	private BlockPoolController GetBlockPoolController() {
+		return GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
+	}
 
 	/// Use this for initialization
 	void Start() {
-		blockPool = GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
-
 		// can vary only y position
 		GetComponent<Rigidbody>().constraints = (
 			RigidbodyConstraints.FreezePositionX |
@@ -34,9 +31,7 @@ public class BlockController : MonoBehaviour {
 	
 	/// Update is called once per frame
 	void Update() {
-		// set the block min-max coordinate
 		SetMinMaxCoord();
-		// after rotate, if the block is outside the Pool, then fix position
 		FixPosition();
 	}
 
@@ -68,7 +63,7 @@ public class BlockController : MonoBehaviour {
 		// 
 		// if block collides wall, it cannot move
 		// 
-		Wall wall = blockPool.GetWall();
+		Wall wall = GetBlockPoolController().GetWall();
 		float halfOfWidth = transform.localScale.x / 2;
 		if (blockMinCoord.x - halfOfWidth < wall.GetMinX()) {
 			x = (x < 0) ? 0 : x;
@@ -137,6 +132,7 @@ public class BlockController : MonoBehaviour {
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().AddForce(Vector3.down * 500);
 
+		/// send notification
 		if (StartFalling != null) {
 			StartFalling(this, EventArgs.Empty);
 		}
@@ -168,6 +164,7 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("block(dropping)") != 0) return;
 
 		if (col.gameObject.tag == "BlockPool") {
+			/// send notification
 			if (StopFalling != null) {
 				StopFalling(this, EventArgs.Empty);
 			}
@@ -205,8 +202,8 @@ public class BlockController : MonoBehaviour {
 		// init block min-max coordinate
 		blockMinCoord = blockMaxCoord = transform.position;
 
+		// set min-max
 		foreach (Transform child in transform) {
-			// set min-max
 			float childX = child.transform.position.x;
 			float childY = child.transform.position.y;
 			float childZ = child.transform.position.z;
@@ -221,7 +218,7 @@ public class BlockController : MonoBehaviour {
 
 	/// after rotate, if part of the block into wall, fix position
 	private void FixPosition() {
-		Wall wall = blockPool.GetWall();
+		Wall wall = GetBlockPoolController().GetWall();
 		if (blockMinCoord.x < wall.GetMinX()) {
 			transform.Translate(Vector3.right, Space.World);
 		} else if (blockMaxCoord.x > wall.GetMaxX()) {
