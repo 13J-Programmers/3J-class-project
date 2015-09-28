@@ -77,7 +77,7 @@ namespace Player.Action {
 
 		override
 		protected bool ValidatePerFrame() {
-			return base.blockController && hand.Confidence > 0.2;
+			return base.blockController && hand.Confidence > 0.1;
 		}
 
 		/// move block with opened hand in x-axis
@@ -89,7 +89,7 @@ namespace Player.Action {
 			if (handX > MOVING_DETECT_RANGE) {
 				Vector3 right = mainCamera.TransformDirection(Vector3.right) * moveSpeed;
 				blockController.MoveBlock(right);
-			} else if (handX < MOVING_DETECT_RANGE) {
+			} else if (handX < -MOVING_DETECT_RANGE) {
 				Vector3 left = mainCamera.TransformDirection(Vector3.left) * moveSpeed;
 				blockController.MoveBlock(left);
 			}
@@ -115,7 +115,7 @@ namespace Player.Action {
 			if (handZ > MOVING_DETECT_RANGE) {
 				Vector3 forward = mainCamera.TransformDirection(Vector3.forward) * moveSpeed;
 				blockController.MoveBlock(forward);
-			} else if (handZ < MOVING_DETECT_RANGE) {
+			} else if (handZ < -MOVING_DETECT_RANGE) {
 				Vector3 back = mainCamera.TransformDirection(Vector3.back) * moveSpeed;
 				blockController.MoveBlock(back);
 			}
