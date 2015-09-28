@@ -10,12 +10,12 @@ public class SubCameraController : MonoBehaviour {
 		// angle
 		this.gameObject.transform.localEulerAngles = 
 			GetMainCameraObj().transform.eulerAngles + 
-			Vector3.right * -10;
+			Vector3.right * 5;
 
 		// position
 		this.gameObject.transform.position = 
 			GetMainCameraObj().transform.position + 
-			Vector3.up * 93 + 
-			this.gameObject.transform.forward * 7;
+			Vector3.up * 98 + 
+			this.gameObject.transform.forward * 9;
 	}
 }

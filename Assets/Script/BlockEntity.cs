@@ -55,7 +55,7 @@ public class BlockEntity : MonoBehaviour {
 		// create new block
 		GameObject newBlock = Instantiate(
 			randBlock, // instance object
-			new Vector3(0, 10, 0), // coordinate
+			new Vector3(0, 8, 0), // coordinate
 			randBlock.transform.rotation // rotation
 		) as GameObject;
 

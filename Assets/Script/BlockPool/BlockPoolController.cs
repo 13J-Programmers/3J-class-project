@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// then recall ControlBlock()
 /// 
 public class BlockPoolController : MonoBehaviour {
-	private BlockPool blockPool = new BlockPool(5, 10, 5);
+	private BlockPool blockPool = new BlockPool(5, 8, 5);
 
 	public int GetSizeX() { return blockPool.GetSizeX(); }
 	public int GetSizeY() { return blockPool.GetSizeY(); }
