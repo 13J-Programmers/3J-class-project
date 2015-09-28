@@ -15,6 +15,10 @@ public class BlockEntity : MonoBehaviour {
 
 	public int GetPrefabMaxNum() { return prefabMaxNum; }
 
+	public GameObject PeekNextBlock() {
+		return (GameObject)queue.Peek();
+	}
+
 	/// send notification when new block is created
 	public static event EventHandler CreateNewBlock;
 
