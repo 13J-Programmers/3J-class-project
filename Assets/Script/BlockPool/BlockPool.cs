@@ -146,7 +146,10 @@ public class BlockPool {
 
 	private void generateSmoke(Vector3 pos) {
 		GameObject prefab = (GameObject)Resources.Load("Particle/Smoke");
-		MonoBehaviour.Instantiate(prefab, pos, Quaternion.identity);
+		GameObject smoke =  MonoBehaviour.Instantiate(
+			prefab, pos, Quaternion.identity
+		) as GameObject;
+		smoke.AddComponent<SmokeController>();
 	}
 }
 
