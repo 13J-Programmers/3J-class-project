@@ -23,10 +23,12 @@ public class BlockPool {
 	public int GetSizeX() { return this.POOL_X; }
 	public int GetSizeY() { return this.POOL_Y; }
 	public int GetSizeZ() { return this.POOL_Z; }
+
 	public GameObject GetGameObject(int x, int y, int z) {
 		return blockPool[x, y, z];
 	}
-	public void SetGameObject(int x, int y, int z, GameObject gameObj) {
+
+	public void SetGameObjectAt(int x, int y, int z, GameObject gameObj) {
 		blockPool[x, y, z] = gameObj;
 	}
 
@@ -34,7 +36,7 @@ public class BlockPool {
 		for (int z = 0; z < POOL_Z; z++) {
 			for (int y = 0; y < POOL_Y; y++) {
 				for (int x = 0; x < POOL_X; x++) {
-					this.SetGameObject(x, y, z, null);
+					SetGameObjectAt(x, y, z, null);
 				}
 			}
 		}

@@ -37,6 +37,7 @@ public class BlockPoolController : MonoBehaviour {
 	public int GetSizeX() { return blockPool.GetSizeX(); }
 	public int GetSizeY() { return blockPool.GetSizeY(); }
 	public int GetSizeZ() { return blockPool.GetSizeZ(); }
+
 	public BlockPool GetPool() { return blockPool; }
 
 	private GameObject GetPoolCubesObj() { return GameObject.Find("BlockPool/Cubes"); }
@@ -100,12 +101,12 @@ public class BlockPoolController : MonoBehaviour {
 
 	/// main process in Pool
 	public void AddBlock(GameObject block) {
-		InitPool();
 		MergeBlock(block);
 		UpdateBlockPool();
 	}
 
 	public void UpdateBlockPool() {
+		InitPool();
 		SearchCubePos();
 		FixCubePos();
 		if (RemoveCompletedRow()) {
@@ -184,7 +185,7 @@ public class BlockPoolController : MonoBehaviour {
 		// print("target: " + obj.transform.position);
 		// print("index : >> " + new Vector3(x, y, z));
 		try {
-			blockPool.SetGameObject(x, y, z, obj.gameObject);
+			blockPool.SetGameObjectAt(x, y, z, obj.gameObject);
 		} catch (IndexOutOfRangeException) {
 			GetGameManager().GameOver();
 		}

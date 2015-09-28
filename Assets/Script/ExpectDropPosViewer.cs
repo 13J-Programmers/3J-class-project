@@ -20,12 +20,15 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	private GameObject GetControllingBlockObj() {
 		return gameObject;
 	}
+	private GameObject GetBlockPoolAt(int x, int y, int z) {
+		return GetBlockPoolController().GetPool().GetGameObject(x, y, z);
+	}
 
 	// Use this for initialization
 	void Start() {
 		CloneSkeltonBlock();
 		BlockController.StartFalling += new EventHandler(StopSync);
-		BlockController.StopFalling += new EventHandler(StopShowing);
+		BlockController.StopFalling  += new EventHandler(StopShowing);
 	}
 	
 	// Update is called once per frame
@@ -83,27 +86,22 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 			foreach (Vector3 cubePos in blockCubesPos) {
 				int cubePosX = (int)Math.Round(cubePos.x + offset.x);
-				int cubePosY = (int)Math.Round(cubePos.y) + height;
+				int cubePosY = (int)cubePos.y + height; //(int)Math.Round(cubePos.y) + height;
 				int cubePosZ = (int)Math.Round(cubePos.z + offset.z);
 
 				if (cubePosY < 0) {
 					isCube = true;
-				} else if (GetBlockPoolController().GetSizeY() <= cubePosY) {
+					break;
+				} 
+
+				if (GetBlockPoolController().GetSizeY() <= cubePosY) {
 					continue;
-				} else if (!(0 <= cubePosX && cubePosX < GetBlockPoolController().GetSizeX() 
-						&& 0 <= cubePosZ && cubePosZ < GetBlockPoolController().GetSizeZ())) {
-					continue;
-				} else if (GetBlockPoolController().GetPool().GetGameObject(cubePosX, cubePosY, cubePosZ) != null) {
-					isCube = true;
 				}
-				// print(
-				// 	new Vector3(
-				// 		Math.Round(cubePos.x + offset.x), 
-				// 		cubePosY, 
-				// 		Math.Round(cubePos.z + offset.z)
-				// 	) + " : " + isCube
-				// );
-				if (isCube) break;
+
+				if (GetBlockPoolAt(cubePosX, cubePosY, cubePosZ) != null) {
+					isCube = true;
+					break;
+				}
 			}
 
 			if (isCube) {
