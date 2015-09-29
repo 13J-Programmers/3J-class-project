@@ -1,7 +1,7 @@
-﻿/// 
+﻿///
 /// @file   BlockController.cs
 /// @brief  controls block position and rotation.
-/// 
+///
 
 using UnityEngine;
 using System;
@@ -24,11 +24,11 @@ public class BlockController : MonoBehaviour {
 		// can vary only y position
 		GetComponent<Rigidbody>().constraints = (
 			RigidbodyConstraints.FreezePositionX |
-			RigidbodyConstraints.FreezePositionZ | 
+			RigidbodyConstraints.FreezePositionZ |
 			RigidbodyConstraints.FreezeRotation
 		);
 	}
-	
+
 	/// Update is called once per frame
 	void Update() {
 		SetMinMaxCoord();
@@ -47,22 +47,22 @@ public class BlockController : MonoBehaviour {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 
 		// block can move in specific range
-		// 
+		//
 		//   blockMinCoord : minimum x,z coordinate
 		//   blockMaxCoord : maximum x,z coordinate
 		//   halfOfWidth : blockWidth / 2
-		// 
+		//
 		//            --- << blockMaxCoord.z + halfOfWidth
 		//           |   |
-		//    --- --- --- 
+		//    --- --- ---
 		//   |   |   |   |
 		//    --- --- --- << blockMinCoord.z - halfOfWidth
 		//   ∧           ∧
 		//   ∧           blockMaxCoord.x + halfOfWidth
 		//   blockMinCoord.x - halfOfWidth
-		// 
+		//
 		// if block collides wall, it cannot move
-		// 
+		//
 		Wall wall = GetBlockPoolController().GetWall();
 		float halfOfWidth = transform.localScale.x / 2;
 		if (blockMinCoord.x - halfOfWidth < wall.GetMinX()) {
@@ -75,7 +75,7 @@ public class BlockController : MonoBehaviour {
 		} else if (blockMaxCoord.z + halfOfWidth > wall.GetMaxZ()) {
 			z = (z > 0) ? 0 : z;
 		}
-		
+
 		transform.Translate(new Vector3(x, 0, z), Space.World);
 	}
 
@@ -86,7 +86,7 @@ public class BlockController : MonoBehaviour {
 
 	/// pitch the block
 	/// this method can decide forward direction via camera.
-	/// @param direct - Vector3 forward or back 
+	/// @param direct - Vector3 forward or back
 	public void PitchBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Vector3 newDirect = VectorUtil.RoundXZ(direct);
@@ -106,7 +106,7 @@ public class BlockController : MonoBehaviour {
 
 	/// roll the block
 	/// this method can decide right direction via camera.
-	/// @param direct - Vector3 right or left 
+	/// @param direct - Vector3 right or left
 	public void RollBlock(Vector3 direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Vector3 newDirect = VectorUtil.RoundXZ(direct);
@@ -136,7 +136,7 @@ public class BlockController : MonoBehaviour {
 		if (StartFalling != null) {
 			StartFalling(this, EventArgs.Empty);
 		}
-		
+
 		// after drop, OnCollisionEnter (private method) is called when landed on BlackPool.
 	}
 
@@ -144,6 +144,13 @@ public class BlockController : MonoBehaviour {
 	public Vector3 GetCorrectPosition() {
 		Vector3 correctedPos = VectorUtil.RoundXZ(transform.position);
 		return correctedPos;
+	}
+
+	/// Destroy child blocks
+	public void DestroyChildBlocks() {
+		foreach (Transform child in this.transform) {
+			Destroy(child.gameObject);
+		}
 	}
 
 
@@ -222,21 +229,3 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

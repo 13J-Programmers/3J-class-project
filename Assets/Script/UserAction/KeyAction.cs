@@ -1,7 +1,7 @@
-/// 
+///
 /// @file   KeyAction.cs
 /// @brief  This script will turn pressing key into game obj motion.
-/// 
+///
 
 using UnityEngine;
 using System.Collections;
@@ -34,7 +34,7 @@ namespace Player.Action {
 			}
 		}
 
-		/// Drop Block 
+		/// Drop Block
 		override
 		protected void DetectMotionY() {
 			if (Input.GetKeyDown("space")) {
@@ -88,7 +88,7 @@ namespace Player.Action {
 			}
 		}
 
-		/// Rotate Camera 
+		/// Rotate Camera
 		override
 		protected void DetectRotationCamera() {
 			if (Input.GetKey("return")) {
@@ -97,7 +97,21 @@ namespace Player.Action {
 				GetCameraController().RotateCam(-1);
 			}
 		}
+
+		/// Press Block
+		override
+		protected void DetectPressMotion() {
+			if (Input.GetKey("p")) {
+				GetBlockController().DestroyChildBlocks();
+			}
+		}
+
+		/// Shake Block
+		override
+		protected void DetectShakeMotion() {
+			if (Input.GetKey("o")) {
+				GetBlockController().DestroyChildBlocks();
+			}
+		}
 	}
 }
-
-

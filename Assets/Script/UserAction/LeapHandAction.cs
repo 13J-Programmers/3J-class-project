@@ -1,9 +1,9 @@
-﻿/// 
+﻿///
 /// @file  LeapHandAction.cs
-/// @brief 
+/// @brief
 ///   This script will turn hand motion into game obj motion.
 ///   Implementer have to consider operability.
-/// 
+///
 
 using UnityEngine;
 using System;
@@ -173,7 +173,7 @@ namespace Player.Action {
 			} else {
 				return;
 			}
-			isRotatedZ = true;	
+			isRotatedZ = true;
 		}
 
 		override
@@ -181,7 +181,17 @@ namespace Player.Action {
 
 		}
 
+		/// Press Block
+		override
+		protected void DetectPressMotion() {
+
+		}
+
+		/// Shake Block
+		override
+		protected void DetectShakeMotion() {
+
+		}
+
 	}
 }
-
-

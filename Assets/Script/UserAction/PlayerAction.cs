@@ -1,7 +1,7 @@
-﻿/// 
+﻿///
 /// @file  PlayerAction.cs
 /// @brief Action classes inherit this base class to detect user inputs
-/// 
+///
 
 using UnityEngine;
 using System;
@@ -25,7 +25,7 @@ namespace Player.Action {
 			BlockEntity.CreateNewBlock   += new EventHandler(ConnectWithBlock);
 			BlockController.StartFalling += new EventHandler(DisconnectWithBlock);
 		}
-		
+
 		/// these access modifier prevent the child script use Update()
 		/// but, it doesn't work.
 		protected sealed override void Update() {
@@ -38,6 +38,8 @@ namespace Player.Action {
 			DetectRotationY();
 			DetectRotationZ();
 			DetectRotationCamera();
+			DetectPressMotion();
+			DetectShakeMotion();
 		}
 
 		protected virtual void InitPerFrame() {
@@ -54,6 +56,8 @@ namespace Player.Action {
 		protected abstract void DetectRotationY();
 		protected abstract void DetectRotationZ();
 		protected abstract void DetectRotationCamera();
+		protected abstract void DetectPressMotion();
+		protected abstract void DetectShakeMotion();
 
 		/// get component of the new block for comment
 		private void ConnectWithBlock(object sender, EventArgs e) {
