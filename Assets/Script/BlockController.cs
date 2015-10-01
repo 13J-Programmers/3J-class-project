@@ -149,17 +149,27 @@ public class BlockController : MonoBehaviour {
 
 	/// Destroy child blocks
 	public ArrayList DestroyChildBlocks() {
+		var childCubes = (from Transform cube in this.transform select cube.gameObject);
+
 		// sum up child cube score to set into parent score
 		this.gameObject.GetComponent<CubeInfo>().score +=
-			(from Transform cube in this.transform select cube)
+			childCubes
 			.Select(cube => cube.GetComponent<CubeInfo>().score)
 			.Sum();
 
+		// store child cubes position
 		ArrayList destroyPositions = new ArrayList();
-		foreach (Transform child in this.transform) {
-			destroyPositions.Add(child.position);
-			Destroy(child.gameObject);
-		}
+		destroyPositions.AddRange(
+			childCubes
+			.Select(childCube => childCube.transform.position)
+			.ToList()
+		);
+
+		// destroy child cubes
+		childCubes
+			.ToList()
+			.ForEach(MonoBehaviour.Destroy);
+
 		return destroyPositions;
 	}
 
@@ -247,3 +257,4 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 }
+
