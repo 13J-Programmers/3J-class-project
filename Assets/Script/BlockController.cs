@@ -149,11 +149,11 @@ public class BlockController : MonoBehaviour {
 
 	/// Destroy child blocks
 	public ArrayList DestroyChildBlocks() {
-		int sumOfChild = 0;
-		foreach (Transform cube in this.transform) {
-			sumOfChild += cube.gameObject.GetComponent<CubeInfo>().score;
-		}
-		this.gameObject.GetComponent<CubeInfo>().score += sumOfChild;
+		// sum up child cube score to set into parent score
+		this.gameObject.GetComponent<CubeInfo>().score +=
+			(from Transform cube in this.transform select cube)
+			.Select(cube => cube.GetComponent<CubeInfo>().score)
+			.Sum();
 
 		ArrayList destroyPositions = new ArrayList();
 		foreach (Transform child in this.transform) {
