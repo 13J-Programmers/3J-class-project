@@ -13,14 +13,12 @@ using Leap;
 namespace Player.Action {
 	/// LeapHandAction < PlayerAction < BaseAction < MonoBehaviour
 	public class LeapHandAction : PlayerAction {
-		// leap motion
-		private Controller controller = new Controller();
-		private Frame frame;
-		private HandList hands;
 		private Hand hand;
 		private Hand otherHand;
 
-		private Transform mainCamera;
+		private Transform GetMainCamera() {
+			return Camera.main.transform;
+		}
 
 		// motion
 		const int MOVING_DETECT_RANGE = 60;
@@ -53,11 +51,14 @@ namespace Player.Action {
 
 		override
 		protected void InitPerFrame() {
-			mainCamera = Camera.main.transform;
-
-			frame = controller.Frame();
-			hands = frame.Hands;
+			Controller controller = new Controller();
+			Frame frame = controller.Frame();
+			HandList hands = frame.Hands;
 			hand = hands[0];
+			otherHand = hands[1];
+
+			// print(hand.PalmPosition);
+			// print(otherHand.PalmPosition);
 
 			pitch = hand.Direction.Pitch * rotateScale;
 			yaw   = hand.Direction.Yaw   * rotateScale;
@@ -87,10 +88,10 @@ namespace Player.Action {
 
 			if (isFingersFolded(hand)) return;
 			if (handX > MOVING_DETECT_RANGE) {
-				Vector3 right = mainCamera.TransformDirection(Vector3.right) * moveSpeed;
+				Vector3 right = GetMainCamera().TransformDirection(Vector3.right) * moveSpeed;
 				blockController.MoveBlock(right);
 			} else if (handX < -MOVING_DETECT_RANGE) {
-				Vector3 left = mainCamera.TransformDirection(Vector3.left) * moveSpeed;
+				Vector3 left = GetMainCamera().TransformDirection(Vector3.left) * moveSpeed;
 				blockController.MoveBlock(left);
 			}
 		}
@@ -113,10 +114,10 @@ namespace Player.Action {
 
 			if (isFingersFolded(hand)) return;
 			if (handZ > MOVING_DETECT_RANGE) {
-				Vector3 forward = mainCamera.TransformDirection(Vector3.forward) * moveSpeed;
+				Vector3 forward = GetMainCamera().TransformDirection(Vector3.forward) * moveSpeed;
 				blockController.MoveBlock(forward);
 			} else if (handZ < -MOVING_DETECT_RANGE) {
-				Vector3 back = mainCamera.TransformDirection(Vector3.back) * moveSpeed;
+				Vector3 back = GetMainCamera().TransformDirection(Vector3.back) * moveSpeed;
 				blockController.MoveBlock(back);
 			}
 		}
@@ -128,11 +129,11 @@ namespace Player.Action {
 			if (isRotatedX) return;
 			if (pitch > upScale) {
 				//print("up");
-				Vector3 back = mainCamera.TransformDirection(Vector3.back);
+				Vector3 back = GetMainCamera().TransformDirection(Vector3.back);
 				blockController.PitchBlock(back);
 			} else if (pitch < downScale) {
 				//print("down");
-				Vector3 forward = mainCamera.TransformDirection(Vector3.forward);
+				Vector3 forward = GetMainCamera().TransformDirection(Vector3.forward);
 				blockController.PitchBlock(forward);
 			} else {
 				return;
@@ -164,11 +165,11 @@ namespace Player.Action {
 			if (isRotatedZ) return;
 			if (roll > counterClockwiseScale) {
 				//print("counter-clockwise");
-				Vector3 left = mainCamera.TransformDirection(Vector3.left);
+				Vector3 left = GetMainCamera().TransformDirection(Vector3.left);
 				blockController.RollBlock(left);
 			} else if (roll < clockwiseScale) {
 				//print("clockwise");
-				Vector3 right = mainCamera.TransformDirection(Vector3.right);
+				Vector3 right = GetMainCamera().TransformDirection(Vector3.right);
 				blockController.RollBlock(right);
 			} else {
 				return;
