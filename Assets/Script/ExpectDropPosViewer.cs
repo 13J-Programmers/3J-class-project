@@ -47,8 +47,6 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Destroy(this);
 	}
 
-
-
 	/// decide position of showDropPosBlock
 	/// * @param position - original block position
 	/// * @return expected dropping position
@@ -86,8 +84,9 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 			foreach (Vector3 cubePos in blockCubesPos) {
 				int cubePosX = (int)Math.Round(cubePos.x + offset.x);
-				int cubePosY = (int)cubePos.y + height; //(int)Math.Round(cubePos.y) + height;
+				int cubePosY = (int)Math.Round(cubePos.y) + height;
 				int cubePosZ = (int)Math.Round(cubePos.z + offset.z);
+				print(new Vector3(cubePosX, cubePosY, cubePosZ));
 
 				if (cubePosY < 0) {
 					isCube = true;
