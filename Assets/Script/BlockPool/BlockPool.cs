@@ -94,7 +94,7 @@ public class BlockPool {
 			for (int y = 0; y < POOL_Y; y++) {
 				for (int x = 0; x < POOL_X; x++) {
 					if (willBeRemovedCube[x, y, z] == true) {
-						generateSmoke(blockPool[x, y, z].transform.position);
+						GenerateSmoke(blockPool[x, y, z].transform.position);
 						cubeScore += blockPool[x, y, z].GetComponent<CubeInfo>().score;
 						MonoBehaviour.Destroy(blockPool[x, y, z]);
 					}
@@ -146,7 +146,7 @@ public class BlockPool {
 		return completedRowNum;
 	}
 
-	private void generateSmoke(Vector3 pos) {
+	private void GenerateSmoke(Vector3 pos) {
 		GameObject prefab = (GameObject)Resources.Load("Particle/Smoke");
 		GameObject smoke =  MonoBehaviour.Instantiate(
 			prefab, pos, Quaternion.identity
@@ -154,6 +154,3 @@ public class BlockPool {
 		smoke.AddComponent<SmokeController>();
 	}
 }
-
-
-

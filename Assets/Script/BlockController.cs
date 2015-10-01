@@ -6,6 +6,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Linq;
 
 public class BlockController : MonoBehaviour {
 	// coordinate for check if collide the wall or not
@@ -147,10 +148,27 @@ public class BlockController : MonoBehaviour {
 	}
 
 	/// Destroy child blocks
-	public void DestroyChildBlocks() {
+	public ArrayList DestroyChildBlocks() {
+		int sumOfChild = 0;
+		foreach (Transform cube in this.transform) {
+			sumOfChild += cube.gameObject.GetComponent<CubeInfo>().score;
+		}
+		this.gameObject.GetComponent<CubeInfo>().score += sumOfChild;
+
+		ArrayList destroyPositions = new ArrayList();
 		foreach (Transform child in this.transform) {
+			destroyPositions.Add(child.position);
 			Destroy(child.gameObject);
 		}
+		return destroyPositions;
+	}
+
+	public void GenerateSplash(Vector3 pos) {
+		GameObject prefab = (GameObject)Resources.Load("Particle/Splash");
+		GameObject splash =  MonoBehaviour.Instantiate(
+			prefab, pos, Quaternion.identity
+		) as GameObject;
+		splash.AddComponent<SmokeController>();
 	}
 
 

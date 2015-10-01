@@ -1,7 +1,7 @@
-﻿/// 
+﻿///
 /// @file  ExpectDropPosViewer.cs
 /// @brief This script displays block expected dropping position.
-/// 
+///
 
 using UnityEngine;
 using System;
@@ -30,7 +30,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		BlockController.StartFalling += new EventHandler(StopSync);
 		BlockController.StopFalling  += new EventHandler(StopShowing);
 	}
-	
+
 	// Update is called once per frame
 	void Update() {
 		SyncOriginBlock();
@@ -47,7 +47,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		Destroy(this);
 	}
 
-	
+
 
 	/// decide position of showDropPosBlock
 	/// * @param position - original block position
@@ -92,7 +92,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 				if (cubePosY < 0) {
 					isCube = true;
 					break;
-				} 
+				}
 
 				if (GetBlockPoolController().GetSizeY() <= cubePosY) {
 					continue;
@@ -123,7 +123,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 
 		// instantiate
 		showDropPosBlock = Instantiate(
-			GetControllingBlockObj(), 
+			GetControllingBlockObj(),
 			cloneBlockPos,
 			GetControllingBlockObj().transform.rotation
 		) as GameObject;
@@ -161,6 +161,10 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		showDropPosBlock.transform.localPosition = cloneBlockPos;
 		showDropPosBlock.transform.rotation = GetControllingBlockObj().transform.rotation;
 	}
+
+	public void DestroyChildBlocks() {
+		foreach (Transform child in showDropPosBlock.transform) {
+			Destroy(child.gameObject);
+		}
+	}
 }
-
-

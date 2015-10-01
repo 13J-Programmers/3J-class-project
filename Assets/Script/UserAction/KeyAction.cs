@@ -103,6 +103,7 @@ namespace Player.Action {
 		protected void DetectPressMotion() {
 			if (Input.GetKey("p")) {
 				GetBlockController().DestroyChildBlocks();
+				GetExpectedDropPosBlock().DestroyChildBlocks();
 			}
 		}
 
@@ -110,7 +111,11 @@ namespace Player.Action {
 		override
 		protected void DetectShakeMotion() {
 			if (Input.GetKey("o")) {
-				GetBlockController().DestroyChildBlocks();
+				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+				GetExpectedDropPosBlock().DestroyChildBlocks();
+				foreach (Vector3 destroyPosition in destroyPositions) {
+					GetBlockController().GenerateSplash(destroyPosition);
+				}
 			}
 		}
 	}
