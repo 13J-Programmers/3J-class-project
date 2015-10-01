@@ -86,7 +86,6 @@ public class ExpectDropPosViewer : MonoBehaviour {
 				int cubePosX = (int)Math.Round(cubePos.x + offset.x);
 				int cubePosY = (int)Math.Round(cubePos.y) + height;
 				int cubePosZ = (int)Math.Round(cubePos.z + offset.z);
-				print(new Vector3(cubePosX, cubePosY, cubePosZ));
 
 				if (cubePosY < 0) {
 					isCube = true;
