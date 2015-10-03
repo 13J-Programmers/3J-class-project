@@ -12,12 +12,18 @@ namespace Player.Action {
 	public abstract class PlayerAction : BaseAction {
 		protected BlockController blockController;
 
+		protected GameObject GetControllingBlock() {
+			return GameObject.Find("block(new)");
+		}
+
 		protected BlockController GetBlockController() {
 			return blockController;
 		}
+
 		protected CameraController GetCameraController() {
 			return GameObject.Find("Main Camera").GetComponent<CameraController>();
 		}
+		
 		protected ExpectDropPosViewer GetExpectedDropPosBlock() {
 			return GameObject.Find("block(new)").GetComponent<ExpectDropPosViewer>();
 		}
