@@ -27,8 +27,6 @@ public class NextBlockEntity : MonoBehaviour {
 			block.transform.rotation // rotation
 		) as GameObject;
 
-		print(nextBlockObj);
-
 		nextBlockObj.transform.parent = this.transform;
 		nextBlockObj.name = "nextBlock";
 	}
