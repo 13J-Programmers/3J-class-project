@@ -31,13 +31,17 @@ namespace Player.Action {
 		private float leftScale = -7;
 		private float counterClockwiseScale = 7;
 		private float clockwiseScale = -7;
-		public bool isRotatedX = false;
-		public bool isRotatedY = false;
-		public bool isRotatedZ = false;
+		private bool isRotatedX = false;
+		private bool isRotatedY = false;
+		private bool isRotatedZ = false;
 		private float rotateScale = 10;
 		private float pitch;
 		private float yaw;
 		private float roll;
+
+		// rotate camera
+		//public bool isCameraRotated = false;
+
 
 		private bool isFingersFolded(Hand hand) {
 			Vector origin = hand.Fingers[0].TipPosition;
@@ -46,7 +50,11 @@ namespace Player.Action {
 			foreach (Finger finger in hand.Fingers) {
 				dist += finger.TipPosition.DistanceTo(origin);
 			}
-			return (dist < 200) ? true : false;
+			return (dist < 250) ? true : false;
+		}
+
+		private bool hasTwoHands() {
+			return otherHand.IsValid;
 		}
 
 		override
@@ -56,9 +64,6 @@ namespace Player.Action {
 			HandList hands = frame.Hands;
 			hand = hands[0];
 			otherHand = hands[1];
-
-			// print(hand.PalmPosition);
-			// print(otherHand.PalmPosition);
 
 			pitch = hand.Direction.Pitch * rotateScale;
 			yaw   = hand.Direction.Yaw   * rotateScale;
@@ -128,11 +133,9 @@ namespace Player.Action {
 			if (isFingersFolded(hand)) return;
 			if (isRotatedX) return;
 			if (pitch > upScale) {
-				//print("up");
 				Vector3 back = GetMainCamera().TransformDirection(Vector3.back);
 				blockController.PitchBlock(back);
 			} else if (pitch < downScale) {
-				//print("down");
 				Vector3 forward = GetMainCamera().TransformDirection(Vector3.forward);
 				blockController.PitchBlock(forward);
 			} else {
@@ -147,10 +150,8 @@ namespace Player.Action {
 			if (isFingersFolded(hand)) return;
 			if (isRotatedY) return;
 			if (yaw > rightScale) {
-				//print("right");
 				blockController.YawBlock(1);
 			} else if (yaw < leftScale) {
-				//print("left");
 				blockController.YawBlock(-1);
 			} else {
 				return;
@@ -164,11 +165,9 @@ namespace Player.Action {
 			if (isFingersFolded(hand)) return;
 			if (isRotatedZ) return;
 			if (roll > counterClockwiseScale) {
-				//print("counter-clockwise");
 				Vector3 left = GetMainCamera().TransformDirection(Vector3.left);
 				blockController.RollBlock(left);
 			} else if (roll < clockwiseScale) {
-				//print("clockwise");
 				Vector3 right = GetMainCamera().TransformDirection(Vector3.right);
 				blockController.RollBlock(right);
 			} else {
@@ -179,7 +178,7 @@ namespace Player.Action {
 
 		override
 		protected void DetectRotationCamera() {
-
+			
 		}
 
 		/// Press Block
