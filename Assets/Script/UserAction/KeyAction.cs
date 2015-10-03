@@ -10,7 +10,6 @@ using Fie.Utility;
 namespace Player.Action {
 	/// KeyAction < PlayerAction < BaseAction < MonoBehaviour
 	public class KeyAction : PlayerAction {
-		private Wiggler wiggler;
 		private Transform mainCamera;
 		private float moveSpeed = 0.1f;
 
@@ -114,9 +113,10 @@ namespace Player.Action {
 		override
 		protected void DetectShakeMotion() {
 			if (Input.GetKey("o")) {
-				wiggler = new Wiggler(mainCamera.transform);
+				Wiggler wiggler = new Wiggler(mainCamera.transform);
 				wiggler.Initialize(1.0f, 10, Vector3.one);
 				wiggler.UpdateWiggler(Time.deltaTime);
+
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
 				GetExpectedDropPosBlock().DestroyChildBlocks();
 				foreach (Vector3 destroyPosition in destroyPositions) {
