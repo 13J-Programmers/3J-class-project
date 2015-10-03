@@ -25,6 +25,7 @@ public class BlockEntity : MonoBehaviour {
 	/// BlockEntity methods are invoked from Start() in GameManager.
 	/// therefore, initializing variables have to write in Awake().
 	void Awake() {
+		CreateNewBlock = null;
 		PushNextBlock(RandomBlock());
 	}
 
@@ -32,17 +33,17 @@ public class BlockEntity : MonoBehaviour {
 		GameManager.StartGame       += new EventHandler(CreateRandomBlock);
 		BlockController.StopFalling += new EventHandler(CreateRandomBlock);
 
-		// change every cube of block
-		BoxCollider bc;
-		Vector3 colliderSize = new Vector3(0.95f, 0.95f, 0.95f);
-		for (int i = 0; i < prefabMaxNum; i++) {
-			bc = blocks[i].GetComponent<BoxCollider>();
-			bc.size = colliderSize;
-			foreach (Transform cube in blocks[i].transform) {
-				bc = cube.gameObject.GetComponent<BoxCollider>();
-				bc.size = colliderSize;
-			}
-		}
+		// // change every cube of block
+		// BoxCollider bc;
+		// Vector3 colliderSize = new Vector3(0.95f, 0.95f, 0.95f);
+		// for (int i = 0; i < prefabMaxNum; i++) {
+		// 	bc = blocks[i].GetComponent<BoxCollider>();
+		// 	bc.size = colliderSize;
+		// 	foreach (Transform cube in blocks[i].transform) {
+		// 		bc = cube.gameObject.GetComponent<BoxCollider>();
+		// 		bc.size = colliderSize;
+		// 	}
+		// }
 	}
 
 	private void CreateRandomBlock(object sender, EventArgs e) {
