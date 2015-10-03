@@ -114,9 +114,9 @@ namespace Player.Action {
 		protected void DetectShakeMotion() {
 			if (Input.GetKey("o")) {
 				// Wiggler wiggler = new Wiggler(mainCamera.transform);
-				Wiggler wiggler = new Wiggler(GetControllingBlock().transform);
-				wiggler.Initialize(1.0f, 10, Vector3.one);
-				wiggler.UpdateWiggler(Time.deltaTime);
+				// Wiggler wiggler = new Wiggler(GetControllingBlock().transform);
+				// wiggler.Initialize(1.0f, 10, Vector3.one);
+				// wiggler.UpdateWiggler(Time.deltaTime);
 
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
 				GetExpectedDropPosBlock().DestroyChildBlocks();
