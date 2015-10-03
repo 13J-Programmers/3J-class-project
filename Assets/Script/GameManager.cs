@@ -27,6 +27,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Linq;
+using Leap;
 
 public class GameManager : MonoBehaviour {
 	public bool isCountDownMode = false;
@@ -110,7 +111,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 		// in result
-		if (!isGamePlayMode && Input.GetKey("return")) {
+		if (!isGamePlayMode 
+				&& (Input.GetKey("return") || LeapGesture()) ) {
 			RestartGame();
 		}
 	}
@@ -202,6 +204,23 @@ public class GameManager : MonoBehaviour {
 		foreach (var moduleInfo in moduleInfos) {
 			Destroy(moduleInfo.GetComponent());
 		}
+	}
+
+
+	private bool LeapGesture() {
+		Hand hand = new Controller().Frame().Hands[0];
+
+		return (isFingersFolded(hand) && hand.PalmVelocity.z > 300);
+	}
+
+	private bool isFingersFolded(Hand hand) {
+		Vector origin = hand.Fingers[0].TipPosition;
+		float dist = 0;
+
+		foreach (Finger finger in hand.Fingers) {
+			dist += finger.TipPosition.DistanceTo(origin);
+		}
+		return (dist < 250) ? true : false;
 	}
 }
 
