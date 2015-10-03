@@ -39,10 +39,6 @@ namespace Player.Action {
 		private float yaw;
 		private float roll;
 
-		// rotate camera
-		public bool isCameraRotatedToRight = false;
-		public bool isCameraRotatedToLeft  = false;
-
 
 		private bool isFingersFolded(Hand hand) {
 			Vector origin = hand.Fingers[0].TipPosition;
@@ -108,8 +104,6 @@ namespace Player.Action {
 		/// Drop Block with clenched fists
 		override
 		protected void DetectMotionY() {
-			if (isFingersFolded(hand)) return;
-
 			float velocityY = hand.PalmVelocity.y;
 
 			if (isFingersFolded(hand)) {
@@ -188,6 +182,7 @@ namespace Player.Action {
 			isRotatedZ = true;
 		}
 
+		// Rotate camera
 		override
 		protected void DetectRotationCamera() {
 			if (!hasTwoHands()) return;
@@ -210,14 +205,35 @@ namespace Player.Action {
 		/// Press Block
 		override
 		protected void DetectPressMotion() {
+			if (!hasTwoHands()) return;
 
+			Vector3 handPos = ToVector3(hand.PalmPosition);
+			Vector3 otherHandPos = ToVector3(otherHand.PalmPosition);
+			double dist = Vector3.Distance(handPos, otherHandPos);
+
+			if (dist < 50) {
+				GetBlockController().DestroyChildBlocks();
+				GetExpectedDropPosBlock().DestroyChildBlocks();
+			}
 		}
 
 		/// Shake Block
 		override
 		protected void DetectShakeMotion() {
+			if (!hasTwoHands()) return;
 
+			float handVelocityY = hand.PalmVelocity.y;
+			float otherHandVelocityY = otherHand.PalmVelocity.y;
+
+			if (handVelocityY < -400 && otherHandVelocityY < -400) {
+				GetBlockController().DestroyChildBlocks();
+				GetExpectedDropPosBlock().DestroyChildBlocks();
+			}
 		}
 
+
+		private Vector3 ToVector3(Vector v) {
+			return new UnityEngine.Vector3(v.x, v.y, v.z);
+		}
 	}
 }
