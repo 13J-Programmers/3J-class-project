@@ -149,7 +149,9 @@ public class BlockController : MonoBehaviour {
 
 	/// Destroy child blocks
 	public ArrayList DestroyChildBlocks() {
-		var childCubes = (from Transform cube in this.transform select cube.gameObject);
+		var childCubes = from Transform cube in this.transform 
+			where cube.name == "Cube"
+			select cube.gameObject;
 
 		// sum up child cube score to set into parent score
 		this.gameObject.GetComponent<CubeInfo>().score +=
