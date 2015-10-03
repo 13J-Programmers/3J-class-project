@@ -192,24 +192,18 @@ namespace Player.Action {
 		protected void DetectRotationCamera() {
 			if (!hasTwoHands()) return;
 
+			Hand rightHand = (hand.IsRight) ? hand : otherHand;
+			Hand leftHand  = (hand.IsRight) ? otherHand : hand;
+
+			float rightHandZ = -rightHand.PalmPosition.z;
+			float leftHandZ  = -leftHand.PalmPosition.z;
+
 			int depth = 80;
 
-			if (hand.IsRight) {
-				float rightHandZ = -hand.PalmPosition.z;
-				float leftHandZ = -otherHand.PalmPosition.z;
-				if (leftHandZ > depth && rightHandZ < -depth) {
-					GetCameraController().RotateCam(-1);
-				} else if (leftHandZ < -depth && rightHandZ > depth) {
-					GetCameraController().RotateCam(1);
-				}
-			} else if (hand.IsLeft) {
-				float leftHandZ = -hand.PalmPosition.z;
-				float rightHandZ = -otherHand.PalmPosition.z;
-				if (leftHandZ > depth && rightHandZ < -depth) {
-					GetCameraController().RotateCam(-1);
-				} else if (leftHandZ < -depth && rightHandZ > depth) {
-					GetCameraController().RotateCam(1);
-				}
+			if (leftHandZ > depth && rightHandZ < -depth) {
+				GetCameraController().RotateCam(-1);
+			} else if (leftHandZ < -depth && rightHandZ > depth) {
+				GetCameraController().RotateCam(1);
 			}
 		}
 
