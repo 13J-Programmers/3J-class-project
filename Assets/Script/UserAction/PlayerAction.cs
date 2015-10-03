@@ -24,9 +24,9 @@ namespace Player.Action {
 			return GameObject.Find("Main Camera").GetComponent<CameraController>();
 		}
 		
-		protected ExpectDropPosViewer GetExpectedDropPosBlock() {
-			return GameObject.Find("block(new)").GetComponent<ExpectDropPosViewer>();
-		}
+		// protected ExpectDropPosViewer GetExpectedDropPosBlock() {
+		// 	return GameObject.Find("block(new)").GetComponent<ExpectDropPosViewer>();
+		// }
 
 		/// these access modifier prevent the child script use Start()
 		/// but, it doesn't work.

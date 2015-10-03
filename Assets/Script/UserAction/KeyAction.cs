@@ -104,7 +104,7 @@ namespace Player.Action {
 		protected void DetectPressMotion() {
 			if (Input.GetKey("p")) {
 				GetBlockController().DestroyChildBlocks();
-				GetExpectedDropPosBlock().DestroyChildBlocks();
+				// GetExpectedDropPosBlock().DestroyChildBlocks();
 
 				GameObject.Find("press(audio)").GetComponent<AudioSource>().Play();
 			}
@@ -120,8 +120,8 @@ namespace Player.Action {
 				// wiggler.UpdateWiggler(Time.deltaTime);
 
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				GetExpectedDropPosBlock().DestroyChildBlocks();
-				
+				// GetExpectedDropPosBlock().DestroyChildBlocks();
+
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
 				}

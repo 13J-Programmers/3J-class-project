@@ -21,7 +21,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	private GameObject GetControllingBlockObj() {
 		return gameObject;
 	}
-	
+
 	private GameObject GetBlockPoolAt(int x, int y, int z) {
 		return GetBlockPoolController().GetPool().GetGameObject(x, y, z);
 	}
@@ -31,6 +31,7 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		CloneSkeltonBlock();
 		BlockController.StartFalling += new EventHandler(StopSync);
 		BlockController.StopFalling  += new EventHandler(StopShowing);
+		BlockController.WhenDestroyChild += new EventHandler(DestroyChildBlocks);
 	}
 
 	// Update is called once per frame
@@ -162,7 +163,8 @@ public class ExpectDropPosViewer : MonoBehaviour {
 		showDropPosBlock.transform.rotation = GetControllingBlockObj().transform.rotation;
 	}
 
-	public void DestroyChildBlocks() {
+	private void DestroyChildBlocks(object sender, EventArgs e) {
+		if (!showDropPosBlock) return;
 		foreach (Transform child in showDropPosBlock.transform) {
 			Destroy(child.gameObject);
 		}

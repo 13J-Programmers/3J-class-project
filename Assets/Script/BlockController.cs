@@ -15,6 +15,7 @@ public class BlockController : MonoBehaviour {
 
 	public static event EventHandler StartFalling; ///< when start falling
 	public static event EventHandler StopFalling;  ///< when stop falling
+	public static event EventHandler WhenDestroyChild; ///< when destroy child
 
 	private BlockPoolController GetBlockPoolController() {
 		return GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
@@ -153,6 +154,8 @@ public class BlockController : MonoBehaviour {
 			where cube.name == "Cube"
 			select cube.gameObject;
 
+		if (childCubes == null) return new ArrayList();
+
 		// sum up child cube score to set into parent score
 		this.gameObject.GetComponent<CubeInfo>().score +=
 			childCubes
@@ -171,6 +174,11 @@ public class BlockController : MonoBehaviour {
 		childCubes
 			.ToList()
 			.ForEach(MonoBehaviour.Destroy);
+
+		// perform event
+		if (WhenDestroyChild != null) {
+			WhenDestroyChild(this, EventArgs.Empty);
+		}
 
 		return destroyPositions;
 	}
