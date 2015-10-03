@@ -40,7 +40,8 @@ namespace Player.Action {
 		private float roll;
 
 		// rotate camera
-		//public bool isCameraRotated = false;
+		public bool isCameraRotatedToRight = false;
+		public bool isCameraRotatedToLeft  = false;
 
 
 		private bool isFingersFolded(Hand hand) {
@@ -56,6 +57,7 @@ namespace Player.Action {
 		private bool hasTwoHands() {
 			return otherHand.IsValid;
 		}
+
 
 		override
 		protected void InitPerFrame() {
@@ -89,9 +91,11 @@ namespace Player.Action {
 		/// move block with opened hand in x-axis
 		override
 		protected void DetectMotionX() {
+			if (isFingersFolded(hand)) return;
+			if (hasTwoHands()) return;
+
 			float handX = hand.PalmPosition.x;
 
-			if (isFingersFolded(hand)) return;
 			if (handX > MOVING_DETECT_RANGE) {
 				Vector3 right = GetMainCamera().TransformDirection(Vector3.right) * moveSpeed;
 				blockController.MoveBlock(right);
@@ -104,7 +108,10 @@ namespace Player.Action {
 		/// Drop Block with clenched fists
 		override
 		protected void DetectMotionY() {
+			if (isFingersFolded(hand)) return;
+
 			float velocityY = hand.PalmVelocity.y;
+
 			if (isFingersFolded(hand)) {
 				if (velocityY < -400) {
 					blockController.DropBlock();
@@ -115,9 +122,11 @@ namespace Player.Action {
 		/// move block with opened hand in z-axis
 		override
 		protected void DetectMotionZ() {
+			if (isFingersFolded(hand)) return;
+			if (hasTwoHands()) return;
+
 			float handZ = -hand.PalmPosition.z;
 
-			if (isFingersFolded(hand)) return;
 			if (handZ > MOVING_DETECT_RANGE) {
 				Vector3 forward = GetMainCamera().TransformDirection(Vector3.forward) * moveSpeed;
 				blockController.MoveBlock(forward);
@@ -131,6 +140,7 @@ namespace Player.Action {
 		override
 		protected void DetectRotationX() {
 			if (isFingersFolded(hand)) return;
+			if (hasTwoHands()) return;
 			if (isRotatedX) return;
 			if (pitch > upScale) {
 				Vector3 back = GetMainCamera().TransformDirection(Vector3.back);
@@ -148,6 +158,7 @@ namespace Player.Action {
 		override
 		protected void DetectRotationY() {
 			if (isFingersFolded(hand)) return;
+			if (hasTwoHands()) return;
 			if (isRotatedY) return;
 			if (yaw > rightScale) {
 				blockController.YawBlock(1);
@@ -163,6 +174,7 @@ namespace Player.Action {
 		override
 		protected void DetectRotationZ() {
 			if (isFingersFolded(hand)) return;
+			if (hasTwoHands()) return;
 			if (isRotatedZ) return;
 			if (roll > counterClockwiseScale) {
 				Vector3 left = GetMainCamera().TransformDirection(Vector3.left);
@@ -178,7 +190,18 @@ namespace Player.Action {
 
 		override
 		protected void DetectRotationCamera() {
-			
+			if (!hasTwoHands()) return;
+			if (otherHand.IsLeft) {
+				float rightHandZ = -hand.PalmPosition.z;
+				float leftHandZ = -otherHand.PalmPosition.z;
+				if (leftHandZ > 100 && rightHandZ < -100) {
+					// print("left");
+					GetCameraController().RotateCam(-1);
+				} else if (leftHandZ < -100 && rightHandZ > 100) {
+					// print("right");
+					GetCameraController().RotateCam(1);
+				}
+			}
 		}
 
 		/// Press Block
