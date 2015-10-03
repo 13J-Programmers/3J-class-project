@@ -17,9 +17,11 @@ public class ExpectDropPosViewer : MonoBehaviour {
 	private BlockPoolController GetBlockPoolController() {
 		return GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 	}
+
 	private GameObject GetControllingBlockObj() {
 		return gameObject;
 	}
+	
 	private GameObject GetBlockPoolAt(int x, int y, int z) {
 		return GetBlockPoolController().GetPool().GetGameObject(x, y, z);
 	}

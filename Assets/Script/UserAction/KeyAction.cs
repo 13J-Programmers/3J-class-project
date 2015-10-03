@@ -105,6 +105,7 @@ namespace Player.Action {
 			if (Input.GetKey("p")) {
 				GetBlockController().DestroyChildBlocks();
 				GetExpectedDropPosBlock().DestroyChildBlocks();
+
 				GameObject.Find("press(audio)").GetComponent<AudioSource>().Play();
 			}
 		}
@@ -120,6 +121,7 @@ namespace Player.Action {
 
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
 				GetExpectedDropPosBlock().DestroyChildBlocks();
+				
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
 				}
