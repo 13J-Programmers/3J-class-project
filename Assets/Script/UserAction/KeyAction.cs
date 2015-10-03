@@ -113,7 +113,8 @@ namespace Player.Action {
 		override
 		protected void DetectShakeMotion() {
 			if (Input.GetKey("o")) {
-				Wiggler wiggler = new Wiggler(mainCamera.transform);
+				// Wiggler wiggler = new Wiggler(mainCamera.transform);
+				Wiggler wiggler = new Wiggler(GetControllingBlock().transform);
 				wiggler.Initialize(1.0f, 10, Vector3.one);
 				wiggler.UpdateWiggler(Time.deltaTime);
 
