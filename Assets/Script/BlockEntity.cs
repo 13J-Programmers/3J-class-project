@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 
 public class BlockEntity : MonoBehaviour {
-	public const int prefabMaxNum = 18;
+	public const int prefabMaxNum = 20;
 	/// block prefabs
 	public GameObject[] blocks = new GameObject[prefabMaxNum];
 	private Queue queue = new Queue();

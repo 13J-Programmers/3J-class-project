@@ -2250,8 +2250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a73cdb1af28b46f5960d2fac5f02aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCameraRotatedToRight: 0
-  isCameraRotatedToLeft: 0
 --- !u!4 &953188388
 Transform:
   m_ObjectHideFlags: 0
@@ -3522,21 +3520,23 @@ MonoBehaviour:
   blocks:
   - {fileID: 141924, guid: a4e7e5ac29efd43ff8c8dc3dbf191d03, type: 2}
   - {fileID: 141924, guid: a4e7e5ac29efd43ff8c8dc3dbf191d03, type: 2}
+  - {fileID: 141924, guid: a4e7e5ac29efd43ff8c8dc3dbf191d03, type: 2}
   - {fileID: 111978, guid: 7193a531e80b24d348c39fc0537aea06, type: 2}
   - {fileID: 111978, guid: 7193a531e80b24d348c39fc0537aea06, type: 2}
   - {fileID: 114106, guid: 9f6b263b2297d4d7f9b5a5e16a598339, type: 2}
   - {fileID: 114106, guid: 9f6b263b2297d4d7f9b5a5e16a598339, type: 2}
   - {fileID: 101862, guid: fd794806948894a73ad8c3120fcdab30, type: 2}
+  - {fileID: 101862, guid: fd794806948894a73ad8c3120fcdab30, type: 2}
+  - {fileID: 181280, guid: 0a21cd411d49c4ea2a5c42244366f68a, type: 2}
   - {fileID: 181280, guid: 0a21cd411d49c4ea2a5c42244366f68a, type: 2}
   - {fileID: 160318, guid: f76481ffe14ec4d9cb0479bd3aaa29c7, type: 2}
   - {fileID: 158356, guid: 2a470f4cdd346496b91355b29eaa4143, type: 2}
   - {fileID: 124468, guid: b86f5bc46875044f5bd154c7f566598b, type: 2}
-  - {fileID: 151800, guid: ffd68dfd5b3fe4a459ec3c50a304f099, type: 2}
+  - {fileID: 124468, guid: b86f5bc46875044f5bd154c7f566598b, type: 2}
   - {fileID: 150700, guid: c8fa5b9fe728145af87742dee49dbe37, type: 2}
-  - {fileID: 142540, guid: 6e8db31b5dd0f480a883be1945157c88, type: 2}
-  - {fileID: 104420, guid: 316b7702038e24ff699568c1747eb6af, type: 2}
-  - {fileID: 122244, guid: 665d91711dc834138b918579f7fbb239, type: 2}
   - {fileID: 131804, guid: af6777c9fb0a140449b50b9d20af10f7, type: 2}
+  - {fileID: 134384, guid: ce70ff75ebd664ecf8fb5a8f61520cb4, type: 2}
+  - {fileID: 134384, guid: ce70ff75ebd664ecf8fb5a8f61520cb4, type: 2}
   - {fileID: 134384, guid: ce70ff75ebd664ecf8fb5a8f61520cb4, type: 2}
 --- !u!4 &1839811671
 Transform:
