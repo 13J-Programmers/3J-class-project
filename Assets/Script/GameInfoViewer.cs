@@ -14,7 +14,6 @@ public class GameInfoViewer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		//blockEntity = GameObject.Find("BlockEntity").GetComponent<BlockEntity>();
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
@@ -41,17 +40,5 @@ public class GameInfoViewer : MonoBehaviour {
 		if (min != 0) time += min + "min ";
 		time += sec + "sec";
 		GUI.Label(new Rect(10, Screen.height - 20, 100, 60), time, guiStyle);
-	}
-
-	public void ShowNextBlock(int nextNum) {
-		// Get next prefab number to display Screen
-		
-		// Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
-		// GameObject next = Instantiate(
-		// 	blockEntity.blocks[nextNum],  //Next Block
-		// 	pos,        //Pos
-		// 	blockEntity.blocks[nextNum].transform.rotation
-		// ) as  GameObject;
-		// next.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 	}
 }
