@@ -54,6 +54,10 @@ public class GameManager : MonoBehaviour {
 	public static event EventHandler FinishGame;
 	public static event EventHandler EndGame; ///< when game-over
 
+	void Awake() {
+		StartGame = FinishGame = EndGame = null;
+	}
+
 	// Use this for initialization
 	void Start() {
 		// start count down
@@ -84,6 +88,8 @@ public class GameManager : MonoBehaviour {
 	//        ∨
 	// 
 	void Update() {
+		if (Input.GetKey(KeyCode.Escape)) RestartGame();
+
 		// start
 		if (isCountDownMode) return;
 		if (!isCountDownMode && !isGamePlayMode && !isGameFinish) {
