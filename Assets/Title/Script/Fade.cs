@@ -6,60 +6,61 @@ using System.Collections.Generic;
 
 // シーン遷移時のフェードイン・アウトを制御するためのクラス .
 public class Fade : MonoBehaviour {
-	private Fade instance;
-	public Fade Instance {
-		get {
-			// if (instance == null) {
-			// 	instance = (Fade)FindObjectOfType(typeof(Fade));
-			// 	
-			// 	if (instance == null) {
-			// 		Debug.LogError(typeof(Fade) + " is nothing");
-			// 	}
-			// }
-			if (instance != null) return instance;
-			instance = (Fade)FindObjectOfType(typeof(Fade));
-			if (instance != null) return instance;
-			Debug.LogError(typeof(Fade) + " is nothing");
-			
-			return instance;
-		}
-	}
-	// デバッグモード .
-	public bool DebugMode = true;
-	// フェード中の透明度<
-	private float fadeAlpha = 0;
-	// フェード中かどうか
-	private bool isFading = false;
-	// フェード色
-	public Color fadeColor = Color.black;
-	// インターバル
-	public float interval;
+	// // unused code
+	// private Fade instance;
+	// public Fade Instance {
+	// 	get {
+	// 		if (instance != null) return instance;
+	// 		instance = (Fade)FindObjectOfType(typeof(Fade));
+	// 		if (instance != null) return instance;
+	// 		Debug.LogError(typeof(Fade) + " is nothing");
+	// 		
+	// 		return instance;
+	// 	}
+	// }
+	
+	public bool DebugMode = false; ///< デバッグモード
+	private float fadeAlpha = 0; ///< フェード中の透明度
+	private bool isFading = false; ///< フェード中かどうか
+	public Color fadeColor = Color.black; ///< フェード色
+	public float interval; ///< インターバル
 
-	public void Awake() {
-		if (this != Instance) {
-			Destroy(this.gameObject);
-			return;
-		}
+	void Awake() {
+		// // unreachable code
+		// if (this != Instance) {
+		// 	Destroy(this.gameObject);
+		// 	return;
+		// }
 		DontDestroyOnLoad(this.gameObject); // シーンを切り替えても残る
 	}
 
+	void Update() {
+		// When this game object come into Main scene, it will be destroyed in 1 seconds.
+		if (Application.loadedLevelName == "Main") {
+			StartCoroutine(DestroyIn1sec());
+		}
+	}
+
 	public void OnGUI() {
-		// Fade .
+		// Fade
 		if (this.isFading) {
-			// 色と透明度を更新して白テクスチャを描画 .
+			// 色と透明度を更新して白テクスチャを描画
 			this.fadeColor.a = this.fadeAlpha;
 			GUI.color = this.fadeColor;
 			GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
 		}
+
+		// show load level infomation
+		DebugMode = false;
 		if (this.DebugMode) {
 			if (!this.isFading) {
-				// Scene一覧を作成 .
-				// (UnityEditor名前空間を使わないと自動取得できなかったので決めうちで作成) .
+				// Scene一覧を作成
+				// (UnityEditor名前空間を使わないと自動取得できなかったので決めうちで作成)
 				List<string> scenes = new List<string>();
 				scenes.Add("Title");
 				scenes.Add("Main");
 				// scenes.Add("Title02");
-				// Sceneが一つもない .
+				// Sceneが一つもない
 				if (scenes.Count == 0) {
 					GUI.Box(new Rect(10, 10, 200, 50), "Fade(Debug Mode)");
 					GUI.Label(new Rect(20, 35, 180, 20), "Scene not found.");
@@ -79,18 +80,16 @@ public class Fade : MonoBehaviour {
 		}
 	}
 
-	// 画面遷移 .
-	// 引数
-	//   scene : シーン名
-	//   interval : 暗転にかかる時間(秒)
+	// 画面遷移
+	// @param  scene    : シーン名
+	// @param  interval : 暗転にかかる時間(秒)
 	public void LoadLevel(string scene, float interval) {
 		StartCoroutine(TransScene(scene, interval));
 	}
 
-	// シーン遷移用コルーチン .
-	// 引数
-	//   scene : シーン名
-	//   interval : 暗転にかかる時間(秒)
+	// シーン遷移用コルーチン
+	// @param  scene    : シーン名
+	// @param  interval : 暗転にかかる時間(秒)
 	private IEnumerator TransScene(string scene, float interval) {
 		// だんだん暗く .
 		this.isFading = true;
@@ -101,10 +100,10 @@ public class Fade : MonoBehaviour {
 			yield return 0;
 		}
 		
-		// シーン切替 .
+		// シーン切替
 		Application.LoadLevel(scene);
 		
-		// だんだん明るく .
+		// だんだん明るく
 		time = 0;
 		while (time <= interval) {
 			this.fadeAlpha = Mathf.Lerp(1f, 0f, time / interval);
@@ -112,6 +111,12 @@ public class Fade : MonoBehaviour {
 			yield return 0;
 		}
 		this.isFading = false;
+	}
+
+	// destroy game object in 1 seconds
+	private IEnumerator DestroyIn1sec() {
+		yield return new WaitForSeconds(1);
+		Destroy(this.gameObject);
 	}
 }
 
