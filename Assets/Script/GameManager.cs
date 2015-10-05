@@ -151,8 +151,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void RestartGame() {
-		if (GameObject.Find("FedeSystem")) {
-			GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel("Title", 1f);
+		if (GameObject.Find("FadeSystem")) {
+			GameObject.Find("FadeSystem").GetComponent<Fade>().LoadLevel("Title", 1f);
 		} else {
 			Application.LoadLevel("Title");
 		}

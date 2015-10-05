@@ -39,6 +39,6 @@ public class Key : MonoBehaviour {
 	public void switchScene()
 	{ // キーボードでシーン切り替え
 		GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
-		GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel(nextSceneName, 1f);
+		GameObject.Find("FadeSystem").GetComponent<Fade>().LoadLevel(nextSceneName, 1f);
 	}
 }

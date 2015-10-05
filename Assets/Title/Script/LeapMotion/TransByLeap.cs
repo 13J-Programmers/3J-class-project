@@ -77,6 +77,6 @@ public class TransByLeap : MonoBehaviour {
 	{
 		f = true;
 		GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
-		GameObject.Find("FedeSystem").GetComponent<Fade>().LoadLevel("Main", 1f);
+		GameObject.Find("FadeSystem").GetComponent<Fade>().LoadLevel("Main", 1f);
 	}
 }
