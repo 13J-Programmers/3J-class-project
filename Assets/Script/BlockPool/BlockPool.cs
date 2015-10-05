@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-//using System;
+using System;
 using System.Collections;
 //using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,11 @@ public class BlockPool {
 	public int GetSizeZ() { return this.POOL_Z; }
 
 	public GameObject GetGameObject(int x, int y, int z) {
-		return blockPool[x, y, z];
+		try {
+			return blockPool[x, y, z];
+		} catch (IndexOutOfRangeException) {
+			return null;
+		}
 	}
 
 	public void SetGameObjectAt(int x, int y, int z, GameObject gameObj) {
