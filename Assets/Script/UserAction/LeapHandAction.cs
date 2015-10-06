@@ -41,13 +41,13 @@ namespace Player.Action {
 
 
 		private bool isFingersFolded(Hand hand) {
-			Vector origin = hand.Fingers[0].TipPosition;
+			Vector origin = hand.PalmPosition;
 			float dist = 0;
 
 			foreach (Finger finger in hand.Fingers) {
 				dist += finger.TipPosition.DistanceTo(origin);
 			}
-			return (dist < 250) ? true : false;
+			return (dist < 280) ? true : false;
 		}
 
 		private bool hasTwoHands() {
