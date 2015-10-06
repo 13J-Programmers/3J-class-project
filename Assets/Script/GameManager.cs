@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 	public string handedness = "right";
 	public int lines = 0; ///< removed lines
 	public int score = 0; ///< obtained score
-	public float remainingTime = 180; ///< sec
+	public float remainingTime = 90; ///< sec
 
 	private GameInfoViewer GetGameInfoViewer() {
 		return GameObject.Find("GameInfoViewer").GetComponent<GameInfoViewer>();
@@ -125,8 +125,6 @@ public class GameManager : MonoBehaviour {
 
 	public void GameStart() {
 		isGamePlayMode = true;
-		score = 0;
-		remainingTime = 180;
 
 		if (StartGame != null) {
 			StartGame(this, EventArgs.Empty);
