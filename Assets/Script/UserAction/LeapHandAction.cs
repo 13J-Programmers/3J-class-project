@@ -195,9 +195,9 @@ namespace Player.Action {
 
 			int depth = 80;
 
-			if (leftHandZ > depth && rightHandZ < -depth) {
+			if (leftHandZ > depth / 2 && rightHandZ < -depth) {
 				GetCameraController().RotateCam(-1);
-			} else if (leftHandZ < -depth && rightHandZ > depth) {
+			} else if (leftHandZ < -depth && rightHandZ > depth / 2) {
 				GetCameraController().RotateCam(1);
 			}
 		}
