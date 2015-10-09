@@ -7,7 +7,7 @@ public class CreateCube : MonoBehaviour {
 	private float time;
 	private GameObject obj;
 	public float interval = 3.0f;
-	public GameObject[] cube = new GameObject[18];
+	public GameObject[] cube = new GameObject[10];
 	public Material material;
 
 	// Use this for initialization
@@ -15,7 +15,7 @@ public class CreateCube : MonoBehaviour {
 		i = -1;
 		time = interval + 1.0f;
 	}
-	
+
 	// Update is called once per frame
 	void Update() {
 		//print(time + "秒経過");
@@ -26,10 +26,10 @@ public class CreateCube : MonoBehaviour {
 		}
 
 	}
-	
+
 	public void create(GameObject[] cube) {
 		while (true) {
-			rand = Random.Range(0, 18); // 0~17のランダム生成
+			rand = Random.Range(0, 10); // 0~17のランダム生成
 			if (rand != i) {
 				i = rand;
 				break;
