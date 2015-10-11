@@ -2,23 +2,25 @@
 using UnityEngine.UI;
 using System.Collections;
 /// <summary>
-/// 手のひらを中央ブロックにmaxLoadTime秒間当てると切り替え
+/// 手のひらを中央ブロックにmaxLoadTime秒間当てるとMainSceneに移行
 /// </summary>
 public class TransByLeap : MonoBehaviour {
 	private float time;//時間
 	private float maxLoadTime;
-	public GameObject loadBar;
-	public Animator OnAndOff;
-	private bool f; //< もっと説明的な変数名にしてください（mako）
+	private GameObject loadBar;
+	private Animator OnAndOff;
+	private bool sceneTransFlag;
 	private bool transFlag;
+	private bool onTriggerStayFlag;
 	private GameObject mainCamera;
 	private GameObject emptyObject;
 	private Canvas canvas;
-	
+
 	void Start()
 	{
 		time = 0;
-		f = false;
+		sceneTransFlag = false;
+		onTriggerStayFlag = false;
 		maxLoadTime = 1.5f;
 		loadBar = GameObject.Find("LoadBar");
 		loadBar.GetComponent<Slider>().maxValue = maxLoadTime;
@@ -32,16 +34,27 @@ public class TransByLeap : MonoBehaviour {
 	void Update()
 	{
 		if (transFlag){
-			if (!f)
+			if (!sceneTransFlag)
 				SceneTrans();
 		}
-		loadBar.GetComponent<Slider>().value = time;//LoadBarに反映
-		
+		float checkTime = time;
+		if (checkTime != loadBar.GetComponent<Slider>().value && onTriggerStayFlag)
+			loadBar.GetComponent<Slider>().value = time;//LoadBarに反映
+		else
+		{
+			onTriggerStayFlag = false;
+			if (!sceneTransFlag)
+			{
+				time = 0;
+				canvas.enabled = false;
+			}
+			OnAndOff.SetBool("Touched", false);
+		}
 	}
 
 	void OnTriggerStay(Collider collider) //ずっと
 	{
-		
+		onTriggerStayFlag = true;
 		if (!transFlag)
 		{
 			time += Time.deltaTime;
@@ -62,20 +75,9 @@ public class TransByLeap : MonoBehaviour {
 			transFlag = false;
 		canvas.enabled = true;
 	}
-	
-	void OnTriggerExit(Collider collider) //離れた時
-	{
-		if (!f)
-		{
-			time = 0;
-			canvas.enabled = false;
-		}
-		OnAndOff.SetBool("Touched", false);
-	}
-	
 	public void SceneTrans() // シーン切り替え
 	{
-		f = true;
+		sceneTransFlag = true;
 		GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
 		GameObject.Find("FadeSystem").GetComponent<Fade>().LoadLevel("Main", 1f);
 	}
