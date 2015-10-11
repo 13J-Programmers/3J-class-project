@@ -50,7 +50,7 @@ GameObject:
   - 54: {fileID: 5406160}
   m_Layer: 0
   m_Name: block1
-  m_TagString: Untagged
+  m_TagString: Pressable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,6 +322,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e349aca76c6ee4526aa413fd9fd44df3, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Pressable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 141924}
