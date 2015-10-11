@@ -3,21 +3,17 @@ using System;
 using System.Collections;
 
 public class NextBlockEntity : MonoBehaviour {
-	// private GameObject nextBlockObj;
-
-	// private GameObject GetNextBlockObj() {
-	// 	return GameObject.Find("BlockEntity").GetComponent<BlockEntity>().PeekNextBlock();
-	// }
-
 	void Start() {
-		BlockEntity.CreateNewBlock  += new EventHandler(InstantiateBlock);
+		BlockEntity.CreateNewBlock  += new EventHandler(ShowBlock);
 		BlockController.StopFalling += new EventHandler(DestoryBlock);
 	}
 
-	private void InstantiateBlock(object sender, EventArgs e) {
-		GameObject nextBlock = ((BlockEntity)sender).PeekNextBlock();
-		//InstantiateBlock(GetNextBlockObj());
-		InstantiateBlock(nextBlock);
+	private GameObject GetNextBlockObj() {
+		return GameObject.Find("BlockEntity").GetComponent<BlockEntity>().PeekNextBlock();
+	}
+
+	public void ShowBlock(object sender, EventArgs e) {
+		InstantiateBlock(GetNextBlockObj());
 	}
 
 	private void InstantiateBlock(GameObject block) {
@@ -27,11 +23,23 @@ public class NextBlockEntity : MonoBehaviour {
 			block.transform.rotation // rotation
 		) as GameObject;
 
-		nextBlockObj.transform.parent = this.transform;
 		nextBlockObj.name = "nextBlock";
 	}
 
-	private void DestoryBlock(object sender, EventArgs e) {
-		Destroy(GameObject.Find("nextBlock").gameObject);
+	public void DestoryBlock(object sender, EventArgs e) {
+		DestoryBlock();
+	}
+
+	public void DestoryBlock() {
+		if (GameObject.Find("nextBlock")) {
+			Destroy(GameObject.Find("nextBlock").gameObject);
+		} else {
+			print("when destroy nextBlock, it is not found.");
+		}
 	}
 }
+
+
+
+
+

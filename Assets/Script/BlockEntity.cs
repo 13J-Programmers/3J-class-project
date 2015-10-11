@@ -22,10 +22,13 @@ public class BlockEntity : MonoBehaviour {
 	/// send notification when new block is created
 	public static event EventHandler CreateNewBlock;
 
+	static public void InitStaticField() {
+		BlockEntity.CreateNewBlock = null;
+	}
+
 	/// BlockEntity methods are invoked from Start() in GameManager.
 	/// therefore, initializing variables have to write in Awake().
 	void Awake() {
-		CreateNewBlock = null;
 		PushNextBlock(RandomBlock());
 	}
 

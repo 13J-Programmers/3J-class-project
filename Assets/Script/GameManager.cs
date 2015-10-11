@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour {
 	public static event EventHandler EndGame; ///< when game-over
 
 	void Awake() {
-		StartGame = FinishGame = EndGame = null;
+		InitEveryStaticField();
 	}
 
 	// Use this for initialization
@@ -146,6 +146,8 @@ public class GameManager : MonoBehaviour {
 		if (FinishGame != null) {
 			FinishGame(this, EventArgs.Empty);
 		}
+
+		InitEveryStaticField();
 	}
 
 	public void RestartGame() {
@@ -210,7 +212,21 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	// The static field events badly influence game scene after play first.
+	// Therefore, static fields should initialize with null.
+	public void InitEveryStaticField() {
+		this.InitStaticField();
+		BlockEntity.InitStaticField();
+		BlockController.InitStaticField();
+	}
 
+	public void InitStaticField() {
+		StartGame = FinishGame = EndGame = null;
+	}
+
+	//
+	// for leap motion
+	//
 	private bool LeapGesture() {
 		Hand hand = new Controller().Frame().Hands[0];
 

@@ -17,11 +17,14 @@ public class BlockController : MonoBehaviour {
 	public static event EventHandler StopFalling;  ///< when stop falling
 	public static event EventHandler WhenDestroyChild; ///< when destroy child
 
+	static public void InitStaticField() {
+		StartFalling = StopFalling = WhenDestroyChild = null;
+	}
+
 	private BlockPoolController GetBlockPoolController() {
 		return GameObject.Find("BlockPool").GetComponent<BlockPoolController>();
 	}
 
-	/// Use this for initialization
 	void Start() {
 		// can vary only y position
 		GetComponent<Rigidbody>().constraints = (
@@ -31,7 +34,6 @@ public class BlockController : MonoBehaviour {
 		);
 	}
 
-	/// Update is called once per frame
 	void Update() {
 		SetMinMaxCoord();
 		FixPosition();
