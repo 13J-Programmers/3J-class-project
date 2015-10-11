@@ -102,7 +102,7 @@ namespace Player.Action {
 		/// Press Block
 		override
 		protected void DetectPressMotion() {
-			if (Input.GetKey("p")) {
+			if (Input.GetKey("p") && GameObject.Find("block(new)").tag == "Pressable") {
 				GetBlockController().DestroyChildBlocks();
 				// GetExpectedDropPosBlock().DestroyChildBlocks();
 
@@ -113,7 +113,7 @@ namespace Player.Action {
 		/// Shake Block
 		override
 		protected void DetectShakeMotion() {
-			if (Input.GetKey("o")) {
+			if (Input.GetKey("o") && GameObject.Find("block(new)").tag == "Shakable") {
 				// Wiggler wiggler = new Wiggler(mainCamera.transform);
 				// Wiggler wiggler = new Wiggler(GetControllingBlock().transform);
 				// wiggler.Initialize(1.0f, 10, Vector3.one);
