@@ -153,9 +153,11 @@ public class BlockPoolController : MonoBehaviour {
 		foreach (Transform cube in block.transform) {
 			blockCubes.Add(cube);
 		}
+		ChangeMaterial(block.transform);
 		foreach (Transform cube in blockCubes) {
 			cube.tag = "BlockPool";
 			cube.transform.parent = GetPoolCubesObj().transform;
+			ChangeMaterial(cube);  //change material of gameObject and gameObject.transform
 		}
 	}
 
@@ -207,6 +209,37 @@ public class BlockPoolController : MonoBehaviour {
 
 	private bool RemoveCompletedRow() {
 		return blockPool.RemoveCompletedRow();
+	}
+	/// change material of cube
+	public void ChangeMaterial(Transform cube)
+	{
+		//Debug.Log(gameObject.GetComponent<MeshRenderer>().material.name);
+		Material color = cube.GetComponent<MeshRenderer>().material;
+		switch (color.name)
+		{
+			case "can (Instance)":
+				color = (Material)Resources.Load("Prefabs/yellow");
+				break;
+			case "garbage (Instance)":
+				color = (Material)Resources.Load("Prefabs/blue");
+				break;
+			case "garbage_bag_red (Instance)":
+				color = (Material)Resources.Load("Prefabs/red");
+				break;
+			case "garbage_bag_green (Instance)":
+				color = (Material)Resources.Load("Prefabs/green");
+				break;
+			case "garbage_bag_yellow (Instance)":
+				color = (Material)Resources.Load("Prefabs/yellow");
+				break;
+			case "bottle (Instance)":
+				color = (Material)Resources.Load("Prefabs/wood");
+				break;
+			case "recyclable_garbage (Instance)":
+				color = (Material)Resources.Load("Prefabs/skyblue");
+				break;
+		}
+		cube.GetComponent<MeshRenderer>().material = color;
 	}
 }
 
