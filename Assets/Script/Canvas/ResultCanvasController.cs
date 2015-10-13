@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 	public string[] titles = new string[] {
@@ -53,7 +54,9 @@ public class ResultCanvasController : MonoBehaviour, IResultCanvas {
 		}
 		GetImage(title).enabled = true;
 
-		GetText().text = "Score : " + score;
+		string scoreStr = "Score : " + score;
+		// insert space between characters
+		GetText().text = Regex.Replace(scoreStr, @"", " ");
 	}
 }
 

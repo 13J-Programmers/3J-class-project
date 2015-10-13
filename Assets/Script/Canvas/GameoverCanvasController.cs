@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 public class GameoverCanvasController : MonoBehaviour, IResultCanvas {
 	private Canvas GetCanvas() {
@@ -23,6 +24,9 @@ public class GameoverCanvasController : MonoBehaviour, IResultCanvas {
 
 	public void ShowResult(int score) {
 		GetCanvas().enabled = true;
-		GetText().text = "Score : " + score;
+
+		string scoreStr = "Score : " + score;
+		// insert space between characters
+		GetText().text = Regex.Replace(scoreStr, @"", " ");
 	}
 }
