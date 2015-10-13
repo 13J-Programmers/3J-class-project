@@ -102,9 +102,8 @@ namespace Player.Action {
 		/// Press Block
 		override
 		protected void DetectPressMotion() {
-			if (Input.GetKey("p") && GameObject.Find("block(new)").tag == "Pressable") {
+			if (Input.GetKey("p")) {
 				GetBlockController().DestroyChildBlocks();
-				// GetExpectedDropPosBlock().DestroyChildBlocks();
 
 				GameObject.Find("press(audio)").GetComponent<AudioSource>().Play();
 			}
@@ -113,15 +112,8 @@ namespace Player.Action {
 		/// Shake Block
 		override
 		protected void DetectShakeMotion() {
-			if (Input.GetKey("o") && GameObject.Find("block(new)").tag == "Shakable") {
-				// Wiggler wiggler = new Wiggler(mainCamera.transform);
-				// Wiggler wiggler = new Wiggler(GetControllingBlock().transform);
-				// wiggler.Initialize(1.0f, 10, Vector3.one);
-				// wiggler.UpdateWiggler(Time.deltaTime);
-
+			if (Input.GetKey("o")) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				// GetExpectedDropPosBlock().DestroyChildBlocks();
-
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
 				}

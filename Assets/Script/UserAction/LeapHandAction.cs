@@ -213,7 +213,6 @@ namespace Player.Action {
 
 			if (dist < 50) {
 				GetBlockController().DestroyChildBlocks();
-				// GetExpectedDropPosBlock().DestroyChildBlocks();
 			}
 		}
 
@@ -227,7 +226,6 @@ namespace Player.Action {
 
 			if (handVelocityY < -400 && otherHandVelocityY < -400) {
 				GetBlockController().DestroyChildBlocks();
-				// GetExpectedDropPosBlock().DestroyChildBlocks();
 			}
 		}
 

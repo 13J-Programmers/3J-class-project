@@ -23,10 +23,6 @@ namespace Player.Action {
 		protected CameraController GetCameraController() {
 			return GameObject.Find("Main Camera").GetComponent<CameraController>();
 		}
-		
-		// protected ExpectDropPosViewer GetExpectedDropPosBlock() {
-		// 	return GameObject.Find("block(new)").GetComponent<ExpectDropPosViewer>();
-		// }
 
 		/// these access modifier prevent the child script use Start()
 		/// but, it doesn't work.
@@ -47,8 +43,12 @@ namespace Player.Action {
 			DetectRotationY();
 			DetectRotationZ();
 			DetectRotationCamera();
-			DetectPressMotion();
-			DetectShakeMotion();
+			if (Test.test(() => GameObject.Find("block(new)").tag == "Pressable")) {
+				DetectPressMotion();
+			}
+			if (Test.test(() => GameObject.Find("block(new)").tag == "Shakable" )) {
+				DetectShakeMotion();
+			}
 		}
 
 		protected virtual void InitPerFrame() {
