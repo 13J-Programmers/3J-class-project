@@ -99,12 +99,12 @@ namespace Player.Action {
 		/// Drop Block with clenched fists
 		override
 		protected void DetectMotionY() {
+			if (!isFingersFolded(hand)) return;
+
 			float velocityY = hand.PalmVelocity.y;
 
-			if (isFingersFolded(hand)) {
-				if (velocityY < -400) {
-					blockController.DropBlock();
-				}
+			if (velocityY < -400) {
+				blockController.DropBlock();
 			}
 		}
 
@@ -131,6 +131,7 @@ namespace Player.Action {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
 			if (isRotated) return;
+
 			if (pitch > upScale) {
 				Vector3 back = GetMainCamera().TransformDirection(Vector3.back);
 				blockController.PitchBlock(back);
@@ -149,6 +150,7 @@ namespace Player.Action {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
 			if (isRotated) return;
+
 			if (yaw > rightScale) {
 				blockController.YawBlock(1);
 			} else if (yaw < leftScale) {
@@ -165,6 +167,7 @@ namespace Player.Action {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
 			if (isRotated) return;
+
 			if (roll > counterClockwiseScale) {
 				Vector3 left = GetMainCamera().TransformDirection(Vector3.left);
 				blockController.RollBlock(left);
