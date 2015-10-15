@@ -30,8 +30,8 @@
 - 生ごみブロックにのみ行えます
 - 両手を同時に振り下ろすことでブロックを圧縮できます
 
-![title](images/shakable_block1.png)
-![title](images/shakable_block2.png)
+![shakable_block1](images/shakable_block1.png)
+![shakable_block2](images/shakable_block2.png)
 <img src="images/shake.png" width="320" height="320" alt="shake">
 
 #### ブロックの落下
