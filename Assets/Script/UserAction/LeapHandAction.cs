@@ -31,9 +31,7 @@ namespace Player.Action {
 		private float leftScale = -7;
 		private float counterClockwiseScale = 7;
 		private float clockwiseScale = -7;
-		private bool isRotatedX = false;
-		private bool isRotatedY = false;
-		private bool isRotatedZ = false;
+		public bool isRotated = false;
 		private float rotateScale = 10;
 		private float pitch;
 		private float yaw;
@@ -68,14 +66,11 @@ namespace Player.Action {
 			roll  = hand.PalmNormal.Roll * rotateScale;
 
 			// horizon hand
-			if (!isFingersFolded(hand) && upScale > pitch && pitch > downScale) {
-				isRotatedX = false;
-			}
-			if (!isFingersFolded(hand) && rightScale > yaw && yaw > leftScale) {
-				isRotatedY = false;
-			}
-			if (!isFingersFolded(hand) && counterClockwiseScale > roll && roll > clockwiseScale) {
-				isRotatedZ = false;
+			if (!isFingersFolded(hand) 
+					&& upScale > pitch && pitch > downScale
+					&& rightScale > yaw && yaw > leftScale
+					&& counterClockwiseScale > roll && roll > clockwiseScale) {
+				isRotated = false;
 			}
 		}
 
@@ -135,7 +130,7 @@ namespace Player.Action {
 		protected void DetectRotationX() {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
-			if (isRotatedX) return;
+			if (isRotated) return;
 			if (pitch > upScale) {
 				Vector3 back = GetMainCamera().TransformDirection(Vector3.back);
 				blockController.PitchBlock(back);
@@ -145,7 +140,7 @@ namespace Player.Action {
 			} else {
 				return;
 			}
-			isRotatedX = true;
+			isRotated = true;
 		}
 
 		/// Yaw Block
@@ -153,7 +148,7 @@ namespace Player.Action {
 		protected void DetectRotationY() {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
-			if (isRotatedY) return;
+			if (isRotated) return;
 			if (yaw > rightScale) {
 				blockController.YawBlock(1);
 			} else if (yaw < leftScale) {
@@ -161,7 +156,7 @@ namespace Player.Action {
 			} else {
 				return;
 			}
-			isRotatedY = true;
+			isRotated = true;
 		}
 
 		/// Roll Block
@@ -169,7 +164,7 @@ namespace Player.Action {
 		protected void DetectRotationZ() {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
-			if (isRotatedZ) return;
+			if (isRotated) return;
 			if (roll > counterClockwiseScale) {
 				Vector3 left = GetMainCamera().TransformDirection(Vector3.left);
 				blockController.RollBlock(left);
@@ -179,7 +174,7 @@ namespace Player.Action {
 			} else {
 				return;
 			}
-			isRotatedZ = true;
+			isRotated = true;
 		}
 
 		// Rotate camera
