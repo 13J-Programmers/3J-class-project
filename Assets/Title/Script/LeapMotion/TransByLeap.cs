@@ -45,8 +45,8 @@ public class TransByLeap : MonoBehaviour {
 			onTriggerStayFlag = false;
 			if (!sceneTransFlag)
 			{
-				time = 0;
-				canvas.enabled = false;
+				// time = 0;
+				// canvas.enabled = false;
 			}
 			OnAndOff.SetBool("Touched", false);
 		}
