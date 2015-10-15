@@ -1,9 +1,15 @@
 ### 操作方法
+#### タイトル
+- 画面上のブロックに手をしばらくかざすと、ゲームが始まります。
+
+<img src="images/title.png" width="467" height="319" alt="title">
+
 #### ブロックの移動
 - ブロックは手をかざしている方向に向かって動き続けます
 - 手を握ると移動が止まります
 
 <img src="images/move.png" width="320" height="320" alt="move">
+<img src="images/rock.png" width="320" height="320" alt="rock">
 
 #### ブロックの回転
 - 回転の軸ごとに三種類があります
@@ -16,12 +22,15 @@
 - 缶ブロックにのみ行えます
 - 左右から手を叩くように近づけるとブロックを圧縮できます
 
+<img src="images/pressable_block.png" width="408" height="289" alt="pressable_block">
 <img src="images/press.png" width="320" height="320" alt="press">
 
 #### 水を切る（振る）
 - 生ごみブロックにのみ行えます
 - 両手を同時に振り下ろすことでブロックを圧縮できます
 
+<img src="images/shakable_block1.png" width="423" height="371" alt="shakable1_block">
+<img src="images/shakable_block2.png" width="391" height="357" alt="shakable2_block">
 <img src="images/shake.png" width="320" height="320" alt="shake">
 
 #### ブロックの落下
