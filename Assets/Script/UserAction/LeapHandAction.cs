@@ -213,6 +213,7 @@ namespace Player.Action {
 
 			if (dist < 50) {
 				GetBlockController().DestroyChildBlocks();
+				GameObject.Find("press(audio)").GetComponent<Sound>().Play();
 			}
 		}
 
@@ -225,7 +226,10 @@ namespace Player.Action {
 			float otherHandVelocityY = otherHand.PalmVelocity.y;
 
 			if (handVelocityY < -400 && otherHandVelocityY < -400) {
-				GetBlockController().DestroyChildBlocks();
+				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+				foreach (Vector3 destroyPosition in destroyPositions) {
+					GetBlockController().GenerateSplash(destroyPosition);
+				}
 			}
 		}
 

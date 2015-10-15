@@ -2136,6 +2136,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 865842137}
   - 82: {fileID: 865842136}
+  - 114: {fileID: 865842138}
   m_Layer: 0
   m_Name: press(audio)
   m_TagString: Untagged
@@ -2225,6 +2226,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 17
+--- !u!114 &865842138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 865842135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42ed9af844141a8aec358d7be57388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &895098785
 GameObject:
   m_ObjectHideFlags: 0
