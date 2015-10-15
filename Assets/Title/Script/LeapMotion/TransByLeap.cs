@@ -33,9 +33,9 @@ public class TransByLeap : MonoBehaviour {
 
 	void Update()
 	{
-		if (transFlag){
-			if (!sceneTransFlag)
-				SceneTrans();
+		if (transFlag && !sceneTransFlag)
+		{
+			SceneTrans();
 		}
 		float checkTime = time;
 		if (checkTime != loadBar.GetComponent<Slider>().value && onTriggerStayFlag)
@@ -75,9 +75,11 @@ public class TransByLeap : MonoBehaviour {
 			transFlag = false;
 		canvas.enabled = true;
 	}
-	public void SceneTrans() // シーン切り替え
+	public void SceneTrans() // シーン切り替え プレイ回数を1つ増やす
 	{
+		PlayCount playCount = GameObject.Find("Screen/PlayCount").GetComponent<PlayCount>();
 		sceneTransFlag = true;
+		playCount.increasePlayNum();
 		GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
 		GameObject.Find("FadeSystem").GetComponent<Fade>().LoadLevel("Main", 1f);
 	}
