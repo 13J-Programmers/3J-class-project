@@ -47,7 +47,7 @@ namespace Player.Action {
 			foreach (Finger finger in hand.Fingers) {
 				dist += finger.TipPosition.DistanceTo(origin);
 			}
-			return (dist < 280) ? true : false;
+			return (dist < 300) ? true : false;
 		}
 
 		private bool hasTwoHands() {
@@ -211,7 +211,7 @@ namespace Player.Action {
 			Vector3 otherHandPos = ToVector3(otherHand.PalmPosition);
 			double dist = Vector3.Distance(handPos, otherHandPos);
 
-			if (dist < 50) {
+			if (dist < 70) {
 				GetBlockController().DestroyChildBlocks();
 				GameObject.Find("press(audio)").GetComponent<Sound>().Play();
 			}
@@ -225,7 +225,7 @@ namespace Player.Action {
 			float handVelocityY = hand.PalmVelocity.y;
 			float otherHandVelocityY = otherHand.PalmVelocity.y;
 
-			if (handVelocityY < -400 && otherHandVelocityY < -400) {
+			if (handVelocityY < -350 && otherHandVelocityY < -350) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
