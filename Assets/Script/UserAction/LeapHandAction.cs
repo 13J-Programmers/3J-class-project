@@ -213,7 +213,7 @@ namespace Player.Action {
 
 			if (dist < 70) {
 				GetBlockController().DestroyChildBlocks();
-				GameObject.Find("press(audio)").GetComponent<Sound>().Play();
+				GameObject.Find("sounds/press(audio)").GetComponent<Sound>().Play();
 			}
 		}
 

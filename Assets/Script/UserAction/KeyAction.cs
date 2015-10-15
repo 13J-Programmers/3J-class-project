@@ -105,7 +105,7 @@ namespace Player.Action {
 			if (Input.GetKey("p")) {
 				GetBlockController().DestroyChildBlocks();
 
-				GameObject.Find("press(audio)").GetComponent<AudioSource>().Play();
+				GameObject.Find("sounds/press(audio)").GetComponent<AudioSource>().Play();
 			}
 		}
 
