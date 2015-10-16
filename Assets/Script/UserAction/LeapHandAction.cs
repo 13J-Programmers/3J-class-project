@@ -31,9 +31,7 @@ namespace Player.Action {
 		private float leftScale = -7;
 		private float counterClockwiseScale = 7;
 		private float clockwiseScale = -7;
-		private bool isRotatedX = false;
-		private bool isRotatedY = false;
-		private bool isRotatedZ = false;
+		public bool isRotated = false;
 		private float rotateScale = 10;
 		private float pitch;
 		private float yaw;
@@ -47,7 +45,7 @@ namespace Player.Action {
 			foreach (Finger finger in hand.Fingers) {
 				dist += finger.TipPosition.DistanceTo(origin);
 			}
-			return (dist < 280) ? true : false;
+			return (dist < 300) ? true : false;
 		}
 
 		private bool hasTwoHands() {
@@ -68,14 +66,11 @@ namespace Player.Action {
 			roll  = hand.PalmNormal.Roll * rotateScale;
 
 			// horizon hand
-			if (!isFingersFolded(hand) && upScale > pitch && pitch > downScale) {
-				isRotatedX = false;
-			}
-			if (!isFingersFolded(hand) && rightScale > yaw && yaw > leftScale) {
-				isRotatedY = false;
-			}
-			if (!isFingersFolded(hand) && counterClockwiseScale > roll && roll > clockwiseScale) {
-				isRotatedZ = false;
+			if (!isFingersFolded(hand) 
+					&& upScale > pitch && pitch > downScale
+					&& rightScale > yaw && yaw > leftScale
+					&& counterClockwiseScale > roll && roll > clockwiseScale) {
+				isRotated = false;
 			}
 		}
 
@@ -104,12 +99,12 @@ namespace Player.Action {
 		/// Drop Block with clenched fists
 		override
 		protected void DetectMotionY() {
+			if (!isFingersFolded(hand)) return;
+
 			float velocityY = hand.PalmVelocity.y;
 
-			if (isFingersFolded(hand)) {
-				if (velocityY < -400) {
-					blockController.DropBlock();
-				}
+			if (velocityY < -400) {
+				blockController.DropBlock();
 			}
 		}
 
@@ -135,7 +130,8 @@ namespace Player.Action {
 		protected void DetectRotationX() {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
-			if (isRotatedX) return;
+			if (isRotated) return;
+
 			if (pitch > upScale) {
 				Vector3 back = GetMainCamera().TransformDirection(Vector3.back);
 				blockController.PitchBlock(back);
@@ -145,7 +141,7 @@ namespace Player.Action {
 			} else {
 				return;
 			}
-			isRotatedX = true;
+			isRotated = true;
 		}
 
 		/// Yaw Block
@@ -153,7 +149,8 @@ namespace Player.Action {
 		protected void DetectRotationY() {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
-			if (isRotatedY) return;
+			if (isRotated) return;
+
 			if (yaw > rightScale) {
 				blockController.YawBlock(1);
 			} else if (yaw < leftScale) {
@@ -161,7 +158,7 @@ namespace Player.Action {
 			} else {
 				return;
 			}
-			isRotatedY = true;
+			isRotated = true;
 		}
 
 		/// Roll Block
@@ -169,7 +166,8 @@ namespace Player.Action {
 		protected void DetectRotationZ() {
 			if (isFingersFolded(hand)) return;
 			if (hasTwoHands()) return;
-			if (isRotatedZ) return;
+			if (isRotated) return;
+
 			if (roll > counterClockwiseScale) {
 				Vector3 left = GetMainCamera().TransformDirection(Vector3.left);
 				blockController.RollBlock(left);
@@ -179,7 +177,7 @@ namespace Player.Action {
 			} else {
 				return;
 			}
-			isRotatedZ = true;
+			isRotated = true;
 		}
 
 		// Rotate camera
@@ -211,9 +209,9 @@ namespace Player.Action {
 			Vector3 otherHandPos = ToVector3(otherHand.PalmPosition);
 			double dist = Vector3.Distance(handPos, otherHandPos);
 
-			if (dist < 50) {
+			if (dist < 70) {
 				GetBlockController().DestroyChildBlocks();
-				GameObject.Find("press(audio)").GetComponent<Sound>().Play();
+				GameObject.Find("sounds/press(audio)").GetComponent<Sound>().Play();
 			}
 		}
 
@@ -225,7 +223,7 @@ namespace Player.Action {
 			float handVelocityY = hand.PalmVelocity.y;
 			float otherHandVelocityY = otherHand.PalmVelocity.y;
 
-			if (handVelocityY < -400 && otherHandVelocityY < -400) {
+			if (handVelocityY < -350 && otherHandVelocityY < -350) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
