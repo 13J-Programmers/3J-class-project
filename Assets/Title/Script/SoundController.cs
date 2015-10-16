@@ -5,9 +5,10 @@ public class SoundController : MonoBehaviour {
 	public AudioClip[] BGM;
 	private AudioSource _audio;
 	private int i = 0;
-
+	private Key key;
 	// Use this for initialization
 	void Start() {
+		key = GameObject.Find("Key").GetComponent<Key>();
 		if (BGM.Length != 0)
 		{
 			_audio = this.GetComponent<AudioSource>();
@@ -15,6 +16,11 @@ public class SoundController : MonoBehaviour {
 			_audio.loop = true;
 			_audio.Play();
 		}
+	}
+	void Update()
+	{
+		if (key.KeyO())
+			ChangeBGM();
 	}
 
 	public void ChangeBGM(){//BGMの選択

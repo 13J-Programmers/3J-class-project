@@ -16,11 +16,7 @@ public class Key : MonoBehaviour {
 	}
 
 	public bool KeyQ() {
-		bool f = false;
-		if (Input.GetKeyDown(KeyCode.Q)) f = true;
-		return f;
-		//^ 上のコードは三項演算子を使って、よりコンパクトにすることができます (mako)
-		//  return (Input.GetKeyDown(KeyCode.Q)) ? true : false;
+		return (Input.GetKeyDown(KeyCode.Q)) ? true : false;
 	}
 
 	public bool KeyO(){
