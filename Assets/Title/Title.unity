@@ -2395,7 +2395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: .475862235, b: 0, a: 1}
+  m_Color: {r: .911764681, g: .433874369, b: 0, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: e32acd39e9ee3c044a45eb6383cfb859, type: 3}
     m_FontSize: 40

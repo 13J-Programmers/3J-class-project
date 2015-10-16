@@ -38,6 +38,8 @@ public class Key : MonoBehaviour {
 	
 	public void switchScene()
 	{ // キーボードでシーン切り替え
+		PlayCount playCount = GameObject.Find("Screen/PlayCount").GetComponent<PlayCount>();
+		playCount.increasePlayNum();
 		GameObject.Find("SoundBox").GetComponent<SoundController>().SoundSE();
 		GameObject.Find("FadeSystem").GetComponent<Fade>().LoadLevel(nextSceneName, 1f);
 	}
