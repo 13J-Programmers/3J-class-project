@@ -1,25 +1,25 @@
-﻿/// 
+﻿///
 /// @file  GameManager.cs
 /// @brief This script manages important game state and moves game mode.
-/// 
+///
 
 /**
  * \mainpage Ecoris - Eco Tetris in 3D
- * 
+ *
  * \section s1 About this
- * 
+ *
  * Ecoris is the abbreviation of Eco-tetris.
- * 
+ *
  * features:
  * - play tetris in 3d
  * - gameplay with LEAP-MOTION
  * - thinking ecology in this game
  * - award the title depending on your score
- * 
+ *
  * \section s2 See Also
- * 
+ *
  * Every codes of this project are open.
- * 
+ *
  * - \link https://github.com/13J-Programmers/3J_class_project \endlink
  */
 
@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour {
 	public static event EventHandler FinishGame;
 	public static event EventHandler EndGame; ///< when game-over
 
+	public AudioClip audioClip;
+	AudioSource[] audioSources;
+
 	void Awake() {
 		InitEveryStaticField();
 	}
@@ -63,10 +66,11 @@ public class GameManager : MonoBehaviour {
 		// start count down
 		isCountDownMode = true;
 		StartCoroutine(CountDown());
+		audioSources = gameObject.GetComponents<AudioSource>();
 	}
-	
+
 	// game flow:
-	// 
+	//
 	//        |transition
 	//        ∨
 	//     CountDown (3,2,1,start!)
@@ -86,7 +90,7 @@ public class GameManager : MonoBehaviour {
 	//        |
 	//        |transition
 	//        ∨
-	// 
+	//
 	void Update() {
 		if (Input.GetKey(KeyCode.Escape)) RestartGame();
 
@@ -117,7 +121,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		// in result
-		if (!isGamePlayMode 
+		if (!isGamePlayMode
 				&& (Input.GetKey("return") || LeapGesture()) ) {
 			RestartGame();
 		}
@@ -129,6 +133,7 @@ public class GameManager : MonoBehaviour {
 		if (StartGame != null) {
 			StartGame(this, EventArgs.Empty);
 		}
+		audioSources[0].Play();
 	}
 
 	public void GameOver() {
@@ -148,6 +153,9 @@ public class GameManager : MonoBehaviour {
 		}
 
 		InitEveryStaticField();
+
+		audioSources[0].Stop();
+		audioSources[1].Play();
 	}
 
 	public void RestartGame() {
@@ -197,10 +205,10 @@ public class GameManager : MonoBehaviour {
 	/// stop specific game modules
 	private void DisableGameModules() {
 		string[] moduleNames = {
-			"Main Camera#CameraController", 
-			"BlockEntity#BlockEntity", 
-			"LeapHandAction#LeapHandAction", 
-			"KeyAction#KeyAction", 
+			"Main Camera#CameraController",
+			"BlockEntity#BlockEntity",
+			"LeapHandAction#LeapHandAction",
+			"KeyAction#KeyAction",
 		};
 
 		var moduleInfos = moduleNames
@@ -249,7 +257,7 @@ public class GameManager : MonoBehaviour {
 public class ComponentInfo {
 	public string attachedObjName;
 	public string componentName;
-	
+
 	public ComponentInfo(string attachedObjName, string componentName) {
 		this.attachedObjName = attachedObjName;
 		this.componentName = componentName;
@@ -264,5 +272,3 @@ public class ComponentInfo {
 		return GameObject.Find(attachedObjName).GetComponent(componentName);
 	}
 }
-
-
