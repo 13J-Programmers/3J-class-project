@@ -209,8 +209,11 @@ namespace Player.Action {
 			Vector3 otherHandPos = ToVector3(otherHand.PalmPosition);
 			double dist = Vector3.Distance(handPos, otherHandPos);
 
-			if (dist < 70) {
-				GetBlockController().DestroyChildBlocks();
+			if (dist < 100) {
+				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+				if (destroyPositions.Count == 0) return;
+
+				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
 				GameObject.Find("sounds/press(audio)").GetComponent<Sound>().Play();
 			}
 		}
@@ -225,9 +228,13 @@ namespace Player.Action {
 
 			if (handVelocityY < -350 && otherHandVelocityY < -350) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+				if (destroyPositions.Count == 0) return;
+
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
 				}
+
+				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
 			}
 		}
 

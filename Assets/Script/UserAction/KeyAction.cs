@@ -103,8 +103,10 @@ namespace Player.Action {
 		override
 		protected void DetectPressMotion() {
 			if (Input.GetKey("p")) {
-				GetBlockController().DestroyChildBlocks();
+				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+				if (destroyPositions.Count == 0) return;
 
+				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
 				GameObject.Find("sounds/press(audio)").GetComponent<AudioSource>().Play();
 			}
 		}
@@ -114,9 +116,13 @@ namespace Player.Action {
 		protected void DetectShakeMotion() {
 			if (Input.GetKey("o")) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+				if (destroyPositions.Count == 0) return;
+				
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
 				}
+
+				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
 			}
 		}
 	}
