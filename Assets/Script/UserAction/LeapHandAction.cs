@@ -226,7 +226,7 @@ namespace Player.Action {
 			float handVelocityY = hand.PalmVelocity.y;
 			float otherHandVelocityY = otherHand.PalmVelocity.y;
 
-			if (handVelocityY < -350 && otherHandVelocityY < -350) {
+			if (handVelocityY < -300 && otherHandVelocityY < -300) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
 				if (destroyPositions.Count == 0) return;
 
