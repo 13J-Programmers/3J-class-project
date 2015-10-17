@@ -14,6 +14,6 @@ public class LeapMotionSpace : MonoBehaviour {
 	void Update()
 	{
 		Vector3 thisPos = target.transform.localPosition;
-		transform.position = thisPos;
+		transform.position = new Vector3(thisPos.x, -4, thisPos.y);
 	}
 }

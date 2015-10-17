@@ -11,6 +11,7 @@ public class SoundController : MonoBehaviour {
 		key = GameObject.Find("Key").GetComponent<Key>();
 		if (BGM.Length != 0)
 		{
+			i = Random.Range(0, BGM.Length);
 			_audio = this.GetComponent<AudioSource>();
 			_audio.clip = BGM[i];
 			_audio.loop = true;

@@ -35,7 +35,7 @@ public class HandControl : MonoBehaviour {
 		Vector plamPos = interactionBox.NormalizePoint(hand.PalmPosition);
 		int scale = 4;//感知する領域を広げる
 		x = scale * (plamPos.x - 0.5f);
-		y = scale * plamPos.y;
+		y = 7 * plamPos.y;
 		z = scale * (plamPos.z - 0.5f);
 		if (plamCount <= 1)//片手の場合
 		{
