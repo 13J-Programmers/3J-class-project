@@ -1112,7 +1112,6 @@ MonoBehaviour:
   score: 0
   remainingTime: 90
   audioClip: {fileID: 0}
-  audioClip2: {fileID: 0}
 --- !u!4 &383653125
 Transform:
   m_ObjectHideFlags: 0
@@ -1135,7 +1134,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6b64ee88e711b4bb09fa945e747d8be7, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1204,7 +1203,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ef57bc180034b48c78b8891457797e1b, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
