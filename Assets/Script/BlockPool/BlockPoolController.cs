@@ -210,13 +210,12 @@ public class BlockPoolController : MonoBehaviour {
 	private bool RemoveCompletedRow() {
 		return blockPool.RemoveCompletedRow();
 	}
+	
 	/// change material of cube
-	public void ChangeMaterial(Transform cube)
-	{
+	public void ChangeMaterial(Transform cube) {
 		//Debug.Log(gameObject.GetComponent<MeshRenderer>().material.name);
 		Material color = cube.GetComponent<MeshRenderer>().material;
-		switch (color.name)
-		{
+		switch (color.name) {
 			case "can (Instance)":
 				color = (Material)Resources.Load("Prefabs/yellow");
 				break;
