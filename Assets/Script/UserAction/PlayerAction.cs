@@ -46,13 +46,12 @@ namespace Player.Action {
 			// if new block is pressable, and detect press motion.
 			if (Test.test(() => GameObject.Find("block(new)").tag == "Pressable")
 					&& DetectPressMotion()) {
-				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
-				GameObject.Find("sounds/press(audio)").GetComponent<Sound>().Play();
+				DestroyChildBlocks();
 			}
 			// if new block is shakable, and detect shake motion.
 			if (Test.test(() => GameObject.Find("block(new)").tag == "Shakable")
 					&& DetectShakeMotion()) {
-				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
+				DestroyChildBlocksAndGenerateSplash();
 			}
 		}
 
@@ -73,18 +72,46 @@ namespace Player.Action {
 		protected abstract bool DetectPressMotion();
 		protected abstract bool DetectShakeMotion();
 
-		/// get component of the new block for comment
+		/// get component of the new block to connent
 		private void ConnectWithBlock(object sender, EventArgs e) {
 			GameObject target = GameObject.Find("block(new)");
 			if (!target) return;
 			blockController = target.GetComponent<BlockController>();
 		}
 
-		/// get component of the _DummyBlock for disconnect
+		/// get component of the _DummyBlock to disconnect
 		private void DisconnectWithBlock(object sender, EventArgs e) {
 			GameObject target = GameObject.Find("_DummyBlock");
 			if (!target) return;
 			blockController = target.GetComponent<BlockController>();
+		}
+
+		private void DestroyChildBlocks() {
+			ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+			if (destroyPositions.Count == 0) return;
+
+			GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
+			GameObject.Find("sounds/press(audio)").GetComponent<Sound>().Play();
+		}
+
+		private void DestroyChildBlocksAndGenerateSplash() {
+			// destroy child blocks
+			ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+			if (destroyPositions.Count == 0) return;
+
+			// generate splash
+			GenerateSplash(destroyPositions);
+
+			GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
+		}
+
+		private void GenerateSplash(ArrayList destroyPositions) {
+			if (destroyPositions.Count == 0) return;
+
+			// generate splash in destroyed block positions
+			foreach (Vector3 destroyPosition in destroyPositions) {
+				GetBlockController().GenerateSplash(destroyPosition);
+			}
 		}
 	}
 }

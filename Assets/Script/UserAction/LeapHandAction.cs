@@ -208,14 +208,12 @@ namespace Player.Action {
 			Vector3 otherHandPos = ToVector3(otherHand.PalmPosition);
 			double dist = Vector3.Distance(handPos, otherHandPos);
 
-			if (dist < 100) {
-				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				if (destroyPositions.Count == 0) return false;
+			if (dist > 100) return false;
 
-				return true;
-			}
+			// ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+			// if (destroyPositions.Count == 0) return false;
 
-			return false;
+			return true;
 		}
 
 		/// Shake Block
@@ -226,21 +224,18 @@ namespace Player.Action {
 			float handVelocityY = hand.PalmVelocity.y;
 			float otherHandVelocityY = otherHand.PalmVelocity.y;
 
-			if (handVelocityY < -300 && otherHandVelocityY < -300) {
-				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				if (destroyPositions.Count == 0) return false;
+			if ( !(handVelocityY < -300 && otherHandVelocityY < -300) ) return false;
 
-				// generate splash in destroyed block positions
-				foreach (Vector3 destroyPosition in destroyPositions) {
-					GetBlockController().GenerateSplash(destroyPosition);
-				}
+			// ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+			// if (destroyPositions.Count == 0) return false;
 
-				return true;
-			}
+			// // generate splash in destroyed block positions
+			// foreach (Vector3 destroyPosition in destroyPositions) {
+			// 	GetBlockController().GenerateSplash(destroyPosition);
+			// }
 
-			return false;
+			return true;
 		}
-
 
 		private Vector3 ToVector3(Vector v) {
 			return new UnityEngine.Vector3(v.x, v.y, v.z);
