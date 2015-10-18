@@ -43,11 +43,16 @@ namespace Player.Action {
 			DetectRotationY();
 			DetectRotationZ();
 			DetectRotationCamera();
-			if (Test.test(() => GameObject.Find("block(new)").tag == "Pressable")) {
-				DetectPressMotion();
+			// if new block is pressable, and detect press motion.
+			if (Test.test(() => GameObject.Find("block(new)").tag == "Pressable")
+					&& DetectPressMotion()) {
+				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
+				GameObject.Find("sounds/press(audio)").GetComponent<Sound>().Play();
 			}
-			if (Test.test(() => GameObject.Find("block(new)").tag == "Shakable" )) {
-				DetectShakeMotion();
+			// if new block is shakable, and detect shake motion.
+			if (Test.test(() => GameObject.Find("block(new)").tag == "Shakable")
+					&& DetectShakeMotion()) {
+				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
 			}
 		}
 
@@ -65,8 +70,8 @@ namespace Player.Action {
 		protected abstract void DetectRotationY();
 		protected abstract void DetectRotationZ();
 		protected abstract void DetectRotationCamera();
-		protected abstract void DetectPressMotion();
-		protected abstract void DetectShakeMotion();
+		protected abstract bool DetectPressMotion();
+		protected abstract bool DetectShakeMotion();
 
 		/// get component of the new block for comment
 		private void ConnectWithBlock(object sender, EventArgs e) {
