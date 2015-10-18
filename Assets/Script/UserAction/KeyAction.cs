@@ -101,29 +101,31 @@ namespace Player.Action {
 
 		/// Press Block
 		override
-		protected void DetectPressMotion() {
-			if (Input.GetKey("p")) {
-				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				if (destroyPositions.Count == 0) return;
+		protected bool DetectPressMotion() {
+			if (!Input.GetKey("p")) return false;
 
-				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
-				GameObject.Find("sounds/press(audio)").GetComponent<AudioSource>().Play();
-			}
+			// try to destroy every child blocks
+			ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+			if (destroyPositions.Count == 0) return false;
+
+			return true;
 		}
 
 		/// Shake Block
 		override
-		protected void DetectShakeMotion() {
-			if (Input.GetKey("o")) {
-				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				if (destroyPositions.Count == 0) return;
-				
-				foreach (Vector3 destroyPosition in destroyPositions) {
-					GetBlockController().GenerateSplash(destroyPosition);
-				}
+		protected bool DetectShakeMotion() {
+			if (!Input.GetKey("o")) return false;
 
-				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
+			// try to destroy every child blocks
+			ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
+			if (destroyPositions.Count == 0) return false;
+			
+			// generate splash in destroyed block positions
+			foreach (Vector3 destroyPosition in destroyPositions) {
+				GetBlockController().GenerateSplash(destroyPosition);
 			}
+
+			return true;
 		}
 	}
 }

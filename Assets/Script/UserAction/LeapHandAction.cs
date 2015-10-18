@@ -25,6 +25,9 @@ namespace Player.Action {
 		private float moveSpeed = 0.03f;
 
 		// rotation
+		private float pitch;
+		private float yaw;
+		private float roll;
 		private float upScale = 7;
 		private float downScale = -7;
 		private float rightScale = 7;
@@ -32,11 +35,6 @@ namespace Player.Action {
 		private float counterClockwiseScale = 7;
 		private float clockwiseScale = -7;
 		public bool isRotated = false;
-		private float rotateScale = 10;
-		private float pitch;
-		private float yaw;
-		private float roll;
-
 
 		private bool isFingersFolded(Hand hand) {
 			Vector origin = hand.PalmPosition;
@@ -61,6 +59,7 @@ namespace Player.Action {
 			hand = hands[0];
 			otherHand = hands[1];
 
+			float rotateScale = 10;
 			pitch = hand.Direction.Pitch * rotateScale;
 			yaw   = hand.Direction.Yaw   * rotateScale;
 			roll  = hand.PalmNormal.Roll * rotateScale;
@@ -202,8 +201,8 @@ namespace Player.Action {
 
 		/// Press Block
 		override
-		protected void DetectPressMotion() {
-			if (!hasTwoHands()) return;
+		protected bool DetectPressMotion() {
+			if (!hasTwoHands()) return false;
 
 			Vector3 handPos = ToVector3(hand.PalmPosition);
 			Vector3 otherHandPos = ToVector3(otherHand.PalmPosition);
@@ -211,31 +210,35 @@ namespace Player.Action {
 
 			if (dist < 100) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				if (destroyPositions.Count == 0) return;
+				if (destroyPositions.Count == 0) return false;
 
-				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
-				GameObject.Find("sounds/press(audio)").GetComponent<Sound>().Play();
+				return true;
 			}
+
+			return false;
 		}
 
 		/// Shake Block
 		override
-		protected void DetectShakeMotion() {
-			if (!hasTwoHands()) return;
+		protected bool DetectShakeMotion() {
+			if (!hasTwoHands()) return false;
 
 			float handVelocityY = hand.PalmVelocity.y;
 			float otherHandVelocityY = otherHand.PalmVelocity.y;
 
 			if (handVelocityY < -300 && otherHandVelocityY < -300) {
 				ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-				if (destroyPositions.Count == 0) return;
+				if (destroyPositions.Count == 0) return false;
 
+				// generate splash in destroyed block positions
 				foreach (Vector3 destroyPosition in destroyPositions) {
 					GetBlockController().GenerateSplash(destroyPosition);
 				}
 
-				GameObject.Find("GameManager").GetComponent<GameManager>().score += 50;
+				return true;
 			}
+
+			return false;
 		}
 
 
