@@ -126,10 +126,10 @@ namespace Player.Action {
 			if (hasTwoHands()) return;
 			if (isRotated) return;
 
-			if (pitch > upScale) {
-				GetBlockController().PitchBlock( DirectViaCamera(Vector3.back) );
-			} else if (pitch < downScale) {
+			if (pitch < downScale) {
 				GetBlockController().PitchBlock( DirectViaCamera(Vector3.forward) );
+			} else if (pitch > upScale) {
+				GetBlockController().PitchBlock( DirectViaCamera(Vector3.back) );
 			} else {
 				return;
 			}
@@ -160,10 +160,10 @@ namespace Player.Action {
 			if (hasTwoHands()) return;
 			if (isRotated) return;
 
-			if (roll > counterClockwiseScale) {
-				GetBlockController().RollBlock( DirectViaCamera(Vector3.left) );
-			} else if (roll < clockwiseScale) {
+			if (roll < clockwiseScale) {
 				GetBlockController().RollBlock( DirectViaCamera(Vector3.right) );
+			} else if (roll > counterClockwiseScale) {
+				GetBlockController().RollBlock( DirectViaCamera(Vector3.left) );
 			} else {
 				return;
 			}
@@ -183,10 +183,10 @@ namespace Player.Action {
 
 			int depth = 80;
 
-			if (leftHandZ > depth / 2 && rightHandZ < -depth) {
-				GetCameraController().RotateCam(-1);
-			} else if (leftHandZ < -depth && rightHandZ > depth / 2) {
-				GetCameraController().RotateCam(1);
+			if (leftHandZ < -depth && rightHandZ > depth / 2) {
+				GetCameraController().RotateCamera( Vector3.right );
+			} else if (leftHandZ > depth / 2 && rightHandZ < -depth) {
+				GetCameraController().RotateCamera( Vector3.left );
 			}
 		}
 

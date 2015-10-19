@@ -103,11 +103,13 @@ public class BlockController : MonoBehaviour {
 	}
 
 	/// yaw the block
+	/// @param direct - 1 or -1
 	public void YawBlock(int direct) {
 		if (gameObject.name.CompareTo("block(new)") != 0) return;
 		Rotate(0, direct * 90, 0);
 	}
 
+	/// @param direct - Vector3.right or Vector3.left
 	public void YawBlock(Vector3 direct) {
 		if (direct == Vector3.right) {
 			YawBlock(1);

@@ -83,9 +83,9 @@ namespace Player.Action {
 		override
 		protected void DetectRotationCamera() {
 			if (Input.GetKey("return")) {
-				GetCameraController().RotateCam(1);
+				GetCameraController().RotateCamera( Vector3.right );
 			} else if (Input.GetKey("delete")) {
-				GetCameraController().RotateCam(-1);
+				GetCameraController().RotateCamera( Vector3.left );
 			}
 		}
 

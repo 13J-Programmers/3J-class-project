@@ -23,7 +23,16 @@ public class CameraController : MonoBehaviour {
 
 	/// rotate camera on an axis of Pool center.
 	/// @param direct - rotating direction: 1 or -1
-	public void RotateCam(int direct) {
+	public void RotateCamera(int direct) {
 		transform.RotateAround( target.transform.position, Vector3.up, direct * 45 * Time.deltaTime );
+	}
+
+	/// @param direct - rotating direction: Vector3.right or Vector3.left
+	public void RotateCamera(Vector3 direct) {
+		if (direct == Vector3.right) {
+			RotateCamera(1);
+		} else if (direct == Vector3.left) {
+			RotateCamera(-1);
+		}
 	}
 }
