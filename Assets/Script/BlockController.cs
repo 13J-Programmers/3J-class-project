@@ -108,6 +108,14 @@ public class BlockController : MonoBehaviour {
 		Rotate(0, direct * 90, 0);
 	}
 
+	public void YawBlock(Vector3 direct) {
+		if (direct == Vector3.right) {
+			YawBlock(1);
+		} else if (direct == Vector3.left) {
+			YawBlock(-1);
+		}
+	}
+
 	/// roll the block
 	/// this method can decide right direction via camera.
 	/// @param direct - Vector3 right or left
