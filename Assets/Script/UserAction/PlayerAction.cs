@@ -24,7 +24,7 @@ namespace Player {
 namespace Player.Action {
 	/// PlayerAction < BaseAction < MonoBehaviour
 	public abstract class PlayerAction : BaseAction {
-		protected BlockController blockController;
+		private BlockController blockController;
 
 		protected GameObject GetControllingBlock() {
 			return GameObject.Find("block(new)");
