@@ -16,10 +16,6 @@ namespace Player.Action {
 		private Hand hand;
 		private Hand otherHand;
 
-		private Transform GetMainCamera() {
-			return Camera.main.transform;
-		}
-
 		// motion
 		const int MOVING_DETECT_RANGE = 60;
 		private float moveSpeed = 0.03f;
@@ -78,7 +74,7 @@ namespace Player.Action {
 
 		override
 		protected bool ValidatePerFrame() {
-			return base.blockController && hand.Confidence > 0.1;
+			return (base.GetBlockController() && hand.Confidence > 0.1);
 		}
 
 		/// move block with opened hand in x-axis
@@ -90,11 +86,9 @@ namespace Player.Action {
 			float handX = hand.PalmPosition.x;
 
 			if (handX > MOVING_DETECT_RANGE) {
-				Vector3 right = GetMainCamera().TransformDirection(Vector3.right) * moveSpeed;
-				blockController.MoveBlock(right);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.right) * moveSpeed );
 			} else if (handX < -MOVING_DETECT_RANGE) {
-				Vector3 left = GetMainCamera().TransformDirection(Vector3.left) * moveSpeed;
-				blockController.MoveBlock(left);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.left) * moveSpeed );
 			}
 		}
 
@@ -106,7 +100,7 @@ namespace Player.Action {
 			float velocityY = hand.PalmVelocity.y;
 
 			if (velocityY < -400) {
-				blockController.DropBlock();
+				GetBlockController().DropBlock();
 			}
 		}
 
@@ -119,11 +113,9 @@ namespace Player.Action {
 			float handZ = -hand.PalmPosition.z;
 
 			if (handZ > MOVING_DETECT_RANGE) {
-				Vector3 forward = GetMainCamera().TransformDirection(Vector3.forward) * moveSpeed;
-				blockController.MoveBlock(forward);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.forward) * moveSpeed );
 			} else if (handZ < -MOVING_DETECT_RANGE) {
-				Vector3 back = GetMainCamera().TransformDirection(Vector3.back) * moveSpeed;
-				blockController.MoveBlock(back);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.back) * moveSpeed );
 			}
 		}
 
@@ -135,11 +127,9 @@ namespace Player.Action {
 			if (isRotated) return;
 
 			if (pitch > upScale) {
-				Vector3 back = GetMainCamera().TransformDirection(Vector3.back);
-				blockController.PitchBlock(back);
+				GetBlockController().PitchBlock( DirectViaCamera(Vector3.back) );
 			} else if (pitch < downScale) {
-				Vector3 forward = GetMainCamera().TransformDirection(Vector3.forward);
-				blockController.PitchBlock(forward);
+				GetBlockController().PitchBlock( DirectViaCamera(Vector3.forward) );
 			} else {
 				return;
 			}
@@ -154,9 +144,9 @@ namespace Player.Action {
 			if (isRotated) return;
 
 			if (yaw > rightScale) {
-				blockController.YawBlock(1);
+				GetBlockController().YawBlock( Vector3.right );
 			} else if (yaw < leftScale) {
-				blockController.YawBlock(-1);
+				GetBlockController().YawBlock( Vector3.left );
 			} else {
 				return;
 			}
@@ -171,11 +161,9 @@ namespace Player.Action {
 			if (isRotated) return;
 
 			if (roll > counterClockwiseScale) {
-				Vector3 left = GetMainCamera().TransformDirection(Vector3.left);
-				blockController.RollBlock(left);
+				GetBlockController().RollBlock( DirectViaCamera(Vector3.left) );
 			} else if (roll < clockwiseScale) {
-				Vector3 right = GetMainCamera().TransformDirection(Vector3.right);
-				blockController.RollBlock(right);
+				GetBlockController().RollBlock( DirectViaCamera(Vector3.right) );
 			} else {
 				return;
 			}

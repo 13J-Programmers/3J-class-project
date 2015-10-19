@@ -9,12 +9,11 @@ using System.Collections;
 namespace Player.Action {
 	/// KeyAction < PlayerAction < BaseAction < MonoBehaviour
 	public class KeyAction : PlayerAction {
-		private Transform mainCamera;
 		private float moveSpeed = 0.1f;
 
 		override
 		protected void InitPerFrame() {
-			mainCamera = Camera.main.transform;
+			
 		}
 
 		override
@@ -26,11 +25,9 @@ namespace Player.Action {
 		override
 		protected void DetectMotionX() {
 			if (Input.GetKey("right")) {
-				Vector3 right = mainCamera.TransformDirection(Vector3.right) * moveSpeed;
-				GetBlockController().MoveBlock(right);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.right) * moveSpeed );
 			} else if (Input.GetKey("left")) {
-				Vector3 left = mainCamera.TransformDirection(Vector3.left) * moveSpeed;
-				GetBlockController().MoveBlock(left);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.left) * moveSpeed );
 			}
 		}
 
@@ -46,11 +43,9 @@ namespace Player.Action {
 		override
 		protected void DetectMotionZ() {
 			if (Input.GetKey("up")) {
-				Vector3 forward = mainCamera.TransformDirection(Vector3.forward) * moveSpeed;
-				GetBlockController().MoveBlock(forward);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.forward) * moveSpeed );
 			} else if (Input.GetKey("down")) {
-				Vector3 back = mainCamera.TransformDirection(Vector3.back) * moveSpeed;
-				GetBlockController().MoveBlock(back);
+				GetBlockController().MoveBlock( DirectViaCamera(Vector3.back) * moveSpeed );
 			}
 		}
 
@@ -58,11 +53,9 @@ namespace Player.Action {
 		override
 		protected void DetectRotationX() {
 			if (Input.GetKeyDown("w")) {
-				Vector3 forward = mainCamera.TransformDirection(Vector3.forward);
-				GetBlockController().PitchBlock(forward);
+				GetBlockController().PitchBlock( DirectViaCamera(Vector3.forward) );
 			} else if (Input.GetKeyDown("s")) {
-				Vector3 back = mainCamera.TransformDirection(Vector3.back);
-				GetBlockController().PitchBlock(back);
+				GetBlockController().PitchBlock( DirectViaCamera(Vector3.back) );
 			}
 		}
 
@@ -70,9 +63,9 @@ namespace Player.Action {
 		override
 		protected void DetectRotationY() {
 			if (Input.GetKeyDown("e")) {
-				GetBlockController().YawBlock(1);
+				GetBlockController().YawBlock( Vector3.right );
 			} else if (Input.GetKeyDown("q")) {
-				GetBlockController().YawBlock(-1);
+				GetBlockController().YawBlock( Vector3.left );
 			}
 		}
 
@@ -80,11 +73,9 @@ namespace Player.Action {
 		override
 		protected void DetectRotationZ() {
 			if (Input.GetKeyDown("d")) {
-				Vector3 right = mainCamera.TransformDirection(Vector3.right);
-				GetBlockController().RollBlock(right);
+				GetBlockController().RollBlock( DirectViaCamera(Vector3.right) );
 			} else if (Input.GetKeyDown("a")) {
-				Vector3 left = mainCamera.TransformDirection(Vector3.left);
-				GetBlockController().RollBlock(left);
+				GetBlockController().RollBlock( DirectViaCamera(Vector3.left) );
 			}
 		}
 
