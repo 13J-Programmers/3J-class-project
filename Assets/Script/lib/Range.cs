@@ -1,6 +1,37 @@
-﻿using UnityEngine;
+﻿///
+/// @file  Range.cs
+/// @brief range instances have max and min value.
+///
+
+using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+
+
+public class Range {
+	private int min;
+	private int max;
+	private int iter;
+
+	public Range(int min, int max) {
+		if (min > max) throw new RangeException();
+		this.min = min;
+		this.max = max;
+		this.iter = this.min;
+	}
+
+	public IEnumerable<int> enumerable {
+		get { return ToEnumerable(); }
+	}
+
+	public IEnumerable<int> ToEnumerable() {
+		while (this.iter < this.max) {
+			yield return this.iter++;
+		}
+	}
+}
+
 
 public class Range<T> where T : IComparable {
 	private T min;
@@ -26,6 +57,7 @@ public class Range<T> where T : IComparable {
 		return (min.CompareTo(val) <= 0) && (val.CompareTo(max) < 0);
 	}
 }
+
 
 public class RangeException : Exception {
 	public RangeException() : base() {}

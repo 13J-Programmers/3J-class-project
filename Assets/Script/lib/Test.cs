@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿///
+/// @file  Test.cs
+/// @brief
+///   provides predicater not raise an exception.
+///   turn from exception to boolean, false.
+///
+
+using UnityEngine;
 using System;
 using System.Collections;
 

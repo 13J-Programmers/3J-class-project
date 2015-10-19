@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿///
+/// @file  VectorUtil.cs
+/// @brief Helper method of Vectors
+///
+
+using UnityEngine;
 using System;
 using System.Collections;
 
