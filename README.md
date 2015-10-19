@@ -4,6 +4,9 @@ Ecoris
 
 3Jのクラス企画
 
+![title scene](https://github.com/13J-Programmers/3J-class-project/blob/master/images/title-scene.png)
+![play scene](https://github.com/13J-Programmers/3J-class-project/blob/master/images/play-scene.png)
+
 Features
 --------
 
@@ -18,8 +21,8 @@ Draft
 
 3Dテトリスに関する設計案
 
-- [3Dテトリス設計草案](https://github.com/13J-Programmers/3J_class_project/blob/master/doc/overview.md)
-- [3Dテトリス詳細設計 (latest version)](https://github.com/13J-Programmers/3J_class_project/blob/master/doc/design.md)
+- [3Dテトリス設計草案](https://github.com/13J-Programmers/3J-class-project/blob/master/doc/overview.md)
+- [3Dテトリス詳細設計 (latest version)](https://github.com/13J-Programmers/3J-class-project/blob/master/doc/design.md)
 
 Ecoris Projectのドキュメント（自動生成）
 
@@ -93,7 +96,7 @@ Pull Requestがまだ作業中の場合、`[WIP]`（Work In Progress）をタイ
 Contributing
 ------------
 
-1. Fork it ( https://github.com/13J-Programmers/3J_class_project )
+1. Fork it ( https://github.com/13J-Programmers/3J-class-project )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
