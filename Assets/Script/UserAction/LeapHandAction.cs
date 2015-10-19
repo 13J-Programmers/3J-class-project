@@ -40,10 +40,13 @@ namespace Player.Action {
 			Vector origin = hand.PalmPosition;
 			float dist = 0;
 
+			// sum up fingers distance from position of palm
 			foreach (Finger finger in hand.Fingers) {
+				// ignore player's thumb
+				if (finger.Type() == Finger.FingerType.TYPE_THUMB) continue;
 				dist += finger.TipPosition.DistanceTo(origin);
 			}
-			return (dist < 300) ? true : false;
+			return (dist < 280) ? true : false;
 		}
 
 		private bool hasTwoHands() {
