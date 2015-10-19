@@ -1,30 +1,28 @@
 
-3J class project
-================
+Ecoris
+=======
 
-Todo
-----
+3Jのクラス企画
 
-- Leap Motionを使うこと
-- Unityを使うこと
-- なんらかのゲームを作ること
+Features
+--------
+
+- 直感的な操作による3Dテトリス
+- 手の動きを検出するためにLeap Motionを使用
+- ゲームの作成にはUnityを使用
+- エコの要素を追加したテトリス (eco + tetris = Ecoris)
+- 缶のブロックは潰したり、生ゴミのブロックは降ったりすることで、小さいブロックにすることができる
 
 Draft
 -----
 
-### 3Dテトリス
-- 3Dテトリス : テトリスに奥行きを加えたゲーム
-- Leap Motionによる操作（移動・回転）
-- 独自の工夫 (+α)
-	- ブロックを積むフィールドの回転 ?
-	- 中心に向かう重力の追加 ?
-	- エコの要素を追加したテトリス (Ecoris)
+3Dテトリスに関する設計案
 
-3Dテトリスに関する詳細な設計案
 - [3Dテトリス設計草案](https://github.com/13J-Programmers/3J_class_project/blob/master/doc/overview.md)
 - [3Dテトリス詳細設計 (latest version)](https://github.com/13J-Programmers/3J_class_project/blob/master/doc/design.md)
 
 Ecoris Projectのドキュメント（自動生成）
+
 - [Ecoris - documentation](http://tex2e.sakura.ne.jp/3j-class-project/html/index.html)
 	
 
