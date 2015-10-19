@@ -1,11 +1,25 @@
 ﻿///
 /// @file  PlayerAction.cs
-/// @brief Action classes inherit this base class to detect user inputs
+/// @brief
+///   Action classes inherit this base class to detect user inputs
+///   + class name:  *Action
+///   + method name: *Motion
 ///
 
 using UnityEngine;
 using System;
 using System.Collections;
+
+namespace Player {
+	// declare motions
+	public enum Motion {
+		Null, 
+		Forward, Backward, Up, Down, Right, Left, 
+		PitchUp, PitchDown, YawRight, YawLeft, RollRight, RollLeft, 
+		RotateCameraRight, RotateCameraLeft, 
+		Press, Shake
+	}
+}
 
 namespace Player.Action {
 	/// PlayerAction < BaseAction < MonoBehaviour
@@ -36,6 +50,7 @@ namespace Player.Action {
 		protected sealed override void Update() {
 			InitPerFrame();
 			if (ValidatePerFrame() == false) return;
+
 			DetectMotionX();
 			DetectMotionY();
 			DetectMotionZ();
@@ -43,11 +58,13 @@ namespace Player.Action {
 			DetectRotationY();
 			DetectRotationZ();
 			DetectRotationCamera();
+
 			// if new block is pressable, and detect press motion.
 			if (Test.test(() => GameObject.Find("block(new)").tag == "Pressable")
 					&& DetectPressMotion()) {
 				DestroyChildBlocks();
 			}
+
 			// if new block is shakable, and detect shake motion.
 			if (Test.test(() => GameObject.Find("block(new)").tag == "Shakable")
 					&& DetectShakeMotion()) {
@@ -71,6 +88,10 @@ namespace Player.Action {
 		protected abstract void DetectRotationCamera();
 		protected abstract bool DetectPressMotion();
 		protected abstract bool DetectShakeMotion();
+
+		protected Vector3 DirectViaCamera(Vector3 direction) {
+			return Camera.main.transform.TransformDirection(direction);
+		}
 
 		/// get component of the new block to connent
 		private void ConnectWithBlock(object sender, EventArgs e) {
