@@ -10,15 +10,16 @@ using System.Collections.Generic;
 
 
 public class Range {
-	private int min;
-	private int max;
-	private int iter;
+	private Range<int> range;
 
 	public Range(int min, int max) {
 		if (min > max) throw new RangeException();
-		this.min = min;
-		this.max = max;
-		this.iter = this.min;
+		this.range = new Range<int>(min, max);
+	}
+
+	override
+	public string ToString() {
+		return range.ToString();
 	}
 
 	public IEnumerable<int> enumerable {
@@ -26,21 +27,16 @@ public class Range {
 	}
 
 	public IEnumerable<int> ToEnumerable() {
-		while (this.iter < this.max) {
-			yield return this.iter++;
+		for (int iter = range.min; iter < this.range.max; iter++) {
+			yield return iter;
 		}
 	}
 }
 
 
 public class Range<T> where T : IComparable {
-	private T min;
-	private T max;
-
-	public T GetMin() { return min; }
-	public T GetMax() { return max; }
-	private void SetMin(T min) { this.min = min; }
-	private void SetMax(T max) { this.max = max; }
+	public T min { get; private set; }
+	public T max { get; private set; }
 
 	public Range(T min, T max) {
 		if (min.CompareTo(max) > 0) throw new RangeException();
