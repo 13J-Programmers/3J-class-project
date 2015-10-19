@@ -20,4 +20,9 @@ public static class VectorUtil {
 		_vector.z = vector.z;
 		return _vector;
 	}
+
+	/// convert Leap Motion Vector to Vector3
+	public static Vector3 ToVector3(Leap.Vector v) {
+		return new UnityEngine.Vector3(v.x, v.y, v.z);
+	}
 }

@@ -204,8 +204,8 @@ namespace Player.Action {
 		protected bool DetectPressMotion() {
 			if (!hasTwoHands()) return false;
 
-			Vector3 handPos = ToVector3(hand.PalmPosition);
-			Vector3 otherHandPos = ToVector3(otherHand.PalmPosition);
+			Vector3 handPos = VectorUtil.ToVector3(hand.PalmPosition);
+			Vector3 otherHandPos = VectorUtil.ToVector3(otherHand.PalmPosition);
 			double dist = Vector3.Distance(handPos, otherHandPos);
 
 			if (dist > 100) return false;
@@ -235,10 +235,6 @@ namespace Player.Action {
 			// }
 
 			return true;
-		}
-
-		private Vector3 ToVector3(Vector v) {
-			return new UnityEngine.Vector3(v.x, v.y, v.z);
 		}
 	}
 }
