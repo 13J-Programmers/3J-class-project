@@ -5,7 +5,6 @@
 
 using UnityEngine;
 using System.Collections;
-using Fie.Utility;
 
 namespace Player.Action {
 	/// KeyAction < PlayerAction < BaseAction < MonoBehaviour
