@@ -13,8 +13,7 @@ using Leap;
 namespace Player.Action {
 	/// LeapHandAction < PlayerAction < BaseAction < MonoBehaviour
 	public class LeapHandAction : PlayerAction {
-		private Hand hand;
-		private Hand otherHand;
+		private LeapHands leapHands;
 
 		// motion
 		const int MOVING_DETECT_RANGE = 60;
@@ -32,39 +31,19 @@ namespace Player.Action {
 		private float clockwiseScale = -7;
 		public bool isRotated = false;
 
-		private bool isFingersFolded(Hand hand) {
-			Vector origin = hand.PalmPosition;
-			float dist = 0;
-
-			// sum up fingers distance from position of palm
-			foreach (Finger finger in hand.Fingers) {
-				// ignore player's thumb
-				if (finger.Type() == Finger.FingerType.TYPE_THUMB) continue;
-				dist += finger.TipPosition.DistanceTo(origin);
-			}
-			return (dist < 280) ? true : false;
+		void Awake() {
+			leapHands = GameObject.Find("LeapHands").GetComponent<LeapHands>();
 		}
-
-		private bool hasTwoHands() {
-			return otherHand.IsValid;
-		}
-
 
 		override
 		protected void InitPerFrame() {
-			Controller controller = new Controller();
-			Frame frame = controller.Frame();
-			HandList hands = frame.Hands;
-			hand = hands[0];
-			otherHand = hands[1];
-
 			float rotateScale = 10;
-			pitch = hand.Direction.Pitch * rotateScale;
-			yaw   = hand.Direction.Yaw   * rotateScale;
-			roll  = hand.PalmNormal.Roll * rotateScale;
+			pitch = leapHands.hand.Direction.Pitch * rotateScale;
+			yaw   = leapHands.hand.Direction.Yaw   * rotateScale;
+			roll  = leapHands.hand.PalmNormal.Roll * rotateScale;
 
 			// horizon hand
-			if (!isFingersFolded(hand) 
+			if (!LeapHands.IsFingersFolded(leapHands.hand) 
 					&& upScale > pitch && pitch > downScale
 					&& rightScale > yaw && yaw > leftScale
 					&& counterClockwiseScale > roll && roll > clockwiseScale) {
@@ -74,16 +53,16 @@ namespace Player.Action {
 
 		override
 		protected bool ValidatePerFrame() {
-			return (base.GetBlockController() && hand.Confidence > 0.1);
+			return (base.GetBlockController() && leapHands.hand.Confidence > 0.1);
 		}
 
 		/// move block with opened hand in x-axis
 		override
 		protected void DetectMotionX() {
-			if (isFingersFolded(hand)) return;
-			if (hasTwoHands()) return;
+			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (leapHands.HasTwoHands()) return;
 
-			float handX = hand.PalmPosition.x;
+			float handX = leapHands.hand.PalmPosition.x;
 
 			if (handX > MOVING_DETECT_RANGE) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.right) * moveSpeed );
@@ -95,9 +74,9 @@ namespace Player.Action {
 		/// Drop Block with clenched fists
 		override
 		protected void DetectMotionY() {
-			if (!isFingersFolded(hand)) return;
+			if (!LeapHands.IsFingersFolded(leapHands.hand)) return;
 
-			float velocityY = hand.PalmVelocity.y;
+			float velocityY = leapHands.hand.PalmVelocity.y;
 
 			if (velocityY < -400) {
 				GetBlockController().DropBlock();
@@ -107,10 +86,10 @@ namespace Player.Action {
 		/// move block with opened hand in z-axis
 		override
 		protected void DetectMotionZ() {
-			if (isFingersFolded(hand)) return;
-			if (hasTwoHands()) return;
+			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (leapHands.HasTwoHands()) return;
 
-			float handZ = -hand.PalmPosition.z;
+			float handZ = -leapHands.hand.PalmPosition.z;
 
 			if (handZ > MOVING_DETECT_RANGE) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.forward) * moveSpeed );
@@ -122,8 +101,8 @@ namespace Player.Action {
 		/// Pitch Block
 		override
 		protected void DetectRotationX() {
-			if (isFingersFolded(hand)) return;
-			if (hasTwoHands()) return;
+			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 
 			if (pitch < downScale) {
@@ -139,8 +118,8 @@ namespace Player.Action {
 		/// Yaw Block
 		override
 		protected void DetectRotationY() {
-			if (isFingersFolded(hand)) return;
-			if (hasTwoHands()) return;
+			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 
 			if (yaw > rightScale) {
@@ -156,8 +135,8 @@ namespace Player.Action {
 		/// Roll Block
 		override
 		protected void DetectRotationZ() {
-			if (isFingersFolded(hand)) return;
-			if (hasTwoHands()) return;
+			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 
 			if (roll < clockwiseScale) {
@@ -173,10 +152,10 @@ namespace Player.Action {
 		// Rotate camera
 		override
 		protected void DetectRotationCamera() {
-			if (!hasTwoHands()) return;
+			if (!leapHands.HasTwoHands()) return;
 
-			Hand rightHand = (hand.IsRight) ? hand : otherHand;
-			Hand leftHand  = (hand.IsRight) ? otherHand : hand;
+			Hand rightHand = (leapHands.hand.IsRight) ? leapHands.hand : leapHands.otherHand;
+			Hand leftHand  = (leapHands.hand.IsRight) ? leapHands.otherHand : leapHands.hand;
 
 			float rightHandZ = -rightHand.PalmPosition.z;
 			float leftHandZ  = -leftHand.PalmPosition.z;
@@ -193,10 +172,10 @@ namespace Player.Action {
 		/// Press Block
 		override
 		protected bool DetectPressMotion() {
-			if (!hasTwoHands()) return false;
+			if (!leapHands.HasTwoHands()) return false;
 
-			Vector3 handPos = VectorUtil.ToVector3(hand.PalmPosition);
-			Vector3 otherHandPos = VectorUtil.ToVector3(otherHand.PalmPosition);
+			Vector3 handPos = VectorUtil.ToVector3(leapHands.hand.PalmPosition);
+			Vector3 otherHandPos = VectorUtil.ToVector3(leapHands.otherHand.PalmPosition);
 			double dist = Vector3.Distance(handPos, otherHandPos);
 
 			if (dist > 100) return false;
@@ -210,10 +189,10 @@ namespace Player.Action {
 		/// Shake Block
 		override
 		protected bool DetectShakeMotion() {
-			if (!hasTwoHands()) return false;
+			if (!leapHands.HasTwoHands()) return false;
 
-			float handVelocityY = hand.PalmVelocity.y;
-			float otherHandVelocityY = otherHand.PalmVelocity.y;
+			float handVelocityY = leapHands.hand.PalmVelocity.y;
+			float otherHandVelocityY = leapHands.otherHand.PalmVelocity.y;
 
 			if ( !(handVelocityY < -300 && otherHandVelocityY < -300) ) return false;
 
