@@ -129,12 +129,12 @@ public class GameManager : MonoBehaviour {
 
 	public void GameStart() {
 		isGamePlayMode = true;
-		int playAudioIndex = UnityEngine.Random.Range (0, 2); // 0以上2未満の整数乱数を返す
+		int playAudioIndex = UnityEngine.Random.Range(0, 2); // 0以上2未満の整数乱数を返す
+		audioSources[playAudioIndex].Play();
 
 		if (StartGame != null) {
 			StartGame(this, EventArgs.Empty);
 		}
-		audioSources[playAudioIndex].Play();
 	}
 
 	public void GameOver() {
@@ -154,9 +154,6 @@ public class GameManager : MonoBehaviour {
 		}
 
 		InitEveryStaticField();
-
-		//audioSources[0].Stop();
-		//audioSources[1].Play();
 	}
 
 	public void RestartGame() {
