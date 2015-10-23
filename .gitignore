@@ -35,6 +35,9 @@ AudioManager.asset
 DynamicsManager.asset
 NetworkManager.asset
 
+# Typescript
+typescript
+
 # Doxygen files
 Doxyfile
 html/
