@@ -37,6 +37,7 @@ NetworkManager.asset
 
 # Typescript
 typescript
+typescript.meta
 
 # Doxygen files
 Doxyfile
