@@ -23,10 +23,6 @@ Draft
 
 - [3Dテトリス設計草案](https://github.com/13J-Programmers/3J-class-project/blob/master/doc/overview.md)
 - [3Dテトリス詳細設計 (latest version)](https://github.com/13J-Programmers/3J-class-project/blob/master/doc/design.md)
-
-Ecoris Projectのドキュメント（自動生成）
-
-- [Ecoris - documentation](http://tex2e.sakura.ne.jp/3j-class-project/html/index.html)
 	
 
 to Committer
