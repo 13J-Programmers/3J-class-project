@@ -11,7 +11,7 @@ using System.Collections;
 using Leap;
 
 namespace Player.Action {
-	/// LeapHandAction < PlayerAction < BaseAction < MonoBehaviour
+	/// LeapHandAction < PlayerAction < MonoBehaviour
 	public class LeapHandAction : PlayerAction {
 		private LeapHands leapHands;
 

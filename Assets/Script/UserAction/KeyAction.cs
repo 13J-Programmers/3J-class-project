@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Collections;
 
 namespace Player.Action {
-	/// KeyAction < PlayerAction < BaseAction < MonoBehaviour
+	/// KeyAction < PlayerAction < MonoBehaviour
 	public class KeyAction : PlayerAction {
 		private float moveSpeed = 0.1f;
 

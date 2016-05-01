@@ -22,8 +22,8 @@ namespace Player {
 }
 
 namespace Player.Action {
-	/// PlayerAction < BaseAction < MonoBehaviour
-	public abstract class PlayerAction : BaseAction {
+	/// PlayerAction < MonoBehaviour
+	public abstract class PlayerAction : MonoBehaviour {
 		private BlockController blockController;
 
 		protected GameObject GetControllingBlock() {
@@ -38,16 +38,13 @@ namespace Player.Action {
 			return GameObject.Find("Main Camera").GetComponent<CameraController>();
 		}
 
-		/// these access modifier prevent the child script use Start()
-		/// but, it doesn't work.
-		protected sealed override void Start() {
+		void Start() {
 			BlockEntity.CreateNewBlock   += new EventHandler(ConnectWithBlock);
 			BlockController.StartFalling += new EventHandler(DisconnectWithBlock);
 		}
 
-		/// these access modifier prevent the child script use Update()
-		/// but, it doesn't work.
-		protected sealed override void Update() {
+		// If this Update method was overrided, everythings goes wrong.
+		void Update() {
 			InitPerFrame();
 			if (ValidatePerFrame() == false) return;
 
