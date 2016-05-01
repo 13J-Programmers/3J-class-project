@@ -119,6 +119,20 @@ Snake case represent specific object or method.
            usr_action
 
 
+
+        BaseAction
+            |
+            |extends
+            ∨
+        PlayerAction
+            |
+            |extends
+            +-------------+
+            |             |
+            ∨             ∨         use
+        KeyAction    LeapHandAction---->LeapHands
+
+
 -+|<∨∧>
 ~~~
 
