@@ -13,10 +13,10 @@ using System.Collections;
 namespace Player {
 	// declare motions
 	public enum Motion {
-		Null, 
-		Forward, Backward, Up, Down, Right, Left, 
-		PitchUp, PitchDown, YawRight, YawLeft, RollRight, RollLeft, 
-		RotateCameraRight, RotateCameraLeft, 
+		Null,
+		Forward, Backward, Up, Down, Right, Left,
+		PitchUp, PitchDown, YawRight, YawLeft, RollRight, RollLeft,
+		RotateCameraRight, RotateCameraLeft,
 		Press, Shake
 	}
 }

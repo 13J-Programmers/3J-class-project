@@ -48,7 +48,7 @@ public class Range<T> where T : IComparable {
 	public string ToString() {
 		return "(" + min + ".." + max + ")";
 	}
-	
+
 	public bool Include(T val) {
 		return (min.CompareTo(val) <= 0) && (val.CompareTo(max) < 0);
 	}
@@ -60,4 +60,3 @@ public class RangeException : Exception {
 	public RangeException(string message) : base(message) {}
 	public RangeException(string message, Exception inner) : base(message, inner) {}
 }
-

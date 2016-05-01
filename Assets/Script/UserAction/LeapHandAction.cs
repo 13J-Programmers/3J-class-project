@@ -43,7 +43,7 @@ namespace Player.Action {
 			roll  = leapHands.hand.PalmNormal.Roll * rotateScale;
 
 			// horizon hand
-			if (!LeapHands.IsFingersFolded(leapHands.hand) 
+			if (!LeapHands.IsFingersFolded(leapHands.hand)
 					&& upScale > pitch && pitch > downScale
 					&& rightScale > yaw && yaw > leftScale
 					&& counterClockwiseScale > roll && roll > clockwiseScale) {

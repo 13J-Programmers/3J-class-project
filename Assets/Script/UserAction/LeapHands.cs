@@ -6,7 +6,7 @@ using Leap;
 public class LeapHands : MonoBehaviour {
 	public Hand hand      { get; private set; }
 	public Hand otherHand { get; private set; }
-	
+
 	void Update() {
 		Controller controller = new Controller();
 		Frame frame = controller.Frame();

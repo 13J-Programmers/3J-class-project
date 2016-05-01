@@ -249,5 +249,3 @@ public class GameManager : MonoBehaviour {
 		return (dist < 250) ? true : false;
 	}
 }
-
-

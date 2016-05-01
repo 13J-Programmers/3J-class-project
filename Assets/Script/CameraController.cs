@@ -1,7 +1,7 @@
-/// 
+///
 /// @file  CameraController.cs
 /// @brief This script controls camera position and direction.
-/// 
+///
 
 using UnityEngine;
 using System.Collections;
@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour {
 	void Start() {
 		target = GameObject.Find("BlockPool/Ground");
 	}
-	
+
 	// Update is called once per frame
 	void Update() {
 		Vector3 poolPos = target.transform.position;

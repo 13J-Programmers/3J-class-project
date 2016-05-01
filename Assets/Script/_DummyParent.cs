@@ -1,9 +1,9 @@
-﻿/// 
+﻿///
 /// @file  _DummyParent.cs
 /// @brief
-///   This script controls motion of every dropping cubes in Pool, 
+///   This script controls motion of every dropping cubes in Pool,
 ///   after deleting completed row.
-/// 
+///
 
 using UnityEngine;
 using System.Collections;
@@ -20,7 +20,7 @@ public class _DummyParent : MonoBehaviour {
 	private GameObject GetPoolCubesObj() {
 		return GameObject.Find("BlockPool/Cubes");
 	}
-	
+
 	void Update() {
 		if (transform.childCount == 0) {
 			Setup();

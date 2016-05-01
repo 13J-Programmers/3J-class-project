@@ -81,8 +81,8 @@ namespace Fie.Utility {
 			nowTime += updateTime;
 
 			// 線形補間で揺れポイント間の座標を求める
-			Vector3 wigglePoint = (wiggleSegmentTime > 0f) 
-				? Vector3.Slerp(nowWigglePoint, nextWigglePoint, Mathf.Min(nowTime / wiggleSegmentTime, 1f)) 
+			Vector3 wigglePoint = (wiggleSegmentTime > 0f)
+				? Vector3.Slerp(nowWigglePoint, nextWigglePoint, Mathf.Min(nowTime / wiggleSegmentTime, 1f))
 				: Vector3.zero;
 
 			// カウンタが一定値を超えたら揺れポイントの再設定
@@ -109,13 +109,13 @@ namespace Fie.Utility {
 			// 揺れ幅割合を算出
 			// 残り揺れ回数に反比例して揺れ幅割合は小さくなる
 			float wigglePower = Mathf.Clamp(
-				(float)((float)totalWiggleCount - (float)count) / Mathf.Max((float)totalWiggleCount, 1f), 
+				(float)((float)totalWiggleCount - (float)count) / Mathf.Max((float)totalWiggleCount, 1f),
 				0f, 1f
 			);
 
 			// 揺れ幅の向きを決めるデグリー角を求める
 			float nextAngle = nowAngle + Random.Range(
-					MIN_RANDOM_SHAKE_ANGLE_RANGE, 
+					MIN_RANDOM_SHAKE_ANGLE_RANGE,
 					MAX_RANDOM_SHAKE_ANGLE_RANGE
 				);
 

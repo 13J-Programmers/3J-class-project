@@ -38,8 +38,3 @@ public class NextBlockEntity : MonoBehaviour {
 		}
 	}
 }
-
-
-
-
-

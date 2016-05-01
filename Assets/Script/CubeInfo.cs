@@ -1,7 +1,7 @@
-﻿/// 
+﻿///
 /// @file  CubeInfo.cs
 /// @brief This script stores status of cube.
-/// 
+///
 
 using UnityEngine;
 using System.Collections;

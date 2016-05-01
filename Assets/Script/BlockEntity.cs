@@ -1,7 +1,7 @@
-﻿/// 
+﻿///
 /// @file  BlockEntity.cs
 /// @brief This script is for create block object instance.
-/// 
+///
 
 using UnityEngine;
 using System;

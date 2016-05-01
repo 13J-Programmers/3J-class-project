@@ -162,7 +162,7 @@ public class BlockController : MonoBehaviour {
 
 	/// Destroy child blocks
 	public ArrayList DestroyChildBlocks() {
-		var childCubes = from Transform cube in this.transform 
+		var childCubes = from Transform cube in this.transform
 			where cube.name == "Cube"
 			select cube.gameObject;
 
@@ -279,4 +279,3 @@ public class BlockController : MonoBehaviour {
 		}
 	}
 }
-

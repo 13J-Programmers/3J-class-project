@@ -13,7 +13,7 @@ namespace Player.Action {
 
 		override
 		protected void InitPerFrame() {
-			
+
 		}
 
 		override
@@ -109,7 +109,7 @@ namespace Player.Action {
 			// // try to destroy every child blocks
 			// ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
 			// if (destroyPositions.Count == 0) return false;
-			// 
+			//
 			// // generate splash in destroyed block positions
 			// foreach (Vector3 destroyPosition in destroyPositions) {
 			// 	GetBlockController().GenerateSplash(destroyPosition);

@@ -1,7 +1,7 @@
-/// 
-/// @file  GameInfoViewer.cs 
+///
+/// @file  GameInfoViewer.cs
 /// @brief This script displays important game status to screen.
-/// 
+///
 
 using UnityEngine;
 using System.Collections;
@@ -16,7 +16,7 @@ public class GameInfoViewer : MonoBehaviour {
 	void Start() {
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
-	
+
 	// Update is called once per frame
 	void Update() {
 		guiStyle = new GUIStyle();

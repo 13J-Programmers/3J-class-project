@@ -8,19 +8,19 @@
 using UnityEngine;
 using System.Collections;
 
-/// 
+///
 /// rendering mode enums (Opaque, Cutout, Fade, Transparent)
-/// 
+///
 public enum BlendMode {
 	Opaque, Cutout, Fade, Transparent
 };
 
 public class StandardShader : MonoBehaviour {
-	/// 
+	///
 	/// swapping material's rendering mode
 	/// @param material - target material
 	/// @param blendMode - set enum BlendMode
-	/// 
+	///
 	public static void SetBlendMode(Material material, BlendMode blendMode) {
 		switch (blendMode) {
 			case BlendMode.Opaque:
@@ -62,6 +62,3 @@ public class StandardShader : MonoBehaviour {
 		}
 	}
 }
-
-
-
