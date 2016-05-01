@@ -21,27 +21,17 @@ namespace Player.Action {
 			return GetBlockController();
 		}
 
-		/// Move Block in X-axis
+		// detect motion
 		override
-		protected void DetectMotionX() {
+		protected void DetectMotion() {
+			// Move Block in X-axis
 			if (Input.GetKey("right")) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.right) * moveSpeed );
 			} else if (Input.GetKey("left")) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.left) * moveSpeed );
 			}
-		}
 
-		/// Drop Block
-		override
-		protected void DetectMotionY() {
-			if (Input.GetKeyDown("space")) {
-				GetBlockController().DropBlock();
-			}
-		}
-
-		// Move Block in Z-axis
-		override
-		protected void DetectMotionZ() {
+			// Move Block in Z-axis
 			if (Input.GetKey("up")) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.forward) * moveSpeed );
 			} else if (Input.GetKey("down")) {
@@ -49,29 +39,33 @@ namespace Player.Action {
 			}
 		}
 
-		/// Pitch Block
+		// detect drop motion
 		override
-		protected void DetectRotationX() {
+		protected void DetectDropMotion() {
+			// Drop Block
+			if (Input.GetKeyDown("space")) {
+				GetBlockController().DropBlock();
+			}
+		}
+
+		// detect rotation
+		override
+		protected void DetectRotation() {
+			// Pitch Block
 			if (Input.GetKeyDown("w")) {
 				GetBlockController().PitchBlock( DirectViaCamera(Vector3.forward) );
 			} else if (Input.GetKeyDown("s")) {
 				GetBlockController().PitchBlock( DirectViaCamera(Vector3.back) );
 			}
-		}
 
-		/// Yaw Block
-		override
-		protected void DetectRotationY() {
+			// Yaw Block
 			if (Input.GetKeyDown("e")) {
 				GetBlockController().YawBlock( Vector3.right );
 			} else if (Input.GetKeyDown("q")) {
 				GetBlockController().YawBlock( Vector3.left );
 			}
-		}
 
-		/// Roll Block
-		override
-		protected void DetectRotationZ() {
+			// Roll Block
 			if (Input.GetKeyDown("d")) {
 				GetBlockController().RollBlock( DirectViaCamera(Vector3.right) );
 			} else if (Input.GetKeyDown("a")) {
@@ -81,7 +75,7 @@ namespace Player.Action {
 
 		/// Rotate Camera
 		override
-		protected void DetectRotationCamera() {
+		protected void DetectCameraRotation() {
 			if (Input.GetKey("return")) {
 				GetCameraController().RotateCamera( Vector3.right );
 			} else if (Input.GetKey("delete")) {

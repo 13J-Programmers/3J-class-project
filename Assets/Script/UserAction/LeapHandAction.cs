@@ -56,41 +56,21 @@ namespace Player.Action {
 			return (base.GetBlockController() && leapHands.hand.Confidence > 0.1);
 		}
 
-		/// move block with opened hand in x-axis
 		override
-		protected void DetectMotionX() {
-			if (LeapHands.IsGrabbing(leapHands.hand)) return;
+		protected void DetectMotion() {
 			if (leapHands.HasTwoHands()) return;
-
+			if (LeapHands.IsGrabbing(leapHands.hand)) return;
+			
+			// move block with opened hand in x-axis
 			float handX = leapHands.hand.PalmPosition.x;
-
 			if (handX > MOVING_DETECT_RANGE) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.right) * moveSpeed );
 			} else if (handX < -MOVING_DETECT_RANGE) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.left) * moveSpeed );
 			}
-		}
 
-		/// Drop Block with clenched fists
-		override
-		protected void DetectMotionY() {
-			if (!LeapHands.IsGrabbing(leapHands.hand)) return;
-
-			float velocityY = leapHands.hand.PalmVelocity.y;
-
-			if (velocityY < -400) {
-				GetBlockController().DropBlock();
-			}
-		}
-
-		/// move block with opened hand in z-axis
-		override
-		protected void DetectMotionZ() {
-			if (LeapHands.IsGrabbing(leapHands.hand)) return;
-			if (leapHands.HasTwoHands()) return;
-
+			// move block with opened hand in z-axis
 			float handZ = -leapHands.hand.PalmPosition.z;
-
 			if (handZ > MOVING_DETECT_RANGE) {
 				GetBlockController().MoveBlock( DirectViaCamera(Vector3.forward) * moveSpeed );
 			} else if (handZ < -MOVING_DETECT_RANGE) {
@@ -98,60 +78,61 @@ namespace Player.Action {
 			}
 		}
 
-		/// Pitch Block
 		override
-		protected void DetectRotationX() {
+		protected void DetectDropMotion() {
+			if (leapHands.HasTwoHands()) return;
+			if (!LeapHands.IsGrabbing(leapHands.hand)) return;
+
+			// Drop Block with grabbed hand
+			float velocityY = leapHands.hand.PalmVelocity.y;
+			if (velocityY < -400) {
+				GetBlockController().DropBlock();
+			}
+		}
+
+		override
+		protected void DetectRotation() {
 			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 
+			/// Pitch Block
 			if (pitch < downScale) {
 				GetBlockController().PitchBlock( DirectViaCamera(Vector3.forward) );
+				isRotated = true;
+				return;
 			} else if (pitch > upScale) {
 				GetBlockController().PitchBlock( DirectViaCamera(Vector3.back) );
-			} else {
+				isRotated = true;
 				return;
 			}
-			isRotated = true;
-		}
 
-		/// Yaw Block
-		override
-		protected void DetectRotationY() {
-			if (LeapHands.IsGrabbing(leapHands.hand)) return;
-			if (leapHands.HasTwoHands()) return;
-			if (isRotated) return;
-
+			/// Yaw Block
 			if (yaw > rightScale) {
 				GetBlockController().YawBlock( Vector3.right );
+				isRotated = true;
+				return;
 			} else if (yaw < leftScale) {
 				GetBlockController().YawBlock( Vector3.left );
-			} else {
+				isRotated = true;
 				return;
 			}
-			isRotated = true;
-		}
 
-		/// Roll Block
-		override
-		protected void DetectRotationZ() {
-			if (LeapHands.IsGrabbing(leapHands.hand)) return;
-			if (leapHands.HasTwoHands()) return;
-			if (isRotated) return;
-
+			/// Roll Block
 			if (roll < clockwiseScale) {
 				GetBlockController().RollBlock( DirectViaCamera(Vector3.right) );
+				isRotated = true;
+				return;
 			} else if (roll > counterClockwiseScale) {
 				GetBlockController().RollBlock( DirectViaCamera(Vector3.left) );
-			} else {
+				isRotated = true;
 				return;
 			}
-			isRotated = true;
 		}
 
 		// Rotate camera
 		override
-		protected void DetectRotationCamera() {
+		protected void DetectCameraRotation() {
 			if (!leapHands.HasTwoHands()) return;
 
 			Hand rightHand = (leapHands.hand.IsRight) ? leapHands.hand : leapHands.otherHand;

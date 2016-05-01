@@ -48,13 +48,10 @@ namespace Player.Action {
 			InitPerFrame();
 			if (ValidatePerFrame() == false) return;
 
-			DetectMotionX();
-			DetectMotionY();
-			DetectMotionZ();
-			DetectRotationX();
-			DetectRotationY();
-			DetectRotationZ();
-			DetectRotationCamera();
+			DetectMotion();
+			DetectDropMotion();
+			DetectRotation();
+			DetectCameraRotation();
 
 			// if new block is pressable, and detect press motion.
 			if (Test.test(() => GameObject.Find("block(new)").tag == "Pressable")
@@ -76,13 +73,10 @@ namespace Player.Action {
 			// validate something
 			return true;
 		}
-		protected abstract void DetectMotionX();
-		protected abstract void DetectMotionY();
-		protected abstract void DetectMotionZ();
-		protected abstract void DetectRotationX();
-		protected abstract void DetectRotationY();
-		protected abstract void DetectRotationZ();
-		protected abstract void DetectRotationCamera();
+		protected abstract void DetectMotion();
+		protected abstract void DetectDropMotion();
+		protected abstract void DetectRotation();
+		protected abstract void DetectCameraRotation();
 		protected abstract bool DetectPressMotion();
 		protected abstract bool DetectShakeMotion();
 
