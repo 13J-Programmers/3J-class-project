@@ -16,16 +16,7 @@ public class LeapHands : MonoBehaviour {
 	}
 
 	public static bool IsFingersFolded(Hand hand) {
-		Vector origin = hand.PalmPosition;
-		float dist = 0;
-
-		// sum up fingers distance from position of palm
-		foreach (Finger finger in hand.Fingers) {
-			// ignore player's thumb
-			if (finger.Type() == Finger.FingerType.TYPE_THUMB) continue;
-			dist += finger.TipPosition.DistanceTo(origin);
-		}
-		return (dist < 280) ? true : false;
+		return (hand.GrabStrength >= 0.99);
 	}
 
 	public bool HasTwoHands() {
