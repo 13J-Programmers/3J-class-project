@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+///
+/// @file  LeapHands.cs
+/// @brief LeapMotion's helper methods
+///
+
+using UnityEngine;
 using System;
 using System.Collections;
 using Leap;

@@ -93,11 +93,6 @@ namespace Player.Action {
 		override
 		protected bool DetectPressMotion() {
 			if (!Input.GetKey("p")) return false;
-
-			// // try to destroy every child blocks
-			// ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-			// if (destroyPositions.Count == 0) return false;
-
 			return true;
 		}
 
@@ -105,16 +100,6 @@ namespace Player.Action {
 		override
 		protected bool DetectShakeMotion() {
 			if (!Input.GetKey("o")) return false;
-
-			// // try to destroy every child blocks
-			// ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-			// if (destroyPositions.Count == 0) return false;
-			//
-			// // generate splash in destroyed block positions
-			// foreach (Vector3 destroyPosition in destroyPositions) {
-			// 	GetBlockController().GenerateSplash(destroyPosition);
-			// }
-
 			return true;
 		}
 	}

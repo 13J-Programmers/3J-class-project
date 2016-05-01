@@ -179,10 +179,6 @@ namespace Player.Action {
 			double dist = Vector3.Distance(handPos, otherHandPos);
 
 			if (dist > 100) return false;
-
-			// ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-			// if (destroyPositions.Count == 0) return false;
-
 			return true;
 		}
 
@@ -195,15 +191,6 @@ namespace Player.Action {
 			float otherHandVelocityY = leapHands.otherHand.PalmVelocity.y;
 
 			if ( !(handVelocityY < -300 && otherHandVelocityY < -300) ) return false;
-
-			// ArrayList destroyPositions = GetBlockController().DestroyChildBlocks();
-			// if (destroyPositions.Count == 0) return false;
-
-			// // generate splash in destroyed block positions
-			// foreach (Vector3 destroyPosition in destroyPositions) {
-			// 	GetBlockController().GenerateSplash(destroyPosition);
-			// }
-
 			return true;
 		}
 	}
