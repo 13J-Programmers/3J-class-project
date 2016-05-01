@@ -43,7 +43,7 @@ namespace Player.Action {
 			roll  = leapHands.hand.PalmNormal.Roll * rotateScale;
 
 			// horizon hand
-			if (!LeapHands.IsFingersFolded(leapHands.hand)
+			if (!LeapHands.IsGrabbing(leapHands.hand)
 					&& upScale > pitch && pitch > downScale
 					&& rightScale > yaw && yaw > leftScale
 					&& counterClockwiseScale > roll && roll > clockwiseScale) {
@@ -59,7 +59,7 @@ namespace Player.Action {
 		/// move block with opened hand in x-axis
 		override
 		protected void DetectMotionX() {
-			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 			if (leapHands.HasTwoHands()) return;
 
 			float handX = leapHands.hand.PalmPosition.x;
@@ -74,7 +74,7 @@ namespace Player.Action {
 		/// Drop Block with clenched fists
 		override
 		protected void DetectMotionY() {
-			if (!LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (!LeapHands.IsGrabbing(leapHands.hand)) return;
 
 			float velocityY = leapHands.hand.PalmVelocity.y;
 
@@ -86,7 +86,7 @@ namespace Player.Action {
 		/// move block with opened hand in z-axis
 		override
 		protected void DetectMotionZ() {
-			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 			if (leapHands.HasTwoHands()) return;
 
 			float handZ = -leapHands.hand.PalmPosition.z;
@@ -101,7 +101,7 @@ namespace Player.Action {
 		/// Pitch Block
 		override
 		protected void DetectRotationX() {
-			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 
@@ -118,7 +118,7 @@ namespace Player.Action {
 		/// Yaw Block
 		override
 		protected void DetectRotationY() {
-			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 
@@ -135,7 +135,7 @@ namespace Player.Action {
 		/// Roll Block
 		override
 		protected void DetectRotationZ() {
-			if (LeapHands.IsFingersFolded(leapHands.hand)) return;
+			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 

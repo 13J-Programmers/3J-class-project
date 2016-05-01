@@ -15,7 +15,7 @@ public class LeapHands : MonoBehaviour {
 		otherHand = hands[1];
 	}
 
-	public static bool IsFingersFolded(Hand hand) {
+	public static bool IsGrabbing(Hand hand) {
 		return (hand.GrabStrength >= 0.99);
 	}
 
