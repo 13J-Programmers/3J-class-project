@@ -63,21 +63,27 @@ namespace Player.Action {
 			if (leapHands.HasTwoHands()) return;
 			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 
-			// move block with opened hand in x-axis
-			float handX = leapHands.hand.PalmPosition.x;
-			if (handX > MOVING_DETECT_RANGE) {
-				GetBlockController().MoveBlock( DirectViaCamera(Vector3.right) * moveSpeed );
-			} else if (handX < -MOVING_DETECT_RANGE) {
-				GetBlockController().MoveBlock( DirectViaCamera(Vector3.left) * moveSpeed );
-			}
+			// // move block with opened hand in x-axis
+			// float handX = leapHands.hand.PalmPosition.x;
+			// if (handX > MOVING_DETECT_RANGE) {
+			// 	GetBlockController().MoveBlock( DirectViaCamera(Vector3.right) * moveSpeed );
+			// } else if (handX < -MOVING_DETECT_RANGE) {
+			// 	GetBlockController().MoveBlock( DirectViaCamera(Vector3.left) * moveSpeed );
+			// }
+			//
+			// // move block with opened hand in z-axis
+			// float handZ = -leapHands.hand.PalmPosition.z;
+			// if (handZ > MOVING_DETECT_RANGE) {
+			// 	GetBlockController().MoveBlock( DirectViaCamera(Vector3.forward) * moveSpeed );
+			// } else if (handZ < -MOVING_DETECT_RANGE) {
+			// 	GetBlockController().MoveBlock( DirectViaCamera(Vector3.back) * moveSpeed );
+			// }
+			Vector3 handPos = VectorUtil.ToVector3(leapHands.hand.PalmPosition);
+			handPos.z *= -1;
+			handPos.y = 0;
+			handPos /= 2;
 
-			// move block with opened hand in z-axis
-			float handZ = -leapHands.hand.PalmPosition.z;
-			if (handZ > MOVING_DETECT_RANGE) {
-				GetBlockController().MoveBlock( DirectViaCamera(Vector3.forward) * moveSpeed );
-			} else if (handZ < -MOVING_DETECT_RANGE) {
-				GetBlockController().MoveBlock( DirectViaCamera(Vector3.back) * moveSpeed );
-			}
+			GetBlockController().MoveBlockSmoothly( handPos, moveSpeed );
 		}
 
 		override

@@ -88,6 +88,29 @@ public class BlockController : MonoBehaviour {
 		MoveBlock(vector.x, vector.z);
 	}
 
+	/// move the block smoothly to *toPosition*
+	/// @param toPosition - position of destination
+	/// @param speed      - movement speed
+	public void MoveBlockSmoothly(Vector3 toPosition, float speed) {
+		Vector3 fromPosition = this.transform.position;
+		toPosition.y = fromPosition.y;
+
+		Wall wall = GetBlockPoolController().GetWall();
+		float halfOfWidth = transform.localScale.x / 2;
+		if (blockMinCoord.x - halfOfWidth < wall.GetMinX()) {
+			toPosition.x /= 100;
+		} else if (blockMaxCoord.x + halfOfWidth > wall.GetMaxX()) {
+			toPosition.x /= 100;
+		}
+		if (blockMinCoord.z - halfOfWidth < wall.GetMinZ()) {
+			toPosition.z /= 100;
+		} else if (blockMaxCoord.z + halfOfWidth > wall.GetMaxZ()) {
+			toPosition.z /= 100;
+		}
+
+		this.transform.position = Vector3.Lerp(fromPosition, toPosition, Time.deltaTime * speed);
+	}
+
 	/// pitch the block
 	/// this method can decide forward direction via camera.
 	/// @param direct - Vector3 forward or back
