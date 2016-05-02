@@ -16,19 +16,9 @@ namespace Player.Action {
 		private LeapHands leapHands;
 
 		// motion
-		// const int MOVING_DETECT_RANGE = 60;
 		private float moveSpeed = 0.1f;
 
 		// rotation
-		private float pitch;
-		private float yaw;
-		private float roll;
-		private float upScale = 7;
-		private float downScale = -7;
-		private float rightScale = 7;
-		private float leftScale = -7;
-		private float counterClockwiseScale = 7;
-		private float clockwiseScale = -7;
 		public bool isRotated = false;
 
 		void Awake() {
@@ -39,16 +29,8 @@ namespace Player.Action {
 		protected void InitPerFrame() {
 			if (leapHands == null || leapHands.hand == null) return;
 
-			float rotateScale = 10;
-			pitch = leapHands.hand.Direction.Pitch * rotateScale;
-			yaw   = leapHands.hand.Direction.Yaw   * rotateScale;
-			roll  = leapHands.hand.PalmNormal.Roll * rotateScale;
-
-			// horizon hand
-			if (!LeapHands.IsGrabbing(leapHands.hand)
-					&& upScale > pitch && pitch > downScale
-					&& rightScale > yaw && yaw > leftScale
-					&& counterClockwiseScale > roll && roll > clockwiseScale) {
+			// horizontal hand
+			if (LeapHands.IsHorizontal(leapHands.hand)) {
 				isRotated = false;
 			}
 		}
@@ -61,10 +43,9 @@ namespace Player.Action {
 		override
 		protected void DetectMotion() {
 			if (leapHands.HasTwoHands()) return;
-			// print(leapHands.hand.GrabStrength);
-			// print(LeapHands.IsGrabbing(leapHands.hand));
 			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 
+			// int MOVING_DETECT_RANGE = 60;
 			// // move block with opened hand in x-axis
 			// float handX = leapHands.hand.PalmPosition.x;
 			// if (handX > MOVING_DETECT_RANGE) {
@@ -109,6 +90,18 @@ namespace Player.Action {
 			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
+
+			const float rotateScale = 10;
+			const float upScale = 7;
+			const float downScale = -7;
+			const float rightScale = 7;
+			const float leftScale = -7;
+			const float counterClockwiseScale = 7;
+			const float clockwiseScale = -7;
+
+			float pitch = leapHands.hand.Direction.Pitch * rotateScale;
+			float yaw   = leapHands.hand.Direction.Yaw   * rotateScale;
+			float roll  = leapHands.hand.PalmNormal.Roll * rotateScale;
 
 			/// Pitch Block
 			if (pitch < downScale) {
