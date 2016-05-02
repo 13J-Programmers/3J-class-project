@@ -80,18 +80,22 @@ namespace Player.Action {
 			// } else if (handZ < -MOVING_DETECT_RANGE) {
 			// 	GetBlockController().MoveBlock( DirectViaCamera(Vector3.back) * moveSpeed );
 			// }
+
+			// hand position
 			Vector3 handPos = VectorUtil.ToVector3(leapHands.hand.PalmPosition);
 			handPos.z *= -1;
 			handPos.y = 0;
 			handPos /= 2;
 
-			GetBlockController().MoveBlockSmoothly( handPos, moveSpeed );
+			GetBlockController().MoveBlockSmoothly( DirectViaCamera(handPos), moveSpeed );
 		}
 
 		override
 		protected void DetectDropMotion() {
 			if (leapHands.HasTwoHands()) return;
 			if (!LeapHands.IsGrabbing(leapHands.hand)) return;
+			const float rotateScale = 15;
+			if (!LeapHands.IsHorizontal(leapHands.hand, rotateScale)) return;
 
 			// Drop Block with grabbed hand
 			float velocityY = leapHands.hand.PalmVelocity.y;
