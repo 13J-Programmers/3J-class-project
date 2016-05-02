@@ -92,10 +92,10 @@ public class BlockController : MonoBehaviour {
 	/// @param toPosition - position of destination
 	/// @param speed      - movement speed
 	public void MoveBlockSmoothly(Vector3 toPosition, float speed) {
+		if (gameObject.name.CompareTo("block(new)") != 0) return;
+
 		Vector3 fromPosition = this.transform.position;
 		toPosition.y = fromPosition.y;
-
-		// print(toPosition);
 
 		Wall wall = GetBlockPoolController().GetWall();
 		float halfOfWidth = transform.localScale.x / 2;
