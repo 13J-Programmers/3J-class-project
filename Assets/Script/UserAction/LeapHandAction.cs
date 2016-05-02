@@ -37,6 +37,8 @@ namespace Player.Action {
 
 		override
 		protected void InitPerFrame() {
+			if (leapHands == null || leapHands.hand == null) return;
+
 			float rotateScale = 10;
 			pitch = leapHands.hand.Direction.Pitch * rotateScale;
 			yaw   = leapHands.hand.Direction.Yaw   * rotateScale;
@@ -60,7 +62,7 @@ namespace Player.Action {
 		protected void DetectMotion() {
 			if (leapHands.HasTwoHands()) return;
 			if (LeapHands.IsGrabbing(leapHands.hand)) return;
-			
+
 			// move block with opened hand in x-axis
 			float handX = leapHands.hand.PalmPosition.x;
 			if (handX > MOVING_DETECT_RANGE) {
