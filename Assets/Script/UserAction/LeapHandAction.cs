@@ -91,46 +91,34 @@ namespace Player.Action {
 			if (leapHands.HasTwoHands()) return;
 			if (isRotated) return;
 
-			const float rotateScale = 10;
-			const float upScale = 7;
-			const float downScale = -7;
-			const float rightScale = 7;
-			const float leftScale = -7;
-			const float counterClockwiseScale = 7;
-			const float clockwiseScale = -7;
-
-			float pitch = leapHands.hand.Direction.Pitch * rotateScale;
-			float yaw   = leapHands.hand.Direction.Yaw   * rotateScale;
-			float roll  = leapHands.hand.PalmNormal.Roll * rotateScale;
-
 			/// Pitch Block
-			if (pitch < downScale) {
+			if (LeapHands.IsPitchingDown(leapHands.hand)) {
 				GetBlockController().PitchBlock( DirectViaCamera(Vector3.forward) );
 				isRotated = true;
 				return;
-			} else if (pitch > upScale) {
+			} else if (LeapHands.IsPitchingUp(leapHands.hand)) {
 				GetBlockController().PitchBlock( DirectViaCamera(Vector3.back) );
 				isRotated = true;
 				return;
 			}
 
 			/// Yaw Block
-			if (yaw > rightScale) {
+			if (LeapHands.IsYawingRight(leapHands.hand)) {
 				GetBlockController().YawBlock( Vector3.right );
 				isRotated = true;
 				return;
-			} else if (yaw < leftScale) {
+			} else if (LeapHands.IsYawingLeft(leapHands.hand)) {
 				GetBlockController().YawBlock( Vector3.left );
 				isRotated = true;
 				return;
 			}
 
 			/// Roll Block
-			if (roll < clockwiseScale) {
+			if (LeapHands.IsRollingRight(leapHands.hand)) {
 				GetBlockController().RollBlock( DirectViaCamera(Vector3.right) );
 				isRotated = true;
 				return;
-			} else if (roll > counterClockwiseScale) {
+			} else if (LeapHands.IsRollingLeft(leapHands.hand)) {
 				GetBlockController().RollBlock( DirectViaCamera(Vector3.left) );
 				isRotated = true;
 				return;
