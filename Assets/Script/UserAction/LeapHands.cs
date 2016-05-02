@@ -21,7 +21,7 @@ public class LeapHands : MonoBehaviour {
 	}
 
 	public static bool IsGrabbing(Hand hand) {
-		return (hand.GrabStrength >= 0.99);
+		return (hand.GrabStrength >= 0.6);
 	}
 
 	public bool HasTwoHands() {

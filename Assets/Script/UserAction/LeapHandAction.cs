@@ -16,8 +16,8 @@ namespace Player.Action {
 		private LeapHands leapHands;
 
 		// motion
-		const int MOVING_DETECT_RANGE = 60;
-		private float moveSpeed = 0.03f;
+		// const int MOVING_DETECT_RANGE = 60;
+		private float moveSpeed = 0.1f;
 
 		// rotation
 		private float pitch;
@@ -61,6 +61,8 @@ namespace Player.Action {
 		override
 		protected void DetectMotion() {
 			if (leapHands.HasTwoHands()) return;
+			// print(leapHands.hand.GrabStrength);
+			// print(LeapHands.IsGrabbing(leapHands.hand));
 			if (LeapHands.IsGrabbing(leapHands.hand)) return;
 
 			// // move block with opened hand in x-axis

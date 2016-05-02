@@ -95,6 +95,8 @@ public class BlockController : MonoBehaviour {
 		Vector3 fromPosition = this.transform.position;
 		toPosition.y = fromPosition.y;
 
+		// print(toPosition);
+
 		Wall wall = GetBlockPoolController().GetWall();
 		float halfOfWidth = transform.localScale.x / 2;
 		if (blockMinCoord.x - halfOfWidth < wall.GetMinX()) {
