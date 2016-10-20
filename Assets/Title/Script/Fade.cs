@@ -3,6 +3,7 @@ using System;
 //using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 // シーン遷移時のフェードイン・アウトを制御するためのクラス .
 public class Fade : MonoBehaviour {
@@ -14,11 +15,11 @@ public class Fade : MonoBehaviour {
 	// 		instance = (Fade)FindObjectOfType(typeof(Fade));
 	// 		if (instance != null) return instance;
 	// 		Debug.LogError(typeof(Fade) + " is nothing");
-	// 		
+	//
 	// 		return instance;
 	// 	}
 	// }
-	
+
 	public bool DebugMode = false; ///< デバッグモード
 	private float fadeAlpha = 0; ///< フェード中の透明度
 	private bool isFading = false; ///< フェード中かどうか
@@ -36,7 +37,7 @@ public class Fade : MonoBehaviour {
 
 	void Update() {
 		// When this game object come into Main scene, it will be destroyed in 1 seconds.
-		if (Application.loadedLevelName == "Main") {
+		if (SceneManager.GetActiveScene().name == "Main") {
 			StartCoroutine(DestroyIn1sec());
 		}
 	}
@@ -67,7 +68,7 @@ public class Fade : MonoBehaviour {
 					return;
 				}
 				GUI.Box(new Rect(0, 0, 250, 60 + scenes.Count * 25), "Fade(Debug Mode)");
-				GUI.Label(new Rect(20, 30, 280, 20), "Current Scene : " + Application.loadedLevelName);
+				GUI.Label(new Rect(20, 30, 280, 20), "Current Scene : " + SceneManager.GetActiveScene().name);
 				int i = 0;
 				foreach (string sceneName in scenes) {
 					if (GUI.Button(new Rect(20, 55 + i * 25, 100, 20), "Load Level")) {
@@ -95,14 +96,15 @@ public class Fade : MonoBehaviour {
 		this.isFading = true;
 		float time = 0;
 		while (time <= interval) {
-			this.fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);      
+			this.fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);
 			time += Time.deltaTime;
 			yield return 0;
 		}
-		
+
 		// シーン切替
-		Application.LoadLevel(scene);
-		
+		// Application.LoadLevel(scene);
+		SceneManager.LoadScene(scene);
+
 		// だんだん明るく
 		time = 0;
 		while (time <= interval) {
@@ -119,4 +121,3 @@ public class Fade : MonoBehaviour {
 		Destroy(this.gameObject);
 	}
 }
-
