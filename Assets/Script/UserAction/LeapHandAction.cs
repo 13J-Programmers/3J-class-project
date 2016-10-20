@@ -75,7 +75,7 @@ namespace Player.Action {
 		protected void DetectDropMotion() {
 			if (leapHands.HasTwoHands()) return;
 			if (!LeapHands.IsGrabbing(leapHands.hand)) return;
-			const float rotateScale = 15;
+			// const float rotateScale = 15;
 			//if (!LeapHands.IsHorizontal(leapHands.hand, rotateScale)) return;
 
 			// Drop Block with grabbed hand
