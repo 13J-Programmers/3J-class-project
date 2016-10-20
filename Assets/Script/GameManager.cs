@@ -25,8 +25,9 @@
 
 using UnityEngine;
 using System;
-using System.Collections;
 using System.Linq;
+using System.Collections;
+using UnityEngine.SceneManagement;
 using Leap;
 
 public class GameManager : MonoBehaviour {
@@ -160,7 +161,8 @@ public class GameManager : MonoBehaviour {
 		if (GameObject.Find("FadeSystem")) {
 			GameObject.Find("FadeSystem").GetComponent<Fade>().LoadLevel("Title", 1f);
 		} else {
-			Application.LoadLevel("Title");
+			//Application.LoadLevel("Title");
+			SceneManager.LoadScene("Title");
 		}
 	}
 
